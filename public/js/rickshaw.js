@@ -2,7 +2,7 @@ function parseDate(jsonDate, debug) {
 
   var date = jsonDate.match(/([^-]+)/g);
 
-  var year  = date[0];
+  var year  = parseInt(date[0]);
   var month = parseInt(date[1]);
   var day   = parseInt(date[2].substr(0,2));
 
@@ -15,14 +15,47 @@ function parseDate(jsonDate, debug) {
   var sec   = parseInt(date[2]);
   if(debug) console.log(hour, min, sec);
 
+  var leapDelta = year-1970;
+
   // Find seconds since beginning of the year
   var monthDays = 0;
-  if(month == 2) {
-    monthDays = 31;
-  } else if(month == 3) {
-    monthDays = 59;
+  switch(month) {
+    case month == 2:
+      monthDays = 31;
+      break;
+    case month == 3:
+      monthDays = 59;
+      break;
+    case month == 4:
+      monthDays = 90;
+      break;
+    case month == 5:
+      monthDays = 120;
+      break;
+    case month == 6:
+      monthDays = 151;
+      break;
+    case month == 7:
+      monthDays = 181;
+      break;
+    case month == 8:
+      monthDays = 212;
+      break;
+    case month == 9:
+      monthDays = 243;
+      break;
+    case month == 10:
+      monthDays = 273;
+      break;
+    case month == 11:
+      monthDays = 304;
+      break;
+    case month == 12:
+      monthDays = 334;
+      break;
   }
-  var seconds = sec + 60*min + 3600*hour + 24*3600*day + 24*3600*monthDays;
+
+  var seconds = sec + 60*min + 3600*hour + 24*3600*day + 24*3600*monthDays + 24*3600*365*leapDelta + (leapDelta/4)*24*3600;
   if(debug) console.log(seconds);
   return seconds;
 
