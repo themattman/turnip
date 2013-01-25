@@ -1,17 +1,31 @@
-var //mongo = require("./database.js"),
-	email = require("./email.js");
+var mongo = require("./database.js"),
+	email = require("./email.js"),
+	colors = require('colors')
 
-/*mongo.connect(function(msg) {
-	if(msg == null)
-		console.log("Mongo Connected!");
-	else 
+var collection;
+mongo.connect(function(msg, coltn) {
+	if(msg == null) {
+		console.log("Mongo Connected!".yellow);
+		collection = coltn;
+	} else 
 		console.log(msg);
-});*/
+});
+
+
 
 // main page
 exports.index = function(req, res){
-	res.render('index', { title: 'Github' });
+	res.render('index', { title: 'Turnip' });
 };
+
+exports.hook = function(req, res) {
+	
+
+	collection.insert(req.body, function(err, docs){
+		if(err) throw err
+		res.send(docs);
+	});
+} 
 
 exports.rickshaw = function(req, res){
   res.render('rickshaw', { title: "Rickshaw" });
@@ -19,12 +33,11 @@ exports.rickshaw = function(req, res){
 
 // db test
 exports.db = function(req, res){
-	mongo.db.collection("test", function(err, collection){
-		collection.insert({ msg: "hello world" }, function(err, docs){
-			if(err) throw err
-			res.send(docs);
-		});
-	})
+	collection.insert({ msg: "hello world" }, function(err, docs){
+		if(err) throw err
+		res.send(docs);
+	});
+
 };
 
 // admin page

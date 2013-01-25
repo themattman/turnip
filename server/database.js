@@ -11,8 +11,14 @@ var API = module.exports = exports;
 		console.log('Starting DB Connection');
 		Database.open(function(err, db) {
 			if(err) { return cb(err); }
-			Database.authenticate(secret.db.user, secret.db.pass, cb);
+			Database.authenticate(secret.db.user, secret.db.pass, function (msg) {
+				db.collection("commits", function(err, collection){
+					if (err) throw err;
+					cb(msg,collection);
+				})
+			});
 			API.db = Database;
+			
 		});
 	};
 
