@@ -20,7 +20,7 @@ exports.index = function(req, res){
 
 exports.hook = function(req, res) {
 
-	var data = JSON.parse(req.body.params.payload);
+	var data = JSON.parse(req.params.payload);
 	collection.insert(data, function(err, docs){
 		if(err) throw err
 		res.send(docs);
