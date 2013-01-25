@@ -19,9 +19,9 @@ exports.index = function(req, res){
 };
 
 exports.hook = function(req, res) {
-	
 
-	collection.insert(req.body, function(err, docs){
+	var data = JSON.parse(req.body.params.payload);
+	collection.insert(data, function(err, docs){
 		if(err) throw err
 		res.send(docs);
 	});
