@@ -1,0 +1,14 @@
+extends layout
+
+block append head
+  link(type="text/css" rel="stylesheet" href="/css/rickshaw.min.css")
+
+block append content
+  h1= title
+  p Welcome to #{title}
+  #chart
+
+block append scripts
+  script(src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.1/d3.v3.min.js")
+  script(src="/js/rickshaw.min.js")
+  script(src="/js/map.js")
