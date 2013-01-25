@@ -13,7 +13,6 @@ config(app);
 // define API routes here
 app.get('/', router.index);
 app.post('/hook', router.hook);
-app.get('/hook', router.hook); // for testing
 app.get('/rickshaw', router.rickshaw);
 
 
