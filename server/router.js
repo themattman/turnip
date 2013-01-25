@@ -13,6 +13,10 @@ exports.index = function(req, res){
 	res.render('index', { title: 'Github' });
 };
 
+exports.rickshaw = function(req, res){
+  res.render('rickshaw', { title: "Rickshaw" });
+};
+
 // db test
 exports.db = function(req, res){
 	mongo.db.collection("test", function(err, collection){

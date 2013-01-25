@@ -14,9 +14,7 @@ config(app);
 app.get('/', router.index);
 app.get('/db', router.db);
 app.get('/admin', router.admin);
-app.get('/map', function(req, res){
-  res.render('map', { title: "Map" });
-});
+app.get('/rickshaw', router.rickshaw);
 
 
 // start the server
@@ -24,12 +22,3 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log(("Express server listening on port " + app.get('port')).blue);
 });
 
-
-
-//setInterval(addLines, 3000);
-
-var totalLines;
-
-function addLines() {
-  console.log('hey there');
-}
