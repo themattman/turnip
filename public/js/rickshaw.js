@@ -61,12 +61,18 @@ function parseDate(jsonDate, debug) {
 
 }
 
+var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
+
 
 var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 } ];
+
+
 var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } ];
-
-
-var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
+var item2 =  {
+    name: "data2",
+    color: palette.color(),
+    data: data2
+  };
 
 var graph = new Rickshaw.Graph({
   element: document.querySelector('#chart'),
@@ -78,17 +84,11 @@ var graph = new Rickshaw.Graph({
     name: "data1",
     color: palette.color(),
     data: data1
-  },
-  {
-    name: "data2",
-    color: palette.color(),
-    data: data2
   }
   ]
 });
 
-console.log(graph);
-console.log(document.querySelector('#slider'));
+//console.log(graph);
 
 var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
 var legend = new Rickshaw.Graph.Legend( {
@@ -132,8 +132,52 @@ yAxis.render();
 graph.render();
 
 
+/*setTimeout(function(){
+  graph.series.push(item2);
+  graph.update();
+}, 3000);*/
 
-//console.log(Rickshaw);
+function checkForMoreRepos() {
+  //var data = JSON.parse(fs.readFileSync('github.json', 'utf8'));
+  $.get('/github/accounts', function(d) {
+    console.log('github');
+    console.log(d);
+  });
+  //var totalRepos = 0;
+  //console.log(data);
+}
+
+// Expose github.json with a get so I can grab it
+
+setTimeout(function(){
+//setInterval(function(){
+  var repoName = "node";
+  checkForMoreRepos();
+  $.get('https://api.github.com/repos/joyent/' + repoName + '/commits', function(d) {
+        var pusher = {};
+        pusher.color = palette.color();
+        pusher.name = repoName;
+        pusher.data = [];
+        var repoCommits = 0;
+        d.forEach(function(com){
+            var commit = parseDate(com.commit.committer.date);
+            //console.log(com.commit.committer.date);
+            //console.log(commit);
+            commit %= 100000000;
+            console.log(commit);
+            var datapoint = {};
+            datapoint.x = commit;
+            datapoint.y = repoCommits;
+            pusher.data.push(datapoint);
+            repoCommits++;
+        })
+        console.log(pusher);
+        graph.series.push(pusher);
+        graph.update();
+        console.log(d);
+  });
+}, 1000);
+
 
 
 

@@ -14,11 +14,12 @@ config(app);
 // define API routes here
 // ---------------------------------------------------------- //
 // GET
-app.get('/',               router.index   );
-app.get('/rickshaw',       router.rickshaw);
-app.get('/db',             router.db      );
-app.get('/admin',          router.admin   );
-app.get('/admin/accounts', router.accounts);
+app.get('/',                router.index     );
+app.get('/rickshaw',        router.rickshaw  );
+app.get('/db',              router.db        );
+app.get('/admin',           router.admin     );
+app.get('/admin/accounts',  router.accounts  );
+app.get('/github/accounts', router.githubjson);
 
 // POST
 app.post('/hook', router.hook);

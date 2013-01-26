@@ -1,7 +1,8 @@
 var mongo = require("./database.js"),
 	email = require("./email.js"),
 	colors = require('colors'),
-	collection;
+	collection,
+	fs = require('fs');
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -27,6 +28,13 @@ exports.db = function(req, res){
 		if(err) throw err
 		res.send(docs);
 	});
+};
+
+// Expose accounts
+exports.githubjson  = function(req, res) {
+	fs.readFile('./server/github.json', 'utf-8', function(err, accounts){
+		res.json(JSON.parse(accounts));
+	})
 };
 
 exports.hook = function(req, res) {

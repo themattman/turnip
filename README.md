@@ -37,4 +37,5 @@ Real-time feed of Github data
 * Use color palettes like so (never mentioned in docs)
   * var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
   * http://code.shutterstock.com/rickshaw/examples/colors.html
-*
+* Date script (MIT)
+  * http://memeorandum.herokuapp.com/
