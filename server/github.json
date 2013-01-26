@@ -3,27 +3,23 @@
     [
       {
         "name": "themattman",
-        "repos":
+        "repoName": "turnip",
+        "hackName": "Turnip",
+        "members":
         [
-          {
-          "name": "node-fun",
-          "commits": []
-          },
-          {
-            "name": "turnip",
-            "commits": []
-          }
-        ]
+          "matt"
+        ],
+        "commits": []
       },
       { 
         "name": "joyent",
-        "repos":
+        "repoName": "node",
+        "hackName": "Turnip",
+        "members":
         [
-          {
-            "name": "node",
-            "commits": []
-          }
-        ]
+          "nick"
+        ],
+        "commits": []
       }
     ]
 }
