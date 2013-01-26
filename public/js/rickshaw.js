@@ -74,62 +74,66 @@ var item2 =  {
     data: data2
   };
 
-var graph = new Rickshaw.Graph({
-  element: document.querySelector('#chart'),
-  width: 800,
-  height: 250,
-  renderer: 'area',
-  stroke: true,
-  series: [ {
-    name: "data1",
-    color: palette.color(),
-    data: data1
-  }
-  ]
-});
+var graph;
 
-//console.log(graph);
+function createGraph(seriesData) {
+  console.log('creating');
+  graph = new Rickshaw.Graph({
+    element: document.querySelector('#chart'),
+    width: 800,
+    height: 250,
+    renderer: 'area',
+    stroke: true,
+    series: [ seriesData ] //{
+      /*name: "data1",
+      color: palette.color(),
+      data: data1
+    }*/
+    //]
+  });
+  //console.log(graph);
+}
 
-var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
-var legend = new Rickshaw.Graph.Legend( {
-  element: document.getElementById('legend'),
-  graph: graph
-});
-var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-  graph: graph,
-  legend: legend
-});
-var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-  graph: graph,
-  legend: legend
-});
-var order = new Rickshaw.Graph.Behavior.Series.Order({
-  graph: graph,
-  legend: legend
-});
+function otherGraphStuff() {
+  var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
+  var legend = new Rickshaw.Graph.Legend( {
+    element: document.getElementById('legend'),
+    graph: graph
+  });
+  var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+    graph: graph,
+    legend: legend
+  });
+  var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+    graph: graph,
+    legend: legend
+  });
+  var order = new Rickshaw.Graph.Behavior.Series.Order({
+    graph: graph,
+    legend: legend
+  });
 
+  var time = new Rickshaw.Fixtures.Time();
+  var seconds = time.unit('second');
+  //console.log(time);
+  console.log('TIIIME');
+  console.log(seconds);
 
+  var xAxis = new Rickshaw.Graph.Axis.X({ 
+    graph: graph,
+    TimeUnit: seconds 
+  });
+  xAxis.render();
 
-
-var time = new Rickshaw.Fixtures.Time();
-var seconds = time.unit('15 second');
-console.log(time);
-console.log(seconds);
-
-var xAxis = new Rickshaw.Graph.Axis.X({ 
-  graph: graph,
-  TimeUnit: seconds 
-});
-xAxis.render();
-
-var yAxis = new Rickshaw.Graph.Axis.Y({
-  graph: graph,
-  orientation: 'left',
-  tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-  element: document.getElementById('y_axis'),
-});
-yAxis.render();
-graph.render();
+  var yAxis = new Rickshaw.Graph.Axis.Y({
+    graph: graph,
+    orientation: 'left',
+    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+    element: document.getElementById('y_axis'),
+  });
+  yAxis.render();
+}
+//graph.render();
 
 
 /*setTimeout(function(){
@@ -139,26 +143,21 @@ graph.render();
 
 
 // Require everyone to enter their repo name before the competition
-// Store global file on server with samples taken every x seconds
+// Store global file on server with samples taken every x seconds (well, on Mongo)
+// Have Otto take form data and write it to Mongo correctly when someone adds their account
 // Each client constructs graph from server
 // Require sockets? That way node server can push updates to graph instead of getting flooded by requests
+
+// Calculate UNIX timestamp of beginning of hackathon
+// Issue Github API requests every x seconds and check if latest commit timestamp > mostRecentTimeStamp
+var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in setInterval
 
 
 var currentAccountData = {};
 
-function checkForMoreRepos() {
-  $.get('/github/accounts', function(d) {
-    console.log('github');
-    console.log(d);
-  });
-  //var totalRepos = 0;
-  //console.log(data);
-  if(d.length > currentAccountData.length) {
-    //addDataStream();
-  }
-}
+var lock = 0;
 
-function addDataStream(userName, repoName) {
+function addDataStream(userName, repoName) {  
   $.get('https://api.github.com/repos/' + userName + '/' + repoName + '/commits', function(d) {
         var pusher = {};
         pusher.color = palette.color();
@@ -178,15 +177,36 @@ function addDataStream(userName, repoName) {
             repoCommits++;
         })
         console.log(pusher);
+        createGraph(pusher);
         //graph.series.push(pusher);
-        //graph.update();
+        console.log(graph);
+        console.log('graph dooone');
+        otherGraphStuff();
+        graph.render();
+        graph.update();
         console.log(d);
   });
 }
 
-setTimeout(function(){
-//setInterval(function(){
-checkForMoreRepos, 1000);
+function checkForMoreRepos() {
+  $.get('/github/accounts', function(d) {
+    console.log('github');
+    console.log(d);
+    d.accounts.forEach(function(p){
+      p.repos.forEach(function(r){
+        console.log('name: ', p.name ,'|repo:', r.name);
+        if(lock == 0) {
+          lock = 1;
+          addDataStream(p.name, r.name);
+        }
+      });
+    });
+  });
+}
+
+setTimeout(
+//setInterval(
+checkForMoreRepos(), 1000);
 
 
 
