@@ -66,11 +66,11 @@ var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 }
 var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } ];
 
 
-var palette = new Rickshaw.Color.Palette();
+var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 
 var graph = new Rickshaw.Graph({
   element: document.querySelector('#chart'),
-  width: 550,
+  width: 800,
   height: 250,
   renderer: 'area',
   stroke: true,
@@ -107,90 +107,6 @@ var order = new Rickshaw.Graph.Behavior.Series.Order({
   graph: graph,
   legend: legend
 });
-var list = [];
-list.push(document.querySelector('#slider'));
-var argu = {
-  element: list,
-  graph: graph
-};
-console.log(argu);
-var slider = new Rickshaw.Graph.RangeSlider(argu);
-
-
-
-
-
-
-
-
-
-
-
-/*function sliderController() {
-  console.log('custom func');
-                this.sliderCreate = function(element, graph) {
-                    var self = this;
-                    self.graph = graph;
-                    var rangeSlider = new dojox.form.HorizontalRangeSlider(
-                    {
-                        name : "rangeSlider",
-                        value : [ graph.dataDomain()[0], graph.dataDomain()[1] ],
-                        minimum : graph.dataDomain()[0],
-                        maximum : graph.dataDomain()[1],
-                        intermediateChanges : true,
-                        onChange : function(value) {
-                            self.graph.window.xMin = this.value[0];
-                            self.graph.window.xMax = this.value[1];
-                            // if we're at an extreme, stick there
-                            if (self.graph.dataDomain()[0] == this.value[0]) {
-                                self.graph.window.xMin = undefined;
-                            }
-                            if (self.graph.dataDomain()[1] == this.value[1]) {
-                                self.graph.window.xMax = undefined;
-                            }
-                            console.log(this.__redraw__);
-                            if (this.__redraw__) {
-                                self.graph.update();
-                            } else {
-                                this.__redraw__ = true;
-                            }
-                        }
-                    }, element);
-                    this.slider = rangeSlider;
-                    this.slider.__redraw__ = true;
-                }
- 
-                this.sliderUpdate = function() {
-                    var value = this.slider.get('value');
-                    console.log('sliderUpdate')
-                    this.slider.set('minimum', this.graph.dataDomain()[0]);
-                    this.slider.set('maximum', this.graph.dataDomain()[1]);
- 
-                    if (this.graph.window.xMin == undefined) {
-                        value[0] = this.graph.dataDomain()[0];
-                    }
-                    if (this.graph.window.xMax == undefined) {
-                        value[1] = this.graph.dataDomain()[1];
-                    }
-                    // chart was updated - do not force redraw on slider change 
-                    this.slider.__redraw__ = false;
-                    this.slider.set('value', value);
-                }
-            }
-            var slider = new Rickshaw.Graph.RangeSlider({
-                graph : graph,
-                element : argu,
-                controller : new sliderController(document
-                .getElementById('slider'), graph)
-            });*/
-
-
-
-
-
-
-
-
 
 
 
@@ -215,22 +131,9 @@ var yAxis = new Rickshaw.Graph.Axis.Y({
 yAxis.render();
 graph.render();
 
-/*var order = new Rickshaw.Graph.Behavior.Series.Order({
-    graph: graph,
-    legend: legend
-});*/
 
-
-/*var slider = new Rickshaw.Graph.RangeSlider({
-    graph: graph,
-    element: document.querySelector('#slider')
-});*/
 
 //console.log(Rickshaw);
-
-
-
-
 
 
 
