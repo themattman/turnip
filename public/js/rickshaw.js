@@ -137,23 +137,29 @@ graph.render();
   graph.update();
 }, 3000);*/
 
+
+// Require everyone to enter their repo name before the competition
+// Store global file on server with samples taken every x seconds
+// Each client constructs graph from server
+// Require sockets? That way node server can push updates to graph instead of getting flooded by requests
+
+
+var currentAccountData = {};
+
 function checkForMoreRepos() {
-  //var data = JSON.parse(fs.readFileSync('github.json', 'utf8'));
   $.get('/github/accounts', function(d) {
     console.log('github');
     console.log(d);
   });
   //var totalRepos = 0;
   //console.log(data);
+  if(d.length > currentAccountData.length) {
+    //addDataStream();
+  }
 }
 
-// Expose github.json with a get so I can grab it
-
-setTimeout(function(){
-//setInterval(function(){
-  var repoName = "node";
-  checkForMoreRepos();
-  $.get('https://api.github.com/repos/joyent/' + repoName + '/commits', function(d) {
+function addDataStream(userName, repoName) {
+  $.get('https://api.github.com/repos/' + userName + '/' + repoName + '/commits', function(d) {
         var pusher = {};
         pusher.color = palette.color();
         pusher.name = repoName;
@@ -172,11 +178,15 @@ setTimeout(function(){
             repoCommits++;
         })
         console.log(pusher);
-        graph.series.push(pusher);
-        graph.update();
+        //graph.series.push(pusher);
+        //graph.update();
         console.log(d);
   });
-}, 1000);
+}
+
+setTimeout(function(){
+//setInterval(function(){
+checkForMoreRepos, 1000);
 
 
 

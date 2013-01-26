@@ -1,11 +1,39 @@
-[
-  { "themattman": [ 
-      "node-fun",
-      "turnip"
+{
+  "accountNames" :
+    [
+      {
+        "themattman": 
+        {
+          "repos":
+          [
+            {
+            "node-fun":
+              {
+                "commits": []
+              }
+            },
+            {
+              "turnip":
+              {
+                "commits": []
+              }
+            }
+          ]
+        }
+      },
+      { 
+        "joyent" :
+        {
+          "repos":
+          [
+            {
+              "node":
+              {
+                "commits": []
+              }
+            }
+          ]
+        }
+      }
     ]
-  },
-  { "joyent" : [
-      "node"
-    ]
-  }
-]
+}
