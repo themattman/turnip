@@ -61,13 +61,32 @@ function parseDate(jsonDate, debug) {
 
 }
 
+
+var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 } ];
+var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } ];
+
+
 var palette = new Rickshaw.Color.Palette();
 
-new Rickshaw.Graph.JSONP({
+var graph = new Rickshaw.Graph({
   element: document.querySelector('#chart'),
   width: 550,
   height: 250,
-  dataURL: 'https://api.github.com/repos/joyent/node/commits',
+  renderer: 'area',
+  stroke: true,
+  series: [ {
+    name: "data1",
+    color: palette.color(),
+    data: data1
+  },
+  {
+    name: "data2",
+    color: palette.color(),
+    data: data2
+  }
+  ]
+
+  /*dataURL: 'https://api.github.com/repos/joyent/node/commits',
   onData: function(d) {
     var commitDates = [];
     console.log(d.data);
@@ -99,36 +118,69 @@ new Rickshaw.Graph.JSONP({
   onComplete: function(transport) {
     console.log('transport')
     console.log(transport)
-
-    var graph = transport.graph;
-    var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
-    var y_axis = new Rickshaw.Graph.Axis.Y({
-            graph: graph,
-            orientation: 'right',
-            tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-            element: document.getElementById('y_axis'),
-    });
-    var legend = new Rickshaw.Graph.Legend( {
-            element: document.querySelector('#legend'),
-            graph: graph
-    });
-
-    var time = new Rickshaw.Fixtures.Time();
-    var seconds = time.unit('15 second');
-    console.log(time);
-    console.log(seconds);
-    var xAxis = new Rickshaw.Graph.Axis.X({ 
-      graph: graph,
-      TimeUnit: seconds 
-    });
-    xAxis.render();
-    var yAxis = new Rickshaw.Graph.Axis.Y({ graph: graph });
-    yAxis.render();
-    console.log(Rickshaw);
-
-
-  }
+  }*/
 });
+
+console.log(graph);
+
+
+
+
+var legend = new Rickshaw.Graph.Legend( {
+        element: document.querySelector('#legend'),
+        graph: graph
+});
+var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
+    graph: graph,
+    legend: legend
+});
+/*var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+    graph: graph,
+    legend: legend
+});*/
+
+
+graph.render();
+
+//var graph = transport.graph;
+var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
+/*var y_axis = new Rickshaw.Graph.Axis.Y({
+        graph: graph,
+        orientation: 'right',
+        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        element: document.getElementById('y_axis'),
+});*/
+
+var time = new Rickshaw.Fixtures.Time();
+var seconds = time.unit('15 second');
+console.log(time);
+console.log(seconds);
+
+var xAxis = new Rickshaw.Graph.Axis.X({ 
+  graph: graph,
+  TimeUnit: seconds 
+});
+xAxis.render();
+
+var yAxis = new Rickshaw.Graph.Axis.Y({ graph: graph });
+yAxis.render();
+
+
+
+/*var slider = new Rickshaw.Graph.RangeSlider({
+    graph: graph,
+    element: document.querySelector('#slider')
+});*/
+
+//console.log(Rickshaw);
+
+
+
+
+
+
+
+
 
 /*$.get('https://api.github.com/repos/joyent/node/commits', function(d) {
         d.forEach(function(com){
