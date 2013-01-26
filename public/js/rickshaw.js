@@ -71,7 +71,7 @@ var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } 
 var item2 =  {
     name: "data2",
     color: palette.color(),
-    data: data2
+    data: data1
   };
 
 var graph;
@@ -85,16 +85,11 @@ function createGraph(seriesData) {
     height: 250,
     renderer: 'area',
     stroke: true,
-    series: [ seriesData ] //{
-      /*name: "data1",
-      color: palette.color(),
-      data: data1
-    }*/
-    //]
+    series:  seriesData 
   });
   console.log('graph before render');
   console.log(graph.series[0]);
-  //graph.render();
+  graph.render();
 }
 
 function otherGraphStuff() {  
