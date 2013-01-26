@@ -85,71 +85,26 @@ var graph = new Rickshaw.Graph({
     data: data2
   }
   ]
-
-  /*dataURL: 'https://api.github.com/repos/joyent/node/commits',
-  onData: function(d) {
-    var commitDates = [];
-    console.log(d.data);
-    console.log(d);
-    var totCommits = 0;
-
-    d.data.reverse();
-    d.data.forEach(function(com){
-      ++totCommits;
-      var x = parseDate(com.commit.committer.date, false);
-      var y = totCommits;
-      var data_pt = {};
-      data_pt.x = x;
-      data_pt.y = y;
-      console.log(data_pt);
-      commitDates.push(data_pt);
-    });
-
-    var series = [];
-    var obj = {};
-    obj.name = "Node";
-    obj.data = commitDates;
-    obj.color = palette.color();
-    series.push(obj);
-    console.log(series);
-
-    return series;
-  },
-  onComplete: function(transport) {
-    console.log('transport')
-    console.log(transport)
-  }*/
 });
 
 console.log(graph);
 
 
-
-
+var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
 var legend = new Rickshaw.Graph.Legend( {
-        element: document.querySelector('#legend'),
-        graph: graph
+  element: document.getElementById('legend'),
+  graph: graph
 });
 var highlighter = new Rickshaw.Graph.Behavior.Series.Highlight({
-    graph: graph,
-    legend: legend
+  graph: graph,
+  legend: legend
 });
-/*var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
-    graph: graph,
-    legend: legend
-});*/
+var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+  graph: graph,
+  legend: legend
+});
 
 
-graph.render();
-
-//var graph = transport.graph;
-var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
-/*var y_axis = new Rickshaw.Graph.Axis.Y({
-        graph: graph,
-        orientation: 'right',
-        tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
-        element: document.getElementById('y_axis'),
-});*/
 
 var time = new Rickshaw.Fixtures.Time();
 var seconds = time.unit('15 second');
@@ -162,9 +117,19 @@ var xAxis = new Rickshaw.Graph.Axis.X({
 });
 xAxis.render();
 
-var yAxis = new Rickshaw.Graph.Axis.Y({ graph: graph });
+var yAxis = new Rickshaw.Graph.Axis.Y({
+  graph: graph,
+  orientation: 'left',
+  tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+  element: document.getElementById('y_axis'),
+});
 yAxis.render();
+graph.render();
 
+/*var order = new Rickshaw.Graph.Behavior.Series.Order({
+    graph: graph,
+    legend: legend
+});*/
 
 
 /*var slider = new Rickshaw.Graph.RangeSlider({

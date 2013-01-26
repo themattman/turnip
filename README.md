@@ -24,3 +24,9 @@ Real-time feed of Github data
 * Soybean
 * Spinach
 * Tomato
+
+
+## Rickshaw Notes
+
+* Include jQuery-UI!!
+* I discovered cdnjs.com for every javascript CDN
