@@ -88,7 +88,7 @@ var graph = new Rickshaw.Graph({
 });
 
 console.log(graph);
-
+console.log(document.querySelector('#slider'));
 
 var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
 var legend = new Rickshaw.Graph.Legend( {
@@ -103,6 +103,95 @@ var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
   graph: graph,
   legend: legend
 });
+var order = new Rickshaw.Graph.Behavior.Series.Order({
+  graph: graph,
+  legend: legend
+});
+var list = [];
+list.push(document.querySelector('#slider'));
+var argu = {
+  element: list,
+  graph: graph
+};
+console.log(argu);
+var slider = new Rickshaw.Graph.RangeSlider(argu);
+
+
+
+
+
+
+
+
+
+
+
+/*function sliderController() {
+  console.log('custom func');
+                this.sliderCreate = function(element, graph) {
+                    var self = this;
+                    self.graph = graph;
+                    var rangeSlider = new dojox.form.HorizontalRangeSlider(
+                    {
+                        name : "rangeSlider",
+                        value : [ graph.dataDomain()[0], graph.dataDomain()[1] ],
+                        minimum : graph.dataDomain()[0],
+                        maximum : graph.dataDomain()[1],
+                        intermediateChanges : true,
+                        onChange : function(value) {
+                            self.graph.window.xMin = this.value[0];
+                            self.graph.window.xMax = this.value[1];
+                            // if we're at an extreme, stick there
+                            if (self.graph.dataDomain()[0] == this.value[0]) {
+                                self.graph.window.xMin = undefined;
+                            }
+                            if (self.graph.dataDomain()[1] == this.value[1]) {
+                                self.graph.window.xMax = undefined;
+                            }
+                            console.log(this.__redraw__);
+                            if (this.__redraw__) {
+                                self.graph.update();
+                            } else {
+                                this.__redraw__ = true;
+                            }
+                        }
+                    }, element);
+                    this.slider = rangeSlider;
+                    this.slider.__redraw__ = true;
+                }
+ 
+                this.sliderUpdate = function() {
+                    var value = this.slider.get('value');
+                    console.log('sliderUpdate')
+                    this.slider.set('minimum', this.graph.dataDomain()[0]);
+                    this.slider.set('maximum', this.graph.dataDomain()[1]);
+ 
+                    if (this.graph.window.xMin == undefined) {
+                        value[0] = this.graph.dataDomain()[0];
+                    }
+                    if (this.graph.window.xMax == undefined) {
+                        value[1] = this.graph.dataDomain()[1];
+                    }
+                    // chart was updated - do not force redraw on slider change 
+                    this.slider.__redraw__ = false;
+                    this.slider.set('value', value);
+                }
+            }
+            var slider = new Rickshaw.Graph.RangeSlider({
+                graph : graph,
+                element : argu,
+                controller : new sliderController(document
+                .getElementById('slider'), graph)
+            });*/
+
+
+
+
+
+
+
+
+
 
 
 
