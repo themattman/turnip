@@ -1,8 +1,8 @@
-var mongo = require("./database.js"),
-	email = require("./email.js"),
-	colors = require('colors'),
-	collection,
-	fs = require('fs');
+var mongo     = require("./database.js")
+	, email     = require("./email.js")
+	, colors    = require('colors')
+	, collection
+	, fs        = require('fs');
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {

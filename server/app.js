@@ -28,7 +28,9 @@ app.post('/hook', router.hook);
 
 
 // start the server
-http.createServer(app).listen(app.get('port'), function(){
+var httpApp = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port:".blue, app.get('port'));
 });
 
+// start socket.io after the server
+var io = require('socket.io').listen(httpApp);

@@ -117,13 +117,13 @@ function otherGraphStuff() {
   console.log('TIIIME');
   console.log(seconds);
 
-  /*var xAxis = new Rickshaw.Graph.Axis.X({ 
+  var xAxis = new Rickshaw.Graph.Axis.X({ 
     graph: graph,
     TimeUnit: seconds 
-  });*/
-  var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
-  x_axis.render();
-  //xAxis.render();
+  });
+  //var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
+  //x_axis.render();
+  xAxis.render();
 
   var yAxis = new Rickshaw.Graph.Axis.Y({
     graph: graph,
@@ -157,36 +157,37 @@ var currentAccountData = [];
 
 var lock = 0;
 
+function pushNewDataPoints() {
+
+}
+
 function addDataStream(userName, repoName, cb) {  
   $.get('https://api.github.com/repos/' + userName + '/' + repoName + '/commits', function(d) {
-        var pusher = {};
-        pusher.color = palette.color();
-        pusher.name = repoName;
-        pusher.data = [];
-        console.log(pusher);
-        var repoCommits = 0;
-        for(var i in d) {
-            if(repoCommits < 25) {
-              var commit = parseDate(d[i].commit.committer.date);
-              commit %= 100000000;
-              console.log(commit);
-              var datapoint = {};
-              datapoint.x = commit;
-              datapoint.y = repoCommits;
-              //console.log(datapoint);
-              pusher.data.push(datapoint);
-            }
-            repoCommits++;
+    var pusher = {};
+    pusher.color = palette.color();
+    pusher.name = repoName;
+    pusher.data = [];
+    console.log(pusher);
+    var repoCommits = 0;
+    for(var i in d) {
+        if(repoCommits < 25) {
+          var commit = parseDate(d[i].commit.committer.date);
+          commit %= 100000000;
+          console.log(commit);
+          var datapoint = {};
+          datapoint.x = commit;
+          datapoint.y = repoCommits;
+          //console.log(datapoint);
+          pusher.data.push(datapoint);
         }
-        currentAccountData.push(pusher);
-        cb();
-        //console.log(pusher.data);
-        //graph.update();
-        //console.log(d);
+        repoCommits++;
+    }
+    currentAccountData.push(pusher);
+    cb();
   });
 }
 
-function checkForMoreRepos() {
+function iterateOverRepos() {
   $.get('/github/accounts', function(d) {
     console.log('github');
     console.log(d);
@@ -200,6 +201,9 @@ function checkForMoreRepos() {
               createGraph(currentAccountData);
               otherGraphStuff()
             }, 2000);
+          } else if(lock > 3) {
+            pushNewDataPoints();
+            graph.update();
           }
         });
       });
@@ -207,9 +211,9 @@ function checkForMoreRepos() {
   });
 }
 
-setTimeout(
-//setInterval(
-checkForMoreRepos(), 1000);
+//setTimeout(
+setInterval(
+iterateOverRepos(), 1000);
 
 
 
