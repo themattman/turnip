@@ -78,6 +78,7 @@ var graph;
 
 function createGraph(seriesData) {
   console.log('creating');
+  console.log(seriesData);
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
     width: 800,
@@ -91,10 +92,12 @@ function createGraph(seriesData) {
     }*/
     //]
   });
-  //console.log(graph);
+  console.log('graph before render');
+  console.log(graph.series[0]);
+  //graph.render();
 }
 
-function otherGraphStuff() {
+function otherGraphStuff() {  
   var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
   var legend = new Rickshaw.Graph.Legend( {
     element: document.getElementById('legend'),
@@ -119,16 +122,18 @@ function otherGraphStuff() {
   console.log('TIIIME');
   console.log(seconds);
 
-  var xAxis = new Rickshaw.Graph.Axis.X({ 
+  /*var xAxis = new Rickshaw.Graph.Axis.X({ 
     graph: graph,
     TimeUnit: seconds 
-  });
-  xAxis.render();
+  });*/
+  var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
+  x_axis.render();
+  //xAxis.render();
 
   var yAxis = new Rickshaw.Graph.Axis.Y({
     graph: graph,
     orientation: 'left',
-    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+    //tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
     element: document.getElementById('y_axis'),
   });
   yAxis.render();
@@ -153,38 +158,36 @@ function otherGraphStuff() {
 var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in setInterval
 
 
-var currentAccountData = {};
+var currentAccountData = [];
 
 var lock = 0;
 
-function addDataStream(userName, repoName) {  
+function addDataStream(userName, repoName, cb) {  
   $.get('https://api.github.com/repos/' + userName + '/' + repoName + '/commits', function(d) {
         var pusher = {};
         pusher.color = palette.color();
         pusher.name = repoName;
         pusher.data = [];
-        var repoCommits = 0;
-        d.forEach(function(com){
-            var commit = parseDate(com.commit.committer.date);
-            //console.log(com.commit.committer.date);
-            //console.log(commit);
-            commit %= 100000000;
-            console.log(commit);
-            var datapoint = {};
-            datapoint.x = commit;
-            datapoint.y = repoCommits;
-            pusher.data.push(datapoint);
-            repoCommits++;
-        })
         console.log(pusher);
-        createGraph(pusher);
-        //graph.series.push(pusher);
-        console.log(graph);
-        console.log('graph dooone');
-        otherGraphStuff();
-        graph.render();
-        graph.update();
-        console.log(d);
+        var repoCommits = 0;
+        for(var i in d) {
+            if(repoCommits < 25) {
+              var commit = parseDate(d[i].commit.committer.date);
+              commit %= 100000000;
+              console.log(commit);
+              var datapoint = {};
+              datapoint.x = commit;
+              datapoint.y = repoCommits;
+              //console.log(datapoint);
+              pusher.data.push(datapoint);
+            }
+            repoCommits++;
+        }
+        currentAccountData.push(pusher);
+        cb();
+        //console.log(pusher.data);
+        //graph.update();
+        //console.log(d);
   });
 }
 
@@ -195,10 +198,15 @@ function checkForMoreRepos() {
     d.accounts.forEach(function(p){
       p.repos.forEach(function(r){
         console.log('name: ', p.name ,'|repo:', r.name);
-        if(lock == 0) {
-          lock = 1;
-          addDataStream(p.name, r.name);
-        }
+        addDataStream(p.name, r.name, function(){
+          lock++;
+          if(lock == 3) {
+            setTimeout(function(){
+              createGraph(currentAccountData);
+              otherGraphStuff()
+            }, 2000);
+          }
+        });
       });
     });
   });
