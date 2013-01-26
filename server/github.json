@@ -1,6 +1,7 @@
 [
   { "themattman": [ 
-      "node-fun"
+      "node-fun",
+      "turnip"
     ]
   },
   { "joyent" : [

@@ -102,22 +102,31 @@ new Rickshaw.Graph.JSONP({
 
     var graph = transport.graph;
     var detail = new Rickshaw.Graph.HoverDetail({ graph: graph });
-
-    var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
-
-    var y_axis = new Rickshaw.Graph.Axis.Y( {
+    var y_axis = new Rickshaw.Graph.Axis.Y({
             graph: graph,
-            orientation: 'left',
+            orientation: 'right',
             tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
             element: document.getElementById('y_axis'),
-    } );
-
+    });
     var legend = new Rickshaw.Graph.Legend( {
             element: document.querySelector('#legend'),
             graph: graph
-    } );
+    });
 
-    //graph.render();
+    var time = new Rickshaw.Fixtures.Time();
+    var seconds = time.unit('15 second');
+    console.log(time);
+    console.log(seconds);
+    var xAxis = new Rickshaw.Graph.Axis.X({ 
+      graph: graph,
+      TimeUnit: seconds 
+    });
+    xAxis.render();
+    var yAxis = new Rickshaw.Graph.Axis.Y({ graph: graph });
+    yAxis.render();
+    console.log(Rickshaw);
+
+
   }
 });
 
