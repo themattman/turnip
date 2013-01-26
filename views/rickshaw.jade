@@ -7,10 +7,12 @@ block append stylesheets
 block append content
   h1= title
   p Welcome to #{title}
-  #chart_container
-    #y_axis
-    #chart
-  #legend
+  #content
+    #side_panel
+      #legend
+    #chart_container
+      #chart
+      #slider
 
 block append scripts
   script(src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.1/d3.v3.min.js")

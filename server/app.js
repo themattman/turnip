@@ -10,15 +10,20 @@ var express   = require('express')
 config(app);
 
 
+// ---------------------------------------------------------- //
 // define API routes here
-app.get('/', router.index);
+// ---------------------------------------------------------- //
+// GET
+app.get('/',               router.index   );
+app.get('/rickshaw',       router.rickshaw);
+app.get('/db',             router.db      );
+app.get('/admin',          router.admin   );
+app.get('/admin/accounts', router.accounts);
+
+// POST
 app.post('/hook', router.hook);
-app.get('/rickshaw', router.rickshaw);
-
-
-
-app.get('/db', router.db);
-app.get('/admin', router.admin);
+// ---------------------------------------------------------- //
+// ---------------------------------------------------------- //
 
 
 // start the server
