@@ -14,7 +14,7 @@
       { 
         "name": "joyent",
         "repoName": "node",
-        "hackName": "Turnip",
+        "hackName": "Node.js",
         "members":
         [
           "nick"

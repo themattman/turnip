@@ -187,34 +187,46 @@ function addDataStream(userName, repoName, cb) {
   });
 }
 
-function iterateOverRepos() {
-  $.get('/github/accounts', function(d) {
-    console.log('github');
-    console.log(d);
-    d.accounts.forEach(function(p){
-      p.repos.forEach(function(r){
-        console.log('name: ', p.name ,'|repo:', r.name);
-        addDataStream(p.name, r.name, function(){
-          lock++;
-          if(lock == 3) {
-            setTimeout(function(){
-              createGraph(currentAccountData);
-              otherGraphStuff()
-            }, 2000);
-          } else if(lock > 3) {
-            pushNewDataPoints();
-            graph.update();
-          }
-        });
-      });
-    });
-  });
+function iterateOverRepos(repo_data) {
+  console.log('github');
+  console.log(repo_data);
+
+  for(var i in repo_data.accounts) {
+    // Push latest item onto array
+    graph.series[i].data.push(repo_data.accounts[i].commits[repo_data.accounts[i].commits.length-1]);
+  }
+  graph.update();
 }
 
-//setTimeout(
-setInterval(
-iterateOverRepos(), 1000);
+function updateGraph() {
+  $.get('/github/accounts', iterateOverRepos);
+}
 
+// Get data when page is first loaded
+// Use Socket.io on connect to push the correct data (most logic server-side)
+loadGraph();
+// Will change once socket.io is up and running
+setInterval(updateGraph(), 1000);
+
+
+// Server-side socket does the computation to find the delta
+// One x and y sent for each repo (with number of commits and the current unified unix timestamp)
+
+// Server-side computation
+// Hooks get the commit data
+////https://help.github.com/articles/post-receive-hooks
+// Process the object and throw the new x's and y's into DB (This will take logic)
+// Compare the latest? incoming timestamp (depends if they all have the same timestamp or just one per push)
+// Increment counter in DB for the y accordingly for the next timestamp
+
+// At set time intervals, blindly broadcast JSON deltas to all clients
+
+// Socket.io
+/*var socket = io.connect('http://localhost');
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+});*/
 
 
 

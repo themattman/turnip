@@ -7,16 +7,26 @@ block append content
     table
       tr
         td
+          a Name of Hack
+        td
+          input(type='text', name='title', style="margin:5px;")
+      tr
+        td
           a Github Username
         td
           input(type='text', name='title', style="margin:5px;")
       tr
+        td
+          a Repo Name
+        td
+          input(type='text', name='title', style="margin:5px;")
+      tr
         td      
-          a Repos
+          a Team Members
         td
           input(type='text', name='author', style="margin:5px;")
     button(type="submit", style="margin-top:10px;") submit
-  i(id="repos", class="icon-info-sign", style="position:fixed;left:15px;top:190px;", data-original-title="CSV plz", data-placement="top")
+  i(id="repos", class="icon-info-sign", style="position:fixed;left:15px;top:270px;", data-original-title="CSV plz", data-placement="top")
 
 
 block append scripts
