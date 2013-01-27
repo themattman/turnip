@@ -73,34 +73,13 @@ exports.pushIntoDatabase = function(data, cb){
 // ---------------------------------------------------------- //
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
-function getCommitData(curTime, cb) {
+exports.getLatestDelta = function (curTime, cb) {
   mongo.db.collection('graph_data', function(err, collection) {
     console.log('querying'.red);
-
-    // Don't forget to sort the results and take the top 10 teams
-    collection.find().sort({ 'numCommits': 1 }).limit(10).toArray(function(err, results) {
-
+    // Sort the results and take the top 10 teams
+    collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
       console.log('results'.red)
-      for(var i in results) {
-        console.log(results[i].name);
-        console.log(results[i].numCommits);
-        /*if(results[i]) {
-          console.log(results[i].name);
-        }*/
-      }
-
-
-      //cb(results);
-
+      cb(results);
     });
-  });
-}
-
-exports.getLatestDelta = function(curTime, cb) {
-  console.log('getLatestDelta', curTime);
-  getCommitData(curTime, function(r){
-    console.log('red'.red)
-    console.log(r.commits);
-    cb(r);
   });
 }
