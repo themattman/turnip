@@ -1,19 +1,31 @@
 var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
+window.graph_data  = [];
+window.leaderboard = [];
 
 function sanitizeDataPoints(serverUpdate){
-  var leaderboard = [];
   for(var i in serverUpdate){
     var team = {};
     team.repoName   = serverUpdate[i].repoName;
     team.numCommits = serverUpdate[i].numCommits;
-    leaderboard.push(team);
+
+    console.log({'numCommits': serverUpdate[i].numCommits, 'repoName': team.repoName} == window.leaderboard[0]);
+    console.log(window.leaderboard.indexOf({ 'repoName': team.repoName, 'numCommits': team.numCommits}));
+    if(window.leaderboard.indexOf({ 'repoName': team.repoName, 'numCommits': team.numCommits}) == -1){
+      console.log("WOOOT!!!!");
+      window.graph_data.push(serverUpdate[i]);
+      window.leaderboard.push(team);
+    }
+
+    serverUpdate[i].name = serverUpdate[i].repoName;
+    delete serverUpdate[i].repoName;
     delete serverUpdate[i].userName;
     delete serverUpdate[i].numCommits;
     delete serverUpdate[i]._id;
-    serverUpdate.color = palette.color();
+    serverUpdate[i].color = palette.color();
   }
-  console.log(leaderboard);
+  console.log(window.leaderboard);
   console.log(serverUpdate);
+
 }
 
 var socket = io.connect('http://localhost');
