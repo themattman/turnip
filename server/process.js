@@ -1,10 +1,25 @@
 var mongo       = require('./database.js')
-  , fs          = require('fs');
-  //, __timeDelta = require('./secret.js').constants.timeDelta;
+  , fs          = require('fs')
+  , __startTime = require('./secret.js').constants.startTime
+  , __timeDelta = require('./secret.js').constants.timeDelta;
 
 // ---------------------------------------------------------- //
 // Process data before DB insert
 // ---------------------------------------------------------- //
+function zeroOutUnusedDataPoints(rawCommitData, cb) {
+  var currentTime = new Date().getTime();
+  var numPointsToFill = (currentTime - __startTime) / __timeDelta);
+  var commits = [];
+  for(var i = 0; i < numPointsToFill; ++i) {
+    var ith_commit = {};
+    ith_commit.x = __startTime + i*__timeDelta;
+    ith_commit.y = 0;
+    commits.push(ith_commit);
+  }
+  console.log('commits Zerod'.yellow, i);
+  cb(commits);
+}
+
 //exports.pushIntoDatabase = function(data, cb){
 function meme(data){
   var record = {};
@@ -19,24 +34,25 @@ function meme(data){
     col.find({'repoName': repoName}).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
-      record = results[0];
       if(results.length < 1) {
 
         // Create a new record for this repo
-        record.repoName = repoName;
-        record.userName = data.repository.owner.name;
-        record.commits = [];
-        console.log('UNDEF'.magenta);
-        record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
-        console.log('record to insert'.green);
-        console.log(record);
-        col.insert(record, function(err, docs){
-          if(err){throw err;}
-          console.log('inserted a new repo/record'.magenta);
+        zeroOutUnusedDataPoints(data, function(c){
+          record.repoName = repoName;
+          record.userName = data.repository.owner.name;
+          record.commits = c;
+          record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
+          console.log('record to insert'.green);
+          //console.log(record);
+          col.insert(record, function(err, docs){
+            if(err){throw err;}
+            console.log('inserted a new repo/record'.magenta);
+          });
         });
       } else {
 
         // Append new data point to existing repo
+        record = results[0];
         var data_point = {};
         data_point.x = file.latest_timestamp;
         data_point.y = results[0].commits[results[0].commits.length-1].y
