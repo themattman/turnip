@@ -44,7 +44,7 @@ exports.pushIntoDatabase = function(data, cb){
           record.commits = c;
           record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
           console.log('record to insert'.green);
-          //console.log(record);
+          console.log('numCommits of this record'.blue, record.numCommits);
           col.insert(record, function(err, docs){
             if(err){throw err;}
             console.log('inserted a new repo/record'.magenta);
