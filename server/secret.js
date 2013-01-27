@@ -28,5 +28,8 @@ module.exports = Object.freeze({
   admin: {
     user: "user",
     pass: "pass"
+  },
+  constants: {
+    timeDelta: 15
   }
 });

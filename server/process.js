@@ -1,5 +1,6 @@
-var mongo = require('./database.js')
-  , fs    = require('fs');
+var mongo       = require('./database.js')
+  , fs          = require('fs');
+  //, __timeDelta = require('./secret.js').constants.timeDelta;
 
 // ---------------------------------------------------------- //
 // Process data before DB insert
@@ -16,15 +17,16 @@ function meme(data){
   var repoName = data.repository.name;
   console.log('repoName =', repoName);
   mongo.db.collection("graph_data", function(err, col){
-    col.findOne({'accounts.name': repoName}).toArray(function(err, results){
+    col.find({'repoName': repoName}).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
-      record.repoName = repoName;
-      record.userName = data.repository.owner.name;
+      record = results[0];
       if(results.length < 1) {
-        console.log('UNDEF'.magenta);
+        record.repoName = repoName;
+        record.userName = data.repository.owner.name;
         record.commits = [];
-        records.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
+        console.log('UNDEF'.magenta);
+        record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
         console.log('record to insert'.green);
         console.log(record);
         // Create an entry
@@ -33,11 +35,17 @@ function meme(data){
           console.log('inserted a new repo/record'.magenta);
         });
       } else {
-        record
-        col.update(record, function(err, docs){
+        var data_point = {};
+        data_point.x = file.latest_timestamp;
+        data_point.y = results[0].commits[results[0].commits.length-1].y
+        data_point.y += data.commits.length;
+        record.commits.push(data_point);
+        console.log('record'.zebra);
+        console.log(record);
+        /*col.update(record, function(err, docs){
           if(err){throw err;}
           console.log('updated a record'.blue);
-        });
+        });*/
       }
     });
   });
