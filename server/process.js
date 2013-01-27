@@ -20,14 +20,14 @@ function zeroOutUnusedDataPoints(cb) {
   cb(commits);
 }
 
-exports.pushIntoDatabase = function(data, cb){
+exports.pushIntoDatabase = function(d, cb){
   var record = {};
   console.log('pushIntoDatabase'.magenta);
-  console.log(data);
+  console.log(d);
   var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
   console.log('file'.cyan, file.latest_timestamp);
 
-  var repoName = data.repository.name;
+  var repoName = d.repository.name;
   console.log('repoName =', repoName);
 
   mongo.db.collection('graph_data', function(err, col){
@@ -39,10 +39,10 @@ exports.pushIntoDatabase = function(data, cb){
         // Create a new record for this repo
         zeroOutUnusedDataPoints(function(c){
           record.repoName = repoName;
-          record.userName = data.repository.owner.name;
-          record.numCommits = data.commits.length;
+          record.userName = d.repository.owner.name;
+          record.numCommits = d.data.length;
           record.data = c;
-          record.data.push({'x': file.latest_timestamp, 'y': data.commits.length});
+          record.data.push({'x': file.latest_timestamp, 'y': d.data.length});
           console.log('record to insert'.green);
           console.log('numCommits of this record'.blue, record.numCommits);
           col.insert(record, function(err, docs){
@@ -57,7 +57,7 @@ exports.pushIntoDatabase = function(data, cb){
         var data_point = {};
         data_point.x = file.latest_timestamp;
         data_point.y = results[0].commits[results[0].commits.length-1].y
-        data_point.y += data.commits.length;
+        data_point.y += d.data.length;
         console.log('record'.zebra);
         console.log(data_point);
         col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } , $push: { 'data': data_point } }, function(err, docs){
