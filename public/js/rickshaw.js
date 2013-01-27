@@ -63,10 +63,7 @@ function parseDate(jsonDate, debug) {
 
 var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 
-
 var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 } ];
-
-
 var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } ];
 var item2 =  {
     name: "data2",
@@ -158,16 +155,7 @@ function updateGraph() {
 // Issue Github API requests every x seconds and check if latest commit timestamp > mostRecentTimeStamp
 var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in setInterval
 
-
-var currentAccountData = [];
-
-var lock = 0;
-
-function pushNewDataPoints() {
-
-}
-
-function addDataStream(userName, repoName, cb) {  
+/*function addDataStream(userName, repoName, cb) {  
   $.get('https://api.github.com/repos/' + userName + '/' + repoName + '/commits', function(d) {
     var pusher = {};
     pusher.color = palette.color();
@@ -202,7 +190,7 @@ function iterateOverRepos(repo_data) {
     graph.series[i].data.push(repo_data.accounts[i].commits[repo_data.accounts[i].commits.length-1]);
   }
   graph.update();
-}
+}*/
 
 /*function updateGraph() {
   $.get('/github/accounts', iterateOverRepos);
