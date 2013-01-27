@@ -108,9 +108,9 @@ function otherGraphStuff() {
     legend: legend
   });
 
-  var time = new Rickshaw.Fixtures.Time();
-  var seconds = time.unit('second');
-  console.log(seconds);
+  var time = new Rickshaw.Fixtures.Time({ graph: graph });
+  //var seconds = time.unit('second');
+  //console.log(seconds);
 
   /*var xAxis = new Rickshaw.Graph.Axis.X({ 
     graph: graph,
