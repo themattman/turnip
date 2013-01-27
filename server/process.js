@@ -4,14 +4,48 @@ var mongo = require('./database.js')
 // ---------------------------------------------------------- //
 // Process data before DB insert
 // ---------------------------------------------------------- //
-//exports.pushIntoDatabase = function(data){
+//exports.pushIntoDatabase = function(data, cb){
 function meme(data){
+  var record = {};
+  console.log('meme'.magenta);
   console.log(data);
   var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
   console.log('file'.cyan);
   console.log(file.latest_timestamp);
-  //var commits_in_push = data.payload.commits.length;
-  //mongo.db.collection("commits", function(err, col){});
+  //var commits_in_push = data.commits.length;
+  var repoName = data.repository.name;
+  console.log('repoName =', repoName);
+  mongo.db.collection("graph_data", function(err, col){
+    col.findOne({'accounts.name': repoName}).toArray(function(err, results){
+      console.log('RESULTS');
+      console.log(results);
+      record.repoName = repoName;
+      record.userName = data.repository.owner.name;
+      if(results.length < 1) {
+        console.log('UNDEF'.magenta);
+        record.commits = [];
+        records.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
+        console.log('record to insert'.green);
+        console.log(record);
+        // Create an entry
+        col.insert(record, function(err, docs){
+          if(err){throw err;}
+          console.log('inserted a new repo/record'.magenta);
+        });
+      } else {
+        record
+        col.update(record, function(err, docs){
+          if(err){throw err;}
+          console.log('updated a record'.blue);
+        });
+      }
+    });
+  });
+    /*col.insert(record, function(err, docs){
+      if(err) throw err
+      //cb(record);
+    });
+  });*/
 }
 
 
@@ -19,8 +53,13 @@ function meme(data){
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
 function getCommitData(curTime, cb) {
-  meme(curTime);
-  var data = "t";
+  mongo.db.collection("commits", function(err, col){
+    col.find({commits: { $exists: true } }).toArray(function(err, results){
+      console.log('SECONDS'.yellow);
+      console.log(results[0]);
+      meme(results[0]);
+    });
+  });
   //console.log(mongo);
   //mongo.db.collectionNames(function(err, collections) {
   mongo.db.collection("commits", function(err, collection) {

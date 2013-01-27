@@ -2,7 +2,8 @@ var mongo     = require("./database.js")
 	, email     = require("./email.js")
 	, colors    = require('colors')
 	, collection
-	, fs        = require('fs');
+	, fs        = require('fs')
+	, process   = require('./process.js');
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -44,9 +45,11 @@ exports.hook = function(req, res) {
 	console.log('INSERT');
 	console.log(req.body.payload);
 	var data = JSON.parse(req.body.payload);
-	collection.insert(data, function(err, docs){
-		if(err) throw err
-		res.send(docs);
+	process.pushIntoDatabase(data, function(record){
+		collection.insert(record, function(err, docs){
+			if(err) throw err
+			res.send(docs);
+		});
 	});
 };
 
