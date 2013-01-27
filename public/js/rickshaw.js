@@ -204,9 +204,10 @@ function updateGraph() {
 
 // Get data when page is first loaded
 // Use Socket.io on connect to push the correct data (most logic server-side)
-loadGraph();
+//loadGraph();
 // Will change once socket.io is up and running
-setInterval(updateGraph(), 1000);
+//setInterval(updateGraph(), 1000);
+//addDataStream('joyent', 'node');
 
 
 // Server-side socket does the computation to find the delta
@@ -230,6 +231,13 @@ setInterval(updateGraph(), 1000);
 
 
 
+//$.get('https://api.github.com/repos/joyent/node/commits', function(d) {
+$.get('/github/accounts', function(d) {
+        /*d.forEach(function(com){
+                console.log(com.commit.committer.date);
+        })*/
+        console.log(d)
+});
 
 
 /*$.get('https://api.github.com/repos/joyent/node/commits', function(d) {

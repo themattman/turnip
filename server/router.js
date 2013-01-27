@@ -38,6 +38,7 @@ exports.githubjson  = function(req, res) {
 };
 
 exports.hook = function(req, res) {
+	console.log('GOT A HOOK'.cyan);
 	var data = JSON.parse(req.params.payload);
 	collection.insert(data, function(err, docs){
 		if(err) throw err
