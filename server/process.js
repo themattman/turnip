@@ -73,15 +73,12 @@ exports.pushIntoDatabase = function(data, cb){
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
 function getCommitData(curTime, cb) {
-  //console.log(mongo);
-  //mongo.db.collectionNames(function(err, collections) {
-  mongo.db.collection("commits", function(err, collection) {
+  mongo.db.collection('graph_data', function(err, collection) {
     console.log('querying'.red);
-    //console.log(collection);
+
+    // Don't forget to sort the results and take the top 10 teams
     collection.find().toArray(function(err, results) {
-      //var ite = JSON.parse(results[0]);
-      //console.log(ite);
-      //console.log(typeof(results[0].payload));
+
       console.log('results'.red)
       console.log(results)
       //console.log(results[0].payload);
@@ -95,7 +92,6 @@ function getCommitData(curTime, cb) {
 
       //cb(results);
 
-      //cb(results[0].payload);
     });
   });
 }
