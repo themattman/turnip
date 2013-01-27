@@ -6,7 +6,7 @@ var mongo       = require('./database.js')
 // ---------------------------------------------------------- //
 // Process data before DB insert
 // ---------------------------------------------------------- //
-function zeroOutUnusedDataPoints(rawCommitData, cb) {
+function zeroOutUnusedDataPoints(cb) {
   var currentTime = new Date().getTime();
   var numPointsToFill = (currentTime - __startTime) / __timeDelta);
   var commits = [];
@@ -20,24 +20,24 @@ function zeroOutUnusedDataPoints(rawCommitData, cb) {
   cb(commits);
 }
 
-//exports.pushIntoDatabase = function(data, cb){
-function meme(data){
+exports.pushIntoDatabase = function(data, cb){
   var record = {};
-  console.log('meme'.magenta);
+  console.log('pushIntoDatabase'.magenta);
   console.log(data);
   var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
-  console.log('file'.cyan);
-  console.log(file.latest_timestamp);
+  console.log('file'.cyan, file.latest_timestamp);
+
   var repoName = data.repository.name;
   console.log('repoName =', repoName);
-  mongo.db.collection("graph_data", function(err, col){
+
+  mongo.db.collection('graph_data', function(err, col){
     col.find({'repoName': repoName}).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
       if(results.length < 1) {
 
         // Create a new record for this repo
-        zeroOutUnusedDataPoints(data, function(c){
+        zeroOutUnusedDataPoints(function(c){
           record.repoName = repoName;
           record.userName = data.repository.owner.name;
           record.commits = c;
@@ -73,13 +73,6 @@ function meme(data){
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
 function getCommitData(curTime, cb) {
-  mongo.db.collection("commits", function(err, col){
-    col.find({commits: { $exists: true } }).toArray(function(err, results){
-      console.log('SECONDS'.yellow);
-      console.log(results[0]);
-      meme(results[0]);
-    });
-  });
   //console.log(mongo);
   //mongo.db.collectionNames(function(err, collections) {
   mongo.db.collection("commits", function(err, collection) {
