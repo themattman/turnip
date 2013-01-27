@@ -41,8 +41,8 @@ exports.pushIntoDatabase = function(data, cb){
           record.repoName = repoName;
           record.userName = data.repository.owner.name;
           record.numCommits = data.commits.length;
-          record.commits = c;
-          record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
+          record.data = c;
+          record.data.push({'x': file.latest_timestamp, 'y': data.commits.length});
           console.log('record to insert'.green);
           console.log('numCommits of this record'.blue, record.numCommits);
           col.insert(record, function(err, docs){
@@ -60,7 +60,7 @@ exports.pushIntoDatabase = function(data, cb){
         data_point.y += data.commits.length;
         console.log('record'.zebra);
         console.log(data_point);
-        col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } , $push: { 'commits': data_point } }, function(err, docs){
+        col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } , $push: { 'data': data_point } }, function(err, docs){
           if(err){throw err;}
           console.log('updated a record'.blue);
         });
