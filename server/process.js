@@ -8,7 +8,7 @@ var mongo       = require('./database.js')
 // ---------------------------------------------------------- //
 function zeroOutUnusedDataPoints(cb) {
   var currentTime = new Date().getTime();
-  var numPointsToFill = (currentTime - __startTime) / __timeDelta);
+  var numPointsToFill = (currentTime - __startTime) / __timeDelta;
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
     var ith_commit = {};
