@@ -5,6 +5,7 @@ block append stylesheets
   link(type="text/css", rel="stylesheet", href="/css/rickshaw.min.css")
 
 block append content
+  #jitsu(style="display: hidden") #{host.host}
   h1= title
   p Welcome to #{title}
   #content
@@ -13,6 +14,20 @@ block append content
       #chart
       #slider
       #legend(style="background-color:#808080")
+    h2(id="ldrbrd") Leaderboard
+    p By number of commits
+    table.table.table-striped(id="leaders")
+      tr
+        thead
+          tr
+            td #
+            td repoName
+            td userName
+        tbody(id="leaders_tbody")
+        tr
+            td 1
+            td turnip
+            td themattman
 
 block append scripts
   script(src="/socket.io/socket.io.js")

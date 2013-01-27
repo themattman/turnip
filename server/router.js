@@ -3,7 +3,8 @@ var mongo     = require("./database.js")
 	, colors    = require('colors')
 	, collection
 	, fs        = require('fs')
-	, process   = require('./process.js');
+	, process   = require('./process.js')
+	, conf      = require('../.jitsuconf');
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -51,5 +52,6 @@ exports.index = function(req, res){
 
 // graph page
 exports.rickshaw = function(req, res){
-  res.render('rickshaw', { title: "Rickshaw" });
+	console.log('conf='.magenta, conf);
+  res.render('rickshaw', { title: "Rickshaw", host: conf });
 };

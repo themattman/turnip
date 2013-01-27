@@ -33,8 +33,18 @@ function sanitizeDataPoints(serverUpdate){
   }
 }
 
-var socket = io.connect('http://localhost');
+var socket = io.connect('/');
 socket.on('update', function(d){
   sanitizeDataPoints(d);
   socket.emit('ACK');
 });
+
+function updateLeaderboard() {
+  for(var i in window.leaderboard){
+    var new_row = document.createElement('tr');
+    var td0 = document.createElement('td');
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+    td0.innerHTML(window.leaderboard[i]);
+  }
+}

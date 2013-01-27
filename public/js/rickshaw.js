@@ -65,10 +65,15 @@ var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 
 var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 } ];
 var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } ];
+var item1 =  {
+    name: "data1",
+    color: palette.color(),
+    data: data2.reverse()
+  };
 var item2 =  {
     name: "data2",
     color: palette.color(),
-    data: data1
+    data: data2
   };
 
 var graph;
@@ -81,7 +86,7 @@ function createGraph() {
     height: 250,
     renderer: 'area',
     stroke: true,
-    series:  window.graph_data//seriesData 
+    series:  [ item2, item1 ]//window.graph_data//seriesData 
   });
   console.log('graph before render');
   console.log(graph.series);
@@ -108,7 +113,18 @@ function otherGraphStuff() {
     legend: legend
   });
 
-  var time = new Rickshaw.Fixtures.Time({ graph: graph });
+  var time = new Rickshaw.Fixtures.Time();
+  var hours = time.unit('hour');
+  console.log('hours');
+  console.log(hours);
+  var xAxis = new Rickshaw.Graph.Axis.Time({
+      graph: graph,
+      timeUnit: hours
+  });
+
+  xAxis.render();
+
+  //var time = new Rickshaw.Fixtures.Time({ graph: graph });
   //var seconds = time.unit('second');
   //console.log(seconds);
 
@@ -116,11 +132,14 @@ function otherGraphStuff() {
     graph: graph,
     TimeUnit: seconds 
   });
-
-  //var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
-  //x_axis.render();
-
   xAxis.render();*/
+
+  /*var x_axis = new Rickshaw.Graph.Axis.X({
+    element: document.querySelector('#chart'),
+    graph: graph,
+    pixelsPerTick: 50
+  });
+  x_axis.render();*/
 
   var yAxis = new Rickshaw.Graph.Axis.Y({
     graph: graph,
@@ -133,7 +152,7 @@ function otherGraphStuff() {
 
 function updateGraph() {
   console.log('graph.update()');
-  graph.update();
+  //graph.update();
 }
 
 //graph.render();

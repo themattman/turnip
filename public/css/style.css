@@ -34,3 +34,7 @@ a:hover {
 #side_panel {
   display: inline-block;
 }
+#leaders,
+#ldrbrd {
+  margin-top: 30px;
+}
