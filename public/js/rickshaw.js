@@ -76,20 +76,20 @@ var item2 =  {
 
 var graph;
 
-function createGraph(seriesData) {
+function createGraph() {
   console.log('creating');
-  console.log(seriesData);
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
     width: 800,
     height: 250,
     renderer: 'area',
     stroke: true,
-    series:  seriesData 
+    series:  window.graph_data//seriesData 
   });
   console.log('graph before render');
-  console.log(graph.series[0]);
+  console.log(graph.series);
   graph.render();
+  otherGraphStuff();
 }
 
 function otherGraphStuff() {  
@@ -113,26 +113,32 @@ function otherGraphStuff() {
 
   var time = new Rickshaw.Fixtures.Time();
   var seconds = time.unit('second');
-  //console.log(time);
-  console.log('TIIIME');
   console.log(seconds);
 
   var xAxis = new Rickshaw.Graph.Axis.X({ 
     graph: graph,
     TimeUnit: seconds 
   });
+
   //var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
   //x_axis.render();
+
   xAxis.render();
 
   var yAxis = new Rickshaw.Graph.Axis.Y({
     graph: graph,
     orientation: 'left',
-    //tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
     element: document.getElementById('y_axis'),
   });
   yAxis.render();
 }
+
+function updateGraph() {
+  console.log('graph.update()');
+  graph.update();
+}
+
 //graph.render();
 
 
@@ -198,9 +204,9 @@ function iterateOverRepos(repo_data) {
   graph.update();
 }
 
-function updateGraph() {
+/*function updateGraph() {
   $.get('/github/accounts', iterateOverRepos);
-}
+}*/
 
 // Get data when page is first loaded
 // Use Socket.io on connect to push the correct data (most logic server-side)
