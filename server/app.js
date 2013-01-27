@@ -46,5 +46,5 @@ io.sockets.on('connection', function(socket){
         socket.on('ACK', function(){console.log('ACK received!')});
       });
     });
-  }, 2000);
+  }, 10000);
 });

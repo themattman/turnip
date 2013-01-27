@@ -112,7 +112,7 @@ function otherGraphStuff() {
   var seconds = time.unit('second');
   console.log(seconds);
 
-  var xAxis = new Rickshaw.Graph.Axis.X({ 
+  /*var xAxis = new Rickshaw.Graph.Axis.X({ 
     graph: graph,
     TimeUnit: seconds 
   });
@@ -120,7 +120,7 @@ function otherGraphStuff() {
   //var x_axis = new Rickshaw.Graph.Axis.X( { graph: graph } );
   //x_axis.render();
 
-  xAxis.render();
+  xAxis.render();*/
 
   var yAxis = new Rickshaw.Graph.Axis.Y({
     graph: graph,

@@ -9,7 +9,7 @@ function sanitizeDataPoints(serverUpdate){
     team.repoName   = serverUpdate[i].repoName;
     team.numCommits = serverUpdate[i].numCommits;
 
-    if(serverUpdate[i].numCommits > 2) {
+    if(serverUpdate[i].numCommits > 5) {
     //if(graph_created == 0) {
       console.log("ADDED");
       window.graph_data.push(serverUpdate[i]);
