@@ -1,4 +1,4 @@
-module.exports = Object.freeze({
+/*module.exports = Object.freeze({
 	db: {
 		user:"turnip",
 		pass:"mattotto",
@@ -14,4 +14,19 @@ module.exports = Object.freeze({
     	user: "user",
     	pass: "pass"
     }
+});*/
+
+module.exports = Object.freeze({
+  db: {
+    user:"turnip",
+    pass:"mattotto",
+    url: "linus.mongohq.com",
+    port: 10074,
+    name: "turnip"
+  }, 
+  //email: {},
+  admin: {
+    user: "user",
+    pass: "pass"
+  }
 });

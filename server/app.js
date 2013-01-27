@@ -38,7 +38,7 @@ var io = require('socket.io').listen(httpApp);
 io.sockets.on('connection', function(socket){
   console.log('SOCKETS ON connection'.green);
   socket.emit('news', { hello: "world" });
-  setInterval(function(){
+  //setInterval(function(){
     var currentTime = new Date().getTime();
     console.log(currentTime);
     require('./process.js').getLatestDelta(currentTime, function(latestDelta){
@@ -46,5 +46,5 @@ io.sockets.on('connection', function(socket){
       console.log(latestDelta);
       socket.broadcast.emit('update', latestDelta);
     });
-  }, 2000);
+  //}, 2000);
 });

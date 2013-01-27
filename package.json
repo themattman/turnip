@@ -13,5 +13,9 @@
     "mongodb": "*",
     "nodemailer": "*",
     "socket.io": "*"
+  },
+  "subdomain": "themattmans.turnip",
+  "engines": {
+    "node": "0.8.x"
   }
 }

@@ -1,11 +1,23 @@
-var mongo = require('./database.js');
+var mongo = require('./database.js')
+  , fs    = require('fs');
 
 // ---------------------------------------------------------- //
 // Process data before DB insert
 // ---------------------------------------------------------- //
-exports.pushIntoDatabase = function(data){
+//exports.pushIntoDatabase = function(data){
+function meme(data){
   console.log(data);
+  var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
+  console.log('file'.cyan);
+  console.log(file.latest_timestamp);
+  var commits_in_push = 0;
+  /*for(var i in data){
+    var commit_time = data.payload.commits[i].timestamp;
+    if(commit_time > file.latest_timestamp) {
 
+    }
+  }*/
+  //mongo.db.collection("commits", function(err, col){});
 }
 
 
@@ -13,15 +25,20 @@ exports.pushIntoDatabase = function(data){
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
 function getCommitData(curTime, cb) {
+  meme(curTime);
   var data = "t";
-  console.log(mongo);
+  //console.log(mongo);
   //mongo.db.collectionNames(function(err, collections) {
   mongo.db.collection("commits", function(err, collection) {
     console.log('querying'.red);
-    console.log(collection);
+    //console.log(collection);
     collection.find().toArray(function(err, results) {
+      //var ite = JSON.parse(results[0]);
+      //console.log(ite);
+      //console.log(typeof(results[0].payload));
       console.log('results'.red)
-      console.log(results[0].payload);
+      console.log(results)
+      //console.log(results[0].payload);
       /*for(var i in results) {
         console.log(results[i].payload);
         /*if(results[i].payload.repository != 'undefined') {
@@ -31,8 +48,8 @@ function getCommitData(curTime, cb) {
 
 
       //cb(results);
-      
-      cb(results[0].payload);
+
+      //cb(results[0].payload);
     });
   });
 }
@@ -40,6 +57,8 @@ function getCommitData(curTime, cb) {
 exports.getLatestDelta = function(curTime, cb) {
   console.log('getLatestDelta', curTime);
   getCommitData(curTime, function(r){
+    console.log('red'.red)
+    console.log(r.commits);
     cb(r);
   });
 }
