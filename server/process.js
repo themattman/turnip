@@ -11,12 +11,6 @@ function meme(data){
   console.log('file'.cyan);
   console.log(file.latest_timestamp);
   var commits_in_push = 0;
-  /*for(var i in data){
-    var commit_time = data.payload.commits[i].timestamp;
-    if(commit_time > file.latest_timestamp) {
-
-    }
-  }*/
   //mongo.db.collection("commits", function(err, col){});
 }
 
