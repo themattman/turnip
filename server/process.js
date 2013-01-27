@@ -10,7 +10,7 @@ function meme(data){
   var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
   console.log('file'.cyan);
   console.log(file.latest_timestamp);
-  var commits_in_push = 0;
+  //var commits_in_push = data.payload.commits.length;
   //mongo.db.collection("commits", function(err, col){});
 }
 
