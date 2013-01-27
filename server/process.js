@@ -31,7 +31,7 @@ exports.pushIntoDatabase = function(data, cb){
   console.log('repoName =', repoName);
 
   mongo.db.collection('graph_data', function(err, col){
-    col.find({'repoName': repoName}).toArray(function(err, results){
+    col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
       if(results.length < 1) {
@@ -40,6 +40,7 @@ exports.pushIntoDatabase = function(data, cb){
         zeroOutUnusedDataPoints(function(c){
           record.repoName = repoName;
           record.userName = data.repository.owner.name;
+          record.numCommits = data.commits.length;
           record.commits = c;
           record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
           console.log('record to insert'.green);
@@ -59,7 +60,7 @@ exports.pushIntoDatabase = function(data, cb){
         data_point.y += data.commits.length;
         console.log('record'.zebra);
         console.log(data_point);
-        col.update({'repoName': record.repoName}, { $push: { 'commits': data_point } }, function(err, docs){
+        col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } , $push: { 'commits': data_point } }, function(err, docs){
           if(err){throw err;}
           console.log('updated a record'.blue);
         });
@@ -77,17 +78,16 @@ function getCommitData(curTime, cb) {
     console.log('querying'.red);
 
     // Don't forget to sort the results and take the top 10 teams
-    collection.find().toArray(function(err, results) {
+    collection.find().sort({ 'numCommits': 1 }).limit(10).toArray(function(err, results) {
 
       console.log('results'.red)
-      console.log(results)
-      //console.log(results[0].payload);
-      /*for(var i in results) {
-        console.log(results[i].payload);
-        /*if(results[i].payload.repository != 'undefined') {
-          console.log(results[i].payload.repository.name);
-        }
-      }*/
+      for(var i in results) {
+        console.log(results[i].name);
+        console.log(results[i].numCommits);
+        /*if(results[i]) {
+          console.log(results[i].name);
+        }*/
+      }
 
 
       //cb(results);

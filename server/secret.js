@@ -30,7 +30,7 @@ module.exports = Object.freeze({
     pass: "pass"
   },
   constants: {
-    timeDelta: 60000, //in milli-seconds
+    timeDelta: 240000, //in milli-seconds
     startTime: 1359259204465
   }
 });
