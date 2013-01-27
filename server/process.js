@@ -13,7 +13,6 @@ function meme(data){
   var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
   console.log('file'.cyan);
   console.log(file.latest_timestamp);
-  //var commits_in_push = data.commits.length;
   var repoName = data.repository.name;
   console.log('repoName =', repoName);
   mongo.db.collection("graph_data", function(err, col){
@@ -22,6 +21,8 @@ function meme(data){
       console.log(results);
       record = results[0];
       if(results.length < 1) {
+
+        // Create a new record for this repo
         record.repoName = repoName;
         record.userName = data.repository.owner.name;
         record.commits = [];
@@ -29,31 +30,26 @@ function meme(data){
         record.commits.push({'x': file.latest_timestamp, 'y': data.commits.length});
         console.log('record to insert'.green);
         console.log(record);
-        // Create an entry
         col.insert(record, function(err, docs){
           if(err){throw err;}
           console.log('inserted a new repo/record'.magenta);
         });
       } else {
+
+        // Append new data point to existing repo
         var data_point = {};
         data_point.x = file.latest_timestamp;
         data_point.y = results[0].commits[results[0].commits.length-1].y
         data_point.y += data.commits.length;
-        record.commits.push(data_point);
         console.log('record'.zebra);
-        console.log(record);
-        /*col.update(record, function(err, docs){
+        console.log(data_point);
+        col.update({'repoName': record.repoName}, { $push: { 'commits': data_point } }, function(err, docs){
           if(err){throw err;}
           console.log('updated a record'.blue);
-        });*/
+        });
       }
     });
   });
-    /*col.insert(record, function(err, docs){
-      if(err) throw err
-      //cb(record);
-    });
-  });*/
 }
 
 
