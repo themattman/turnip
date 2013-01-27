@@ -232,11 +232,3 @@ $.get('/github/accounts', function(d) {
         })*/
         console.log(d)
 });
-
-
-/*$.get('https://api.github.com/repos/joyent/node/commits', function(d) {
-        d.forEach(function(com){
-                console.log(com.commit.committer.date);
-        })
-        console.log(d)
-})*/
