@@ -5,24 +5,40 @@ var graph_created = 0;
 
 function sanitizeDataPoints(serverUpdate){
   for(var i in serverUpdate){
-    var team = {};
-    team.repoName   = serverUpdate[i].repoName;
-    team.userName   = serverUpdate[i].userName;
-    team.numCommits = serverUpdate[i].numCommits;
+    if(window.leaderboard.length > 0){
+      var curName = serverUpdate[i].repoName
+      var notOnList = true;
+      for(var j in leaderboard){
+        if(serverUpdate[i] == window.leaderboard){
+          notOnList = false;
+        }
+      }
+      if(notOnList){
+        for(var k = 10; k < window.leaderboard.length; k++){
+          delete window.leaderboard[k];
+        }
+        updateLeaderboard(serverUpdate[i], i);
+      }
+    } else {
+      var team = {};
+      team.repoName   = serverUpdate[i].repoName;
+      team.userName   = serverUpdate[i].userName;
+      team.numCommits = serverUpdate[i].numCommits;
 
-    if(serverUpdate[i].numCommits > 5) {
-    //if(graph_created == 0) {
-      console.log("ADDED");
-      window.graph_data.push(serverUpdate[i]);
-      window.leaderboard.push(team);
+      if(serverUpdate[i].numCommits > 5) {
+      //if(graph_created == 0) {
+        console.log("ADDED");
+        window.graph_data.push(serverUpdate[i]);
+        window.leaderboard.push(team);
+      }
+
+      serverUpdate[i].name = serverUpdate[i].repoName;
+      delete serverUpdate[i].repoName;
+      delete serverUpdate[i].userName;
+      delete serverUpdate[i].numCommits;
+      delete serverUpdate[i]._id;
+      serverUpdate[i].color = palette.color();
     }
-
-    serverUpdate[i].name = serverUpdate[i].repoName;
-    delete serverUpdate[i].repoName;
-    delete serverUpdate[i].userName;
-    delete serverUpdate[i].numCommits;
-    delete serverUpdate[i]._id;
-    serverUpdate[i].color = palette.color();
   }
   console.log(window.leaderboard);
   console.log(window.graph_data);
@@ -44,7 +60,7 @@ socket.on('update', function(d){
 });
 
 
-function updateLeaderboard(c) {
+function updateLeaderboard(c, indexToInsert) {
   console.log(c);
   console.log('window.leaderboard');
   for(var i in c){
@@ -64,6 +80,11 @@ function updateLeaderboard(c) {
     new_row.appendChild(td3);
     console.log('new_rw');
     console.log(new_row);
-    document.getElementById('leaders_tbody').appendChild(new_row);
+    if(indexToInsert){
+      var child = '#leaders_tbody tr:eq(' + indexToInsert + ')';
+      $('#leaders_tbody').insertBefore(new_row, $(child));
+    }else{
+      document.getElementById('leaders_tbody').appendChild(new_row);
+    }
   }
 }
