@@ -51,5 +51,5 @@ exports.index = function(req, res){
 
 // graph page
 exports.rickshaw = function(req, res){
-  res.render('rickshaw', { title: "Rickshaw" });
+  res.render('rickshaw', { title: 'Turnip' });
 };

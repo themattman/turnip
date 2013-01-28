@@ -13,7 +13,7 @@ a:hover {
 }
 #chart_container {
   position: relative;
-  display: inline-block;
+  display: block;
   font-family: Arial, Helvetica, sans-serif;
 }
 #chart {
@@ -30,23 +30,37 @@ a:hover {
   display: inline-block;
   vertical-align: top;
   margin: 0 0 0 10px;
+  background-color: #808080;
 }
 #side_panel {
   display: inline-block;
 }
 #leaders,
-#ldrbrd {
+.noun {
   margin-top: 30px;
 }
 #leaders {
-  width: 400px;
+  width: 450px;
   text-align: center;
 }
 #leader_container {
   max-height: 418px;
-  /*overflow: hidden;*/
-
+  overflow: hidden;
+  float: left;
+  display: inline-block;
 }
 #leaders_tbody tr td {
   text-align: center;
+}
+#commit_feed_container {
+  float: right;
+  display: inline-block;
+}
+#turnip_pic {
+  position: absolute;
+  top: 45px;
+  left: 0px;
+}
+.inline {
+  margin-left: 10px;
 }

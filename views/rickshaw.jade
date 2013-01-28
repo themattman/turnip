@@ -5,17 +5,19 @@ block append stylesheets
   link(type="text/css", rel="stylesheet", href="/css/rickshaw.min.css")
 
 block append content
-  h1= title
-  p Welcome to #{title}
+  .inline
+    h1= title
+    p Welcome to #{title}
+    img(id="turnip_pic", src="/img/turnip.jpg")
   #content
-    #chart_container
+    #chart_container(style="display: block;")
       #y_axis
       #chart
       #slider
-      #legend(style="background-color:#808080")
-    h2(id="ldrbrd") Leaderboard
-    p By number of commits
+      #legend
     #leader_container
+      h2(class="noun") Leaderboard
+      p By number of commits
       table.table.table-striped(id="leaders")
         thead(style="font-weight: bold;")
           tr
@@ -24,6 +26,10 @@ block append content
             td Username
             td # of Commits
         tbody(id="leaders_tbody")
+    #commit_feed_container
+      h2(class="noun") Latest Commit Messages
+      table.table.table-bordered
+        tbody
 
 block append scripts
   script(src="/socket.io/socket.io.js")
