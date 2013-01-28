@@ -8,6 +8,10 @@ html
     block stylesheets
 
   body
+    .inline
+      h1= title
+      p Welcome to #{title}
+      img(id="turnip_pic", src="/img/turnip.jpg")
     block content
 
   script(src="/js/jquery-1.8.3.min.js")
