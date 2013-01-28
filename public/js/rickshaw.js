@@ -114,7 +114,11 @@ function otherGraphStuff() {
   var hoverDetail = new Rickshaw.Graph.HoverDetail({
     graph: graph,
     //xFormatter: function(x) { return x + "seconds" }
-    //yFormatter: function(y) { return Math.floor(y) + " percent" }
+    yFormatter: function(y) { 
+      var before_s = Math.floor(y) + " commit";
+      before_s += (Math.floor(y) == 1) ? "" : "s";
+      return before_s;
+    }
   });
 
   /*var time = new Rickshaw.Fixtures.Time();

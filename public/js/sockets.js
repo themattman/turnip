@@ -6,15 +6,24 @@ function updatePageData(serverUpdate) {
   // Construct new hidden table body
   // Fadeout the old and in the new
   // Delete the old leaderboard
+
+  // ---------------------------------------------------------- //
+  // Update Graph
+  // ---------------------------------------------------------- //
+  window.graph_data = serverUpdate;
+  //updateGraph();
+
+  // ---------------------------------------------------------- //
+  // Update Leaderboard
+  // ---------------------------------------------------------- //
   var fresh_tbody = document.createElement('tbody');
-  updateLeaderboard(serverUpdate, fresh_tbody);
-  $('#leaders_tbody').fadeOut('fast', function(){
+  fresh_tbody = updateLeaderboard(serverUpdate, fresh_tbody);
+  //$('#leaders_tbody').fadeOut('fast', function(){
+    document.getElementById('leaders').appendChild(fresh_tbody);
+    $('#leaders_tbody').remove();
     $(fresh_tbody).fadeIn('fast');
     fresh_tbody.setAttribute("id", "leaders_tbody");
-
-    // Need to update graph data
-    updateGraph();
-  });
+  //});
 }
 
 function sanitizeDataPoints(serverUpdate){
@@ -68,5 +77,8 @@ function updateLeaderboard(c, tbody_handle) {
     new_row.appendChild(td2);
     new_row.appendChild(td3);
     tbody_handle.appendChild(new_row);
+    return tbody_handle;
+    //console.log('tbody_handle');
+    //console.log(tbody_handle);
   }
 }
