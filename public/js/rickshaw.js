@@ -86,7 +86,7 @@ function createGraph() {
     height: 250,
     renderer: 'area',
     stroke: true,
-    series:  [ item2, item1 ]//window.graph_data//seriesData 
+    series:  window.graph_data//[ item2, item1 ]//window.graph_data//seriesData 
   });
   console.log('graph before render');
   console.log(graph.series);
@@ -122,7 +122,7 @@ function otherGraphStuff() {
       timeUnit: hours
   });
 
-  xAxis.render();
+  //xAxis.render();
 
   //var time = new Rickshaw.Fixtures.Time({ graph: graph });
   //var seconds = time.unit('second');

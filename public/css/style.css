@@ -40,9 +40,13 @@ a:hover {
 }
 #leaders {
   width: 400px;
+  text-align: center;
 }
 #leader_container {
   max-height: 418px;
   /*overflow: hidden;*/
 
+}
+#leaders_tbody tr td {
+  text-align: center;
 }
