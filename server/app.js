@@ -24,8 +24,6 @@ app.get('/github/accounts', router.githubjson);
 
 // POST
 app.post('/hook', router.hook);
-// ---------------------------------------------------------- //
-// ---------------------------------------------------------- //
 
 
 // start the server
@@ -33,9 +31,11 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port:".blue, app.get('port'));
 });
 
+// ---------------------------------------------------------- //
+// Socket.io
+// ---------------------------------------------------------- //
 // start socket.io after the server
 var io = require('socket.io').listen(httpApp).set('log level', 1);
-
 
 io.sockets.on('connection', function(socket){
   console.log('SOCKET CONNECTED'.green);
