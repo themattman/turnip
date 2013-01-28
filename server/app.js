@@ -4,7 +4,8 @@ var express   = require('express')
   , colors    = require('colors')
   , router    = require('./router.js')
   , config    = require('./config.js')
-  , http      = require('http');
+  , http      = require('http')
+  , process   = require('./process.js');
 
 // setup here
 config(app);
@@ -36,15 +37,18 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 var io = require('socket.io').listen(httpApp);
 
 io.sockets.on('connection', function(socket){
-  console.log('SOCKETS ON connection'.green);
-  setInterval(function(){
-    var currentTime = new Date().getTime();
-    console.log(currentTime);
-    require('./process.js').getLatestDelta(currentTime, function(latestDelta){
-      //console.log('see this??'.cyan, latestDelta);
-      socket.broadcast.emit('update', latestDelta, function(){
-        socket.on('ACK', function(){console.log('ACK received!')});
-      });
-    });
-  }, 10000);
+  console.log('SOCKET CONNECTED'.green);
+  var currentTime = new Date().getTime();
+  process.getLatestDelta(currentTime, function(latestDelta){
+    console.log('emitting datas');
+    socket.emit('gimme_all_ur_datas', latestDelta);
+  });
 });
+
+setInterval(function(){
+  var curTime = new Date().getTime();
+  process.getLatestDelta(curTime, function(latestDelta){
+    //socket.broadcast.emit
+  });
+  onsole.log('intervalling', new Date().getTime());
+}, 10000);

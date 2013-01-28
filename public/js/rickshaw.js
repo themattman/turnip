@@ -206,6 +206,18 @@ var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in s
   });
 }
 
+
+// ----WORKS----
+// CLIENT-SIDE
+// On connect, emit some event ('gimme_all_ur_datas')
+// Server then sends everything
+
+// After that, server only sends top ten data
+// Client expects to overwrite everything with new update
+
+
+
+
 function iterateOverRepos(repo_data) {
   console.log('github');
   console.log(repo_data);
