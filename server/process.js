@@ -74,13 +74,22 @@ exports.pushIntoDatabase = function(d, cb){
 // ---------------------------------------------------------- //
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
-exports.getLatestDelta = function (curTime, cb) {
+exports.getData = function(curTime, cb) {
   mongo.db.collection('graph_data', function(err, collection) {
-    console.log('querying'.red);
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
-      console.log('results'.red, results.length)
+      console.log('getData'.red, results.length)
       cb(results);
     });
   });
-}
+};
+
+exports.getLatestDelta = function(curTime, cb) {
+  mongo.db.collection('graph_data', function(err, collection) {
+    // Sort the results and take the top 10 teams
+    collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
+      console.log('getLatestDelta'.red, results.length)
+      cb(results);
+    });
+  });
+};

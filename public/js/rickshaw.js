@@ -88,7 +88,6 @@ function createGraph() {
     stroke: true,
     series:  window.graph_data//[ item2, item1 ]//window.graph_data//seriesData 
   });
-  console.log('graph before render');
   console.log(graph.series);
   graph.render();
   otherGraphStuff();
@@ -158,7 +157,7 @@ function otherGraphStuff() {
 
 function updateGraph() {
   console.log('graph.update()');
-  //graph.update();
+  graph.update();
 }
 
 //graph.render();

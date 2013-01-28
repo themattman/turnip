@@ -34,21 +34,23 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 });
 
 // start socket.io after the server
-var io = require('socket.io').listen(httpApp);
+var io = require('socket.io').listen(httpApp).set('log level', 1);
+
 
 io.sockets.on('connection', function(socket){
   console.log('SOCKET CONNECTED'.green);
   var currentTime = new Date().getTime();
-  process.getLatestDelta(currentTime, function(latestDelta){
+  // Change this to get all data
+  process.getData(currentTime, function(graph_info){
     console.log('emitting datas');
-    socket.emit('gimme_all_ur_datas', latestDelta);
+    socket.emit('gimme_all_ur_datas', graph_info);
   });
-});
 
-setInterval(function(){
-  var curTime = new Date().getTime();
-  process.getLatestDelta(curTime, function(latestDelta){
-    //socket.broadcast.emit
-  });
-  onsole.log('intervalling', new Date().getTime());
-}, 10000);
+  setInterval(function(){
+    var curTime = new Date().getTime();
+    process.getLatestDelta(curTime, function(latestDelta){
+      socket.broadcast.emit('update', latestDelta);
+    });
+    console.log('intervalling', new Date().getTime());
+  }, 10000);
+});

@@ -11,25 +11,10 @@ function updatePageData(serverUpdate) {
   $('#leaders_tbody').fadeOut('fast', function(){
     $(fresh_tbody).fadeIn('fast');
     fresh_tbody.setAttribute("id", "leaders_tbody");
+
+    // Need to update graph data
+    updateGraph();
   });
-
-
-  /*for(var i in serverUpdate){
-    var curName = serverUpdate[i].repoName
-    var notOnList = true;
-    for(var j in leaderboard){
-      if(serverUpdate[i] == window.leaderboard){
-        notOnList = false;
-      }
-    }
-    if(!notOnList){
-      for(var k = 10; k < window.leaderboard.length; k++){
-        delete window.leaderboard[k];
-      }
-      updateLeaderboard(serverUpdate[i]);
-    }
-  }
-  updateGraph();*/
 }
 
 function sanitizeDataPoints(serverUpdate){
@@ -51,19 +36,20 @@ function sanitizeDataPoints(serverUpdate){
   }
 
   createGraph();
-  updateLeaderboard(window.leaderboard, $('#leaders_tbody'));
+  updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
 }
 
 var socket = io.connect('/');
 socket.on('connect', function(){
   console.log('on_connect');
-  socket.on('update', function(delta){
-    updatePageData(delta);
-  });
 });
 socket.on('gimme_all_ur_datas', function(update){
   console.log('on_gimme');
   sanitizeDataPoints(update);
+});
+socket.on('update', function(delta){
+  console.log('on_update');
+  updatePageData(delta);
 });
 
 function updateLeaderboard(c, tbody_handle) {
