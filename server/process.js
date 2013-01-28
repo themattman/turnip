@@ -59,7 +59,7 @@ exports.pushIntoDatabase = function(d, cb){
         record = results[0];
         var data_point = {};
         data_point.x = file.latest_timestamp;
-        data_point.y = results[0].data[results[0].data-1].y
+        data_point.y = results[0].numCommits;
         data_point.y += d.commits.length;
         console.log('NEW COMMIT LENGTH'.yellow, data_point.y);
         console.log('record'.zebra);
