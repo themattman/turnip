@@ -45,7 +45,10 @@ io.sockets.on('connection', function(socket){
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
     console.log('emitting all_ur_datas');
-    socket.emit('gimme_all_ur_datas', graph_info);
+    setTimeout(function(){
+      console.log(graph_info);
+      socket.emit('gimme_all_ur_datas', graph_info);
+    }, 1000);
   });
 
   setInterval(function(){

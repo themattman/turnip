@@ -105,6 +105,7 @@ exports.getLatestDelta = function(curTime, cb) {
   mongo.db.collection('graph_data', function(err, collection) {
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
+      //console.log(results)
       console.log('getLatestDelta'.red, results.length)
       cb(results);
     });
