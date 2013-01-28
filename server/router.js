@@ -46,7 +46,14 @@ exports.hook = function(req, res) {
 
 // main page
 exports.index = function(req, res){
-	res.render('index', { title: 'Turnip' });
+	mongo.db.collection('commits', function(err, col){
+    col.find().limit(1).toArray(function(err, results){
+    	console.log(results);
+    	console.log(results[0].commits.length);
+
+    	res.render('index', { title: 'Turnip' });
+    });
+  });
 };
 
 // graph page

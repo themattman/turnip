@@ -54,10 +54,10 @@ exports.pushIntoDatabase = function(d, cb){
       } else {
 
         // Append new data point to existing repo
-        record = results;
+        record = results[0];
         var data_point = {};
         data_point.x = file.latest_timestamp;
-        data_point.y = results.commits[results.commits.length-1].y
+        data_point.y = results[0].commits[results[0].commits.length-1].y
         data_point.y += d.commits.length;
         console.log('NEW COMMIT LENGTH'.yellow, data_point.y);
         console.log('record'.zebra);
