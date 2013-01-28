@@ -63,7 +63,7 @@ function parseDate(jsonDate, debug) {
 
 var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 
-var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 } ];
+/*var data1 = [ { x: 0, y: 30 }, { x: 1, y: 43 }, { x: 2, y: 17 }, { x: 3, y: 32 } ];
 var data2 = [ { x: 0, y: 40 }, { x: 1, y: 42 }, { x: 2, y: 27 }, { x: 3, y: 5 } ];
 var item1 =  {
     name: "data1",
@@ -74,7 +74,7 @@ var item2 =  {
     name: "data2",
     color: palette.color(),
     data: data2
-  };
+  };*/
 
 var graph;
 
@@ -112,15 +112,21 @@ function otherGraphStuff() {
     graph: graph,
     legend: legend
   });
+  var hoverDetail = new Rickshaw.Graph.HoverDetail({
+    graph: graph,
+    //xFormatter: function(x) { return x + "seconds" }
+    //yFormatter: function(y) { return Math.floor(y) + " percent" }
+  });
 
-  var time = new Rickshaw.Fixtures.Time();
-  var hours = time.unit('hour');
+  /*var time = new Rickshaw.Fixtures.Time();
+  console.log(time);
+  var hours = time.unit('6 hour');
   console.log('hours');
   console.log(hours);
   var xAxis = new Rickshaw.Graph.Axis.Time({
       graph: graph,
       timeUnit: hours
-  });
+  });*/
 
   //xAxis.render();
 

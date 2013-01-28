@@ -13,7 +13,7 @@ function zeroOutUnusedDataPoints(cb) {
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
     var ith_commit = {};
-    ith_commit.x = (__startTime + i*__timeDelta)/1000;
+    ith_commit.x = (__startTime + i*__timeDelta);///1000;
     ith_commit.y = Math.round(40*Math.random());
     commits.push(ith_commit);
   }

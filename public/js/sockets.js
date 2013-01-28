@@ -44,6 +44,7 @@ function sanitizeDataPoints(serverUpdate){
   if(graph_created == 0) {
     graph_created = 1;
     createGraph();
+    //console.log(window);
     updateLeaderboard(window.leaderboard);
   } else {
     updateGraph();
