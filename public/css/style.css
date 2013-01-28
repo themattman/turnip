@@ -53,7 +53,7 @@ a:hover {
   text-align: center;
 }
 #commit_feed_container {
-  float: right;
+  margin-left: 30px;
   display: inline-block;
 }
 #turnip_pic {
