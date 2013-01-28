@@ -69,7 +69,7 @@ io.sockets.on('connection', function(socket){
         if(error) throw error;
         console.log('done writing timestamp to github.json');
         mongo.db.collection('graph_data', function(err, col){
-          col.find.toArray(function(err, col){
+          col.find().toArray(function(err, col){
             console.log(col);
             for(var row in col){
               var data_point = {};
