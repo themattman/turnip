@@ -78,9 +78,18 @@ exports.pushIntoDatabase = function(d, cb){
         console.log(data_point.y);
         console.log('record'.zebra);
         console.log(data_point);
-        col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } , $push: { 'data': data_point } }, function(err, docs){
+
+        var last_data_spot = record.data[record.data.length];
+        console.log(last_data_spot);
+        last_data_spot = 'data.' + last_data_spot;
+
+        col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } }, function(err, docs){
           if(err){throw err;}
-          console.log('updated a record'.blue);
+          console.log('updated a record'.magenta);
+          col.update({'repoName': record.repoName}, { $set: { last_data_spot: data_point.x } }, function(err, docs){
+            if(err){throw err;}
+            console.log('updated a record'.blue);
+          });
         });
       }
     });

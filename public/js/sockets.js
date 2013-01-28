@@ -1,3 +1,5 @@
+$('#messages').hide(); // .show() the latest messages after they load
+
 var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 window.graph_data  = [];
 window.leaderboard = [];
@@ -84,7 +86,5 @@ function updateLeaderboard(c, tbody_handle) {
     new_row.appendChild(td3);
     tbody_handle.appendChild(new_row);
     return tbody_handle;
-    //console.log('tbody_handle');
-    //console.log(tbody_handle);
   }
 }
