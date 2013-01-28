@@ -35,7 +35,7 @@ exports.pushIntoDatabase = function(d, cb){
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
-      if(results.length < 1) {
+      if(!results) {
 
         // Create a new record for this repo
         zeroOutUnusedDataPoints(function(c){
@@ -59,6 +59,7 @@ exports.pushIntoDatabase = function(d, cb){
         data_point.x = file.latest_timestamp;
         data_point.y = results[0].commits[results[0].commits.length-1].y
         data_point.y += d.commits.length;
+        console.log('NEW COMMIT LENGTH'.yellow, data_point.y);
         console.log('record'.zebra);
         console.log(data_point);
         col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } , $push: { 'data': data_point } }, function(err, docs){
