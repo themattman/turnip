@@ -21,6 +21,13 @@ function zeroOutUnusedDataPoints(cb) {
   cb(commits);
 }
 
+function saveCommitToDatabase(commit_data){
+  mongo.db.collection('commits', function(err, col){
+    console.log('in da commits collection');
+    col.insert(commit_data);
+  });
+}
+
 exports.pushIntoDatabase = function(d, cb){
   var record = {};
   console.log('pushIntoDatabase'.magenta);
@@ -31,13 +38,20 @@ exports.pushIntoDatabase = function(d, cb){
   var repoName = d.repository.name;
   console.log('repoName =', repoName);
 
+  // ---------------------------------------------------------- //
+  // Write the commit to Mongo
+  // ---------------------------------------------------------- //
+  saveCommitToDatabase(d);
+
   mongo.db.collection('graph_data', function(err, col){
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
       if(!results) {
 
+        // ---------------------------------------------------------- //
         // Create a new record for this repo
+        // ---------------------------------------------------------- //
         zeroOutUnusedDataPoints(function(c){
           record.repoName = repoName;
           record.userName = d.repository.owner.name;
@@ -52,7 +66,9 @@ exports.pushIntoDatabase = function(d, cb){
           });
         });
       } else {
+        // ---------------------------------------------------------- //
         // Append new data point to existing repo
+        // ---------------------------------------------------------- //
         record = results[0];
         var data_point = {};
         data_point.x = file.latest_timestamp;
