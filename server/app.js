@@ -75,7 +75,7 @@ io.sockets.on('connection', function(socket){
               var data_point = {};
               data_point.x = file.latest_timestamp + __timeDelta;
               data_point.y = col[row].numCommits;
-              col.update( {'repoName': col[row].repoName, { $push: { 'data': data_point } } }, function(err, docs){
+              col.update( {'repoName': col[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
                 if(err){throw err;}
               });
             }
