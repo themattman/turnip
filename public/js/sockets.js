@@ -14,8 +14,6 @@ function sanitizeDataPoints(serverUpdate){
           notOnList = false;
         }
       }
-      console.log('LENGTH=', window.leaderboard.length);
-      console.log(window.leaderboard);
       if(!notOnList){
         for(var k = 10; k < window.leaderboard.length; k++){
           console.log('LEADERBOARD');
@@ -31,12 +29,8 @@ function sanitizeDataPoints(serverUpdate){
       team.userName   = serverUpdate[i].userName;
       team.numCommits = serverUpdate[i].numCommits;
 
-      //if(serverUpdate[i].numCommits > 5) {
-      //if(graph_created == 0) {
-        console.log("ADDED");
-        window.graph_data.push(serverUpdate[i]);
-        window.leaderboard.push(team);
-      //}
+      window.graph_data.push(serverUpdate[i]);
+      window.leaderboard.push(team);
 
       serverUpdate[i].name = serverUpdate[i].repoName;
       delete serverUpdate[i].repoName;
@@ -47,8 +41,6 @@ function sanitizeDataPoints(serverUpdate){
     }
   }
 
-  console.log(window.leaderboard);
-  console.log(window.graph_data);
   if(graph_created == 0) {
     graph_created = 1;
     createGraph();
@@ -60,16 +52,13 @@ function sanitizeDataPoints(serverUpdate){
 
 var socket = io.connect('/');
 socket.on('update', function(d){
-  console.log('DATA COMIN IN!', d.length);
-  //updateLeaderboard(d);
   sanitizeDataPoints(d);
   socket.emit('ACK');
 });
 
 
+// UNTESTED!
 function updateLeaderboard(c, indexToInsert) {
-  console.log(c);
-  console.log('window.leaderboard');
   for(var i in c){
     var new_row = document.createElement('tr');
     var td0 = document.createElement('td');
@@ -85,10 +74,7 @@ function updateLeaderboard(c, indexToInsert) {
     new_row.appendChild(td1);
     new_row.appendChild(td2);
     new_row.appendChild(td3);
-    console.log('new_rw');
-    console.log(new_row);
     if(indexToInsert){
-      console.log('LLOOL');
       var child = '#leaders_tbody tr:eq(' + indexToInsert + ')';
       //$('#leaders_tbody').insertBefore(new_row, $(child));
     }else{
