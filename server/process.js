@@ -52,9 +52,6 @@ exports.pushIntoDatabase = function(d, cb){
           });
         });
       } else {
-        console.log(results[0]);
-        console.log(results[0].commits);
-        console.log()
         // Append new data point to existing repo
         record = results[0];
         var data_point = {};

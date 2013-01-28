@@ -40,8 +40,9 @@ exports.githubjson  = function(req, res) {
 
 exports.hook = function(req, res) {
 	console.log('GOT A HOOK'.cyan);
-	var data = JSON.parse(req.body.payload);
-	process.pushIntoDatabase(data);
+	var hook_data = JSON.parse(req.body.payload);
+	console.log(hook_data);
+	process.pushIntoDatabase(hook_data);
 };
 
 // main page
