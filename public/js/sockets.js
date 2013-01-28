@@ -29,7 +29,7 @@ function sanitizeDataPoints(serverUpdate){
   if(graph_created == 0) {
     graph_created = 1;
     createGraph();
-    updateLeaderboard();
+    //updateLeaderboard();
   } else {
     updateGraph();
   }
@@ -37,24 +37,31 @@ function sanitizeDataPoints(serverUpdate){
 
 var socket = io.connect('/');
 socket.on('update', function(d){
+  console.log('DATA COMIN IN!', d.length);
+  updateLeaderboard(d);
   sanitizeDataPoints(d);
   socket.emit('ACK');
 });
 
 
-function updateLeaderboard() {
-  for(var i in window.leaderboard){
+function updateLeaderboard(c) {
+  console.log(c);
+  console.log('window.leaderboard');
+  for(var i in c){
     var new_row = document.createElement('tr');
     var td0 = document.createElement('td');
     var td1 = document.createElement('td');
     var td2 = document.createElement('td');
+    var td3 = document.createElement('td');
 
     td0.innerHTML = i;
-    td1.innerHTML = window.leaderboard[i].repoName;
-    td2.innerHTML = window.leaderboard[i].userName;
+    td1.innerHTML = c[i].repoName;
+    td2.innerHTML = c[i].userName;
+    td3.innerHTML = c[i].numCommits;
     new_row.appendChild(td0);
     new_row.appendChild(td1);
     new_row.appendChild(td2);
+    new_row.appendChild(td3);
     console.log('new_rw');
     console.log(new_row);
     document.getElementById('leaders_tbody').appendChild(new_row);

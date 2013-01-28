@@ -15,17 +15,15 @@ block append content
       #legend(style="background-color:#808080")
     h2(id="ldrbrd") Leaderboard
     p By number of commits
-    table.table.table-striped(id="leaders")
-      thead
-        tr
-          td #
-          td repoName
-          td userName
-      tbody(id="leaders_tbody")
-      tr
-          td 1
-          td turnip
-          td themattman
+    #leader_container
+      table.table.table-striped(id="leaders")
+        thead(style="font-weight: bold;")
+          tr
+            td #
+            td Repo Name
+            td Username
+            td # of Commits
+        tbody(id="leaders_tbody")
 
 block append scripts
   script(src="/socket.io/socket.io.js")

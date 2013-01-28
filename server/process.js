@@ -7,12 +7,13 @@ var mongo       = require('./database.js')
 // Process data before DB insert
 // ---------------------------------------------------------- //
 function zeroOutUnusedDataPoints(cb) {
-  var currentTime = new Date().getTime();
-  var numPointsToFill = (currentTime - __startTime) / __timeDelta;
+  //var currentTime = new Date().getTime();
+  //var numPointsToFill = (currentTime - __startTime) / __timeDelta;
+  var numPointsToFill = (1359273904465 - __startTime) / __timeDelta;
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
     var ith_commit = {};
-    ith_commit.x = __startTime + i*__timeDelta;
+    ith_commit.x = (__startTime + i*__timeDelta)/1000;
     ith_commit.y = Math.round(40*Math.random());
     commits.push(ith_commit);
   }
@@ -78,7 +79,7 @@ exports.getLatestDelta = function (curTime, cb) {
     console.log('querying'.red);
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
-      console.log('results'.red)
+      console.log('results'.red, results.length)
       cb(results);
     });
   });
