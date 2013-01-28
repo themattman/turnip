@@ -266,9 +266,9 @@ function iterateOverRepos(repo_data) {
 
 
 //$.get('https://api.github.com/repos/joyent/node/commits', function(d) {
-$.get('/github/accounts', function(d) {
+/*$.get('/github/accounts', function(d) {
         /*d.forEach(function(com){
                 console.log(com.commit.committer.date);
-        })*/
+        })
         console.log(d)
-});
+});*/

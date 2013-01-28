@@ -44,6 +44,8 @@ function sanitizeDataPoints(serverUpdate){
     serverUpdate[i].color = palette.color();
   }
 
+  $('#loader').hide();
+
   createGraph();
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
 }
@@ -54,11 +56,15 @@ socket.on('connect', function(){
 });
 socket.on('gimme_all_ur_datas', function(update){
   console.log('on_gimme');
-  sanitizeDataPoints(update);
+  if(window.leaderboard.length < 1){
+    sanitizeDataPoints(update);
+  }
 });
 socket.on('update', function(delta){
   console.log('on_update');
-  updatePageData(delta);
+  if(window.leaderboard.length > 0){
+    updatePageData(delta);
+  }
 });
 
 function updateLeaderboard(c, tbody_handle) {

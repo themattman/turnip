@@ -15,6 +15,7 @@ a:hover {
   position: relative;
   display: block;
   font-family: Arial, Helvetica, sans-serif;
+  height: 332px;
 }
 #chart {
   display: inline-block;
@@ -63,4 +64,9 @@ a:hover {
 }
 .inline {
   margin-left: 10px;
+}
+#loader {
+  position: absolute;
+  padding-top: 100px;
+  padding-left: 50%;
 }
