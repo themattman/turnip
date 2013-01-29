@@ -7,8 +7,6 @@ var mongo       = require('./database.js')
 // Process data before DB insert
 // ---------------------------------------------------------- //
 function zeroOutUnusedDataPoints(cb) {
-  //var currentTime = new Date().getTime();
-  //var numPointsToFill = (currentTime - __startTime) / __timeDelta;
   var numPointsToFill = (1359273904465 - __startTime) / __timeDelta;
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
@@ -19,6 +17,10 @@ function zeroOutUnusedDataPoints(cb) {
   }
   console.log('commits Zerod'.yellow, i);
   cb(commits);
+}
+
+function updateCommitsFeed(){
+  
 }
 
 function saveCommitToDatabase(commit_data){
@@ -114,8 +116,14 @@ exports.getLatestDelta = function(curTime, cb) {
   mongo.db.collection('graph_data', function(err, collection) {
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
-      //console.log(results)
-      console.log('getLatestDelta'.red, results.length)
+      console.log('getLatestDelta'.red, results.length);
+
+      // Only send the most recent 10 items
+      for(var i in results){
+        if(results[i].data.length > 10){
+          results[i].data = results[i].data.slice(results[i].data.length - 10, 10);
+        }
+      }
       cb(results);
     });
   });

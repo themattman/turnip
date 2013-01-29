@@ -5,7 +5,8 @@ var mongo     = require("./database.js")
 	, fs        = require('fs')
 	, process   = require('./process.js')
 	, loop      = require('./app.js')
-	, interval;
+	, interval
+	, events    = require('events').EventEmitter;
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -49,6 +50,7 @@ exports.hook = function(req, res) {
 	var hook_data = JSON.parse(req.body.payload);
 	console.log(hook_data);
 	process.pushIntoDatabase(hook_data);
+	events.emit('update_commits');
 };
 
 // main page

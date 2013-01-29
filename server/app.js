@@ -8,7 +8,8 @@ var express     = require('express')
   , process     = require('./process.js')
   , fs          = require('fs')
   , mongo       = require('./database.js')
-  , __timeDelta = require('./secret.js').constants.timeDelta;
+  , __timeDelta = require('./secret.js').constants.timeDelta
+  , events      = require('events').EventEmitter;
 
 // setup here
 config(app);
@@ -61,6 +62,16 @@ io.sockets.on('connection', function(socket){
       socket.broadcast.emit('update', latestDelta);
     });
   });
+
+  events.on('update_commits', function(cur, prev){
+    mongo.db.collection('commits', function(err, col){
+      col.find().limit(1).toArray(function(err, collection){
+        console.log('updatingCommitFeeds'.yellow);
+        console.log(collection);
+        //socket.broadcast.emit('feed', collection);
+      });
+    });
+  });
 });
 
 
@@ -81,7 +92,6 @@ exports.daemon = function(){
               var data_point = {};
               data_point.x = file.latest_timestamp + __timeDelta;
               data_point.y = collection[row].numCommits;
-              console.log(collection);
               col.update( {'repoName': collection[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
                 if(err){throw err;}
               });
