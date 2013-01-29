@@ -47,7 +47,7 @@ exports.pushIntoDatabase = function(d, cb){
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       console.log('RESULTS');
       console.log(results);
-      if(!results) {
+      if(!results || results.length < 1) {
 
         // ---------------------------------------------------------- //
         // Create a new record for this repo
@@ -72,22 +72,24 @@ exports.pushIntoDatabase = function(d, cb){
         record = results[0];
         var data_point = {};
         data_point.x = file.latest_timestamp;
-        data_point.y = results[0].numCommits;
-        data_point.y += d.commits.length;
+        data_point.y = record.numCommits + d.commits.length;
         console.log('record'.zebra);
-        console.log(data_point);
 
-        var last_data_spot = record.data[record.data.length];
-        console.log(last_data_spot);
-        last_data_spot = 'data.' + last_data_spot;
-
-        col.update({'repoName': record.repoName}, { $set: { 'numCommits': data_point.y } }, function(err, docs){
+        col.update({'repoName': record.repoName}, { $inc: { 'numCommits': d.commits.length } }, function(err, docs){
           if(err){throw err;}
           console.log('updated a record'.magenta);
-          col.update({'repoName': record.repoName}, { $set: { last_data_spot: data_point.x } }, function(err, docs){
+
+          // Remove the last data point
+          col.update({'repoName': record.repoName}, { $pop: { data: 1 } }, function(err, docs){
             if(err){throw err;}
-            console.log('updated a record'.blue);
+
+            // Push the last data point back on with an updated y value
+            col.update({'repoName': record.repoName}, { $push: { data: data_point } }, function(err, docs){
+              if(err){throw err;}
+              console.log('updated a record'.blue);
+            });
           });
+
         });
       }
     });
