@@ -52,37 +52,41 @@ io.sockets.on('connection', function(socket){
     }, 1000);
   });
 
-  setInterval(function(){
+  fs.watch('./server/github.json', function(cur, prev){
     var curTime = new Date().getTime();
     process.getLatestDelta(curTime, function(latestDelta){
       socket.broadcast.emit('update', latestDelta);
     });
+  });
 
-    // ---------------------------------------------------------- //
-    // Increment the timestamp in github.json and the database
-    // ---------------------------------------------------------- //
-    fs.readFile('./server/github.json', 'utf-8', function(err, file){
-      file = JSON.parse(file);
-      console.log('file'.cyan, file.latest_timestamp);
-      file.latest_timestamp += __timeDelta;
-      fs.writeFile('./server/github.json', JSON.stringify(file), function(error){
-        if(error) throw error;
-        console.log('done writing timestamp to github.json');
-        mongo.db.collection('graph_data', function(err, col){
-          col.find().toArray(function(err, col){
-            console.log(col);
-            for(var row in col){
-              var data_point = {};
-              data_point.x = file.latest_timestamp + __timeDelta;
-              data_point.y = col[row].numCommits;
-              col.update( {'repoName': col[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
-                if(err){throw err;}
-              });
-            }
-          });
+});
+
+
+setInterval(function(){
+  // ---------------------------------------------------------- //
+  // Increment the timestamp in github.json and the database
+  // ---------------------------------------------------------- //
+  fs.readFile('./server/github.json', 'utf-8', function(err, file){
+    file = JSON.parse(file);
+    console.log('file'.cyan, file.latest_timestamp);
+    file.latest_timestamp += __timeDelta;
+    fs.writeFile('./server/github.json', JSON.stringify(file), function(error){
+      if(error) throw error;
+      console.log('done writing timestamp to github.json');
+      mongo.db.collection('graph_data', function(err, col){
+        col.find().toArray(function(err, collection){
+          for(var row in collection){
+            var data_point = {};
+            data_point.x = file.latest_timestamp + __timeDelta;
+            data_point.y = collection[row].numCommits;
+            console.log(collection);
+            col.update( {'repoName': collection[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
+              if(err){throw err;}
+            });
+          }
         });
       });
     });
-    console.log('intervalling', new Date().getTime());
-  }, 10000);
-});
+  });
+  console.log('intervalling', new Date().getTime());
+}, 10000);
