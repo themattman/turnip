@@ -3,7 +3,9 @@ var mongo     = require("./database.js")
 	, colors    = require('colors')
 	, collection
 	, fs        = require('fs')
-	, process   = require('./process.js');
+	, process   = require('./process.js')
+	, loop      = require('./app.js')
+	, interval;
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -12,6 +14,10 @@ mongo.connect(function(msg, coltn) {
 	} else 
 		console.log(msg);
 });
+
+exports.access = function(req, res){
+	res.render('access', { title: "Access" });
+};
 
 // Configure data streams from github
 exports.accounts = function(req, res){
@@ -60,4 +66,14 @@ exports.index = function(req, res){
 // graph page
 exports.rickshaw = function(req, res){
   res.render('rickshaw', { title: 'Turnip' });
+};
+
+exports.start = function(req, res){
+	console.log('start');
+	interval = setInterval(loop.daemon, 10000);
+};
+
+exports.stop = function(req, res){
+	console.log('stop');
+	clearInterval(interval);
 };

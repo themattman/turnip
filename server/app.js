@@ -19,14 +19,17 @@ config(app);
 // ---------------------------------------------------------- //
 // GET
 app.get('/',                router.index     );
-app.get('/rickshaw',        router.rickshaw  );
-app.get('/db',              router.db        );
+app.get('/access',          router.access    );
 app.get('/admin',           router.admin     );
 app.get('/admin/accounts',  router.accounts  );
+app.get('/db',              router.db        );
 app.get('/github/accounts', router.githubjson);
+app.get('/rickshaw',        router.rickshaw  );
 
 // POST
-app.post('/hook', router.hook);
+app.post('/hook',  router.hook );
+app.post('/start', router.start);
+app.post('/stop',  router.stop );
 
 
 // start the server
@@ -58,8 +61,10 @@ io.sockets.on('connection', function(socket){
       socket.broadcast.emit('update', latestDelta);
     });
   });
+});
 
-  setInterval(function(){
+
+exports.daemon = function(){
     // ---------------------------------------------------------- //
     // Increment the timestamp in github.json and the database
     // ---------------------------------------------------------- //
@@ -86,6 +91,4 @@ io.sockets.on('connection', function(socket){
       });
     });
     console.log('intervalling', new Date().getTime());
-  }, 10000);
-
-});
+  }

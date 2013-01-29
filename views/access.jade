@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .btn.btn-success(style="margin-right:10px;margin-left:10px;") Start
+  .btn.btn-danger Stop
+
+block scripts
+  script
+    $('.btn.btn-success').click(function(){
+      console.log('suc');
+      $.post('/start');
+    });
+    $('.btn.btn-danger').click(function(){
+      console.log('dan');
+      $.post('/stop');
+    });
