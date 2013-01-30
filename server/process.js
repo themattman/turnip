@@ -1,11 +1,22 @@
 var mongo       = require('./database.js')
   , fs          = require('fs')
+  , events      = require('events')
   , __startTime = require('./secret.js').constants.startTime
   , __timeDelta = require('./secret.js').constants.timeDelta;
 
 // ---------------------------------------------------------- //
 // Process data before DB insert
 // ---------------------------------------------------------- //
+var commitFeed = function(){};
+commitFeed.prototype = new events.EventEmitter;
+commitFeed.prototype.updateAll = function(commit) {
+  console.log('emitting the new commit feed prototype'.red);
+  this.emit('update_commits', commit);
+};
+
+var Updater = new commitFeed();
+exports.commitFeed = Updater;
+
 function zeroOutUnusedDataPoints(cb) {
   var numPointsToFill = (1359273904465 - __startTime) / __timeDelta;
   var commits = [];
@@ -29,10 +40,16 @@ function updateCommitsFeed(){
   });
 }
 
-function saveCommitToDatabase(commit_data){
-  var sanitized_commit = {};
+exports.saveCommitToDatabase = function (commit_data){
+  var sanitized_commit        = {};
+  sanitized_commit.pusher     = {};
+  sanitized_commit.repository = {};
+  sanitized_commit.commits    = [];
+  console.log('numCommits=', commit_data.commits.length.magenta);
+
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}
+
     sanitized_commit.pusher.name            = commit_data.pusher.name;
     sanitized_commit.pusher.email           = commit_data.pusher.email;
     sanitized_commit.repository.name        = commit_data.repository.name;
@@ -40,12 +57,17 @@ function saveCommitToDatabase(commit_data){
     sanitized_commit.repository.created_at  = commit_data.repository.created_at;
     sanitized_commit.repository.private     = commit_data.repository.private;
     for(var i in commit_data.commits){
-      sanitized_commit.commits[i].timestamp      = commit_data.commits[i].timestamp;
-      sanitized_commit.commits[i].message        = commit_data.commits[i].message;
-      sanitized_commit.commits[i].committer.name = commit_data.commits[i].committer.name;
+      var this_commit       = {};
+      this_commit.committer = {};
+      this_commit.timestamp      = commit_data.commits[i].timestamp;
+      this_commit.message        = commit_data.commits[i].message;
+      this_commit.committer.name = commit_data.commits[i].committer.name;
+      sanitized_commit.commits.push(this_commit);
     }
-    console.log('in da commits collection');
+    console.log(sanitized_commit);
     col.insert(sanitized_commit);
+
+    Updater.updateAll(sanitized_commit);
   });
 }
 
@@ -129,7 +151,6 @@ exports.getData = function(curTime, cb) {
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
       if(err){throw err;}
-      console.log('getData'.red, results.length)
       cb(results);
     });
   });

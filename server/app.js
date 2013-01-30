@@ -46,18 +46,16 @@ var io = require('socket.io').listen(httpApp).set('log level', 1);
 
 io.sockets.on('connection', function(socket){
   console.log('SOCKET CONNECTED'.green);
+  socket.join('graph');
   var currentTime = new Date().getTime();
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
-    console.log('emitting all_ur_datas');
     setTimeout(function(){
-      console.log(graph_info);
       socket.emit('gimme_all_ur_datas', graph_info);
     }, 1000);
   });
 
   process.getFeed(currentTime, function(commitFeed){
-    console.log(commitFeed);
     socket.emit('feed_load', commitFeed);
   });
 
@@ -67,23 +65,21 @@ io.sockets.on('connection', function(socket){
       socket.broadcast.emit('update', latestDelta);
     });
   });
+});
 
-  router.commitFeed.on('update_commits', function(cur, prev){
-    console.log('UPDATE COMMITS!!!!!!!!!!'.cyan);
-    mongo.db.collection('commits', function(err, col){
+process.commitFeed.on('update_commits', function(cur, prev){
+  console.log('UPDATE COMMITS!!!!!!!!!!'.cyan);
+  mongo.db.collection('commits', function(err, col){
+    if(err){throw err;}
+    col.find().limit(1).toArray(function(err, collection){
       if(err){throw err;}
-      col.find().limit(1).toArray(function(err, collection){
-        if(err){throw err;}
-        console.log('updatingCommitFeeds'.yellow);
-        if(collection){
-          console.log(collection);
-          var to_send = {};
-          to_send.userName = collection[0].pusher.name;
-          to_send.repoName = collection[0].repository.name;
-          to_send.message  = collection[0].head_commit.message;
-          socket.broadcast.emit('feed_update', to_send);
-        }
-      });
+      if(collection){
+        var to_send = {};
+        to_send.userName = collection[0].pusher.name;
+        to_send.repoName = collection[0].repository.name;
+        to_send.message  = collection[0].head_commit.message;
+        io.sockets.in('graph').emit('feed_update', to_send);
+      }
     });
   });
 });

@@ -44,13 +44,13 @@ a:hover {
   width: 450px;
   text-align: center;
 }
-#leader_container,
-#commit_feed_container {
+#leader_container {
   max-height: 426px;
   overflow: hidden;
   float: left;
   display: inline-block;
   margin-right: 30px;
+  margin-bottom: 20px;
 }
 #leaders_tbody tr td {
   /*text-align:center;*/
@@ -76,4 +76,11 @@ a:hover {
   color: #ccc;
   /*215E21;*/
 
+}
+#commit_feed_container {
+  max-height: 462px;
+  overflow: hidden;
+  float: left;
+  display: inline-block;
+  margin-bottom: 100px;
 }

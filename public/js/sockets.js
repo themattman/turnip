@@ -71,7 +71,7 @@ socket.on('update', function(delta){
 socket.on('feed_update', function(commit){
   console.log('on_feed');
   console.log(commit);
-  //updateFeed(commit);
+  updateFeed(commit);
 });
 socket.on('feed_load', function(commit){
   commit = commit.reverse();
@@ -87,16 +87,18 @@ function updateFeed(commit){
   var td1 = document.createElement('td');
   td1.innerHTML = commit.message;
   var new_row = document.createElement('tr');
+  $(new_row).css('border-collapse', 'separate');
   new_row.appendChild(td0);
   new_row.appendChild(td1);
-  $('#messages_tbody').prepend(new_row);
+  $('#messages_tbody').prepend(new_row);//.fadeIn('slow');
   if($('#messages_tbody tr').length > 10){
-    for(var i in ($('#messages_tbody tr')-10)){
-      var to_delete = "'#messages_tbody tr:nth-child('" + (10+i) + ")";
-      console.log(to_delete);
-      $(to_delete).remove();
+    var num_trs = $('#messages_tbody tr').length-10;
+    for(var i = 0; i < num_trs; i++){
+      $('#messages_tbody tr:last-child').remove();
     }
   }
+  $(td0).effect('highlight', { color: "#ffff99" }, 1200);
+  $(td1).effect('highlight', {}, 1200);
 }
 
 function updateLeaderboard(c, tbody_handle) {

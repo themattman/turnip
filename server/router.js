@@ -17,15 +17,6 @@ mongo.connect(function(msg, coltn) {
 		console.log(msg);
 });
 
-var commitFeed = function(){};
-commitFeed.prototype = new events.EventEmitter;
-commitFeed.prototype.updateAll = function(commit) {
-	this.emit('update_commits', commit);
-};
-
-var Updater = new commitFeed();
-exports.commitFeed = Updater;
-
 exports.access = function(req, res){
 	res.render('access', { title: "Access" });
 };
@@ -67,10 +58,8 @@ exports.index = function(req, res){
 	//console.log(loop.events);
 	mongo.db.collection('commits', function(err, col){
 		col.find().limit(1).toArray(function(err, r){
-			//console.log(r);
-			console.log(r[0]);
+			//console.log(r[0]);
 			//process.pushIntoDatabase(r[0]);
-			//Updater.updateAll(r[0]);
 			process.saveCommitToDatabase(r[0]);
 			res.render('index', { title: 'Turnip' });
 		});
