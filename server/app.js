@@ -71,7 +71,9 @@ io.sockets.on('connection', function(socket){
   router.commitFeed.on('update_commits', function(cur, prev){
     console.log('UPDATE COMMITS!!!!!!!!!!'.cyan);
     mongo.db.collection('commits', function(err, col){
+      if(err){throw err;}
       col.find().limit(1).toArray(function(err, collection){
+        if(err){throw err;}
         console.log('updatingCommitFeeds'.yellow);
         if(collection){
           console.log(collection);
@@ -99,7 +101,9 @@ exports.daemon = function(){
       if(error) throw error;
       console.log('done writing timestamp to github.json');
       mongo.db.collection('graph_data', function(err, col){
+        if(err){throw err;}
         col.find().toArray(function(err, collection){
+          if(err){throw err;}
           for(var row in collection){
             var data_point = {};
             data_point.x = file.latest_timestamp + __timeDelta;
