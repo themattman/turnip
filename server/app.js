@@ -84,7 +84,6 @@ process.commitFeed.on('update_commits', function(cur, prev){
   });
 });
 
-
 exports.daemon = function(){
   // ---------------------------------------------------------- //
   // Increment the timestamp in github.json and the database

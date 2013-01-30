@@ -55,10 +55,8 @@ exports.hook = function(req, res) {
 
 // main page
 exports.index = function(req, res){
-	//console.log(loop.events);
 	mongo.db.collection('commits', function(err, col){
 		col.find().limit(1).toArray(function(err, r){
-			//console.log(r[0]);
 			//process.pushIntoDatabase(r[0]);
 			process.saveCommitToDatabase(r[0]);
 			res.render('index', { title: 'Turnip' });

@@ -9,11 +9,11 @@
 
 * (check) Add authentication to start/stop buttons
 * (check) Sanitize data upon hook, only save necessary data
-* commit feed fade in
+* (check) commit feed fade in
 * test top 10 update
-* clean up / refactor - emitter for hook should move from router to process
+* clean up / refactor - (check) emitter for hook should move from router to process
 * get rid of collection undef issue
-* make sure all require()s are used
+* make sure in each file all require()s are used
 * Static graphs?
 * load balancer
 * separate server for getting hooks
