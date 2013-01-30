@@ -70,7 +70,8 @@ exports.index = function(req, res){
 			//console.log(r);
 			console.log(r[0]);
 			//process.pushIntoDatabase(r[0]);
-			Updater.updateAll(r[0]);
+			//Updater.updateAll(r[0]);
+			process.saveCommitToDatabase(r[0]);
 			res.render('index', { title: 'Turnip' });
 		});
 	});

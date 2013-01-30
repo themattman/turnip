@@ -8,4 +8,4 @@
 ### Todo
 
 * Add authentication to start/stop buttons
-* 
+* Sanitize data upon hook, only save necessary data

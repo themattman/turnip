@@ -11,7 +11,7 @@ function zeroOutUnusedDataPoints(cb) {
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
     var ith_commit = {};
-    ith_commit.x = (__startTime + i*__timeDelta);///1000;
+    ith_commit.x = (__startTime + i*__timeDelta);
     ith_commit.y = Math.round(40*Math.random());
     commits.push(ith_commit);
   }
@@ -30,10 +30,22 @@ function updateCommitsFeed(){
 }
 
 function saveCommitToDatabase(commit_data){
+  var sanitized_commit = {};
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}
+    sanitized_commit.pusher.name            = commit_data.pusher.name;
+    sanitized_commit.pusher.email           = commit_data.pusher.email;
+    sanitized_commit.repository.name        = commit_data.repository.name;
+    sanitized_commit.repository.description = commit_data.repository.description;
+    sanitized_commit.repository.created_at  = commit_data.repository.created_at;
+    sanitized_commit.repository.private     = commit_data.repository.private;
+    for(var i in commit_data.commits){
+      sanitized_commit.commits[i].timestamp      = commit_data.commits[i].timestamp;
+      sanitized_commit.commits[i].message        = commit_data.commits[i].message;
+      sanitized_commit.commits[i].committer.name = commit_data.commits[i].committer.name;
+    }
     console.log('in da commits collection');
-    col.insert(commit_data);
+    col.insert(sanitized_commit);
   });
 }
 
