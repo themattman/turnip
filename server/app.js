@@ -9,7 +9,7 @@ var express     = require('express')
   , fs          = require('fs')
   , mongo       = require('./database.js')
   , __timeDelta = require('./secret.js').constants.timeDelta
-  , events      = require('events').EventEmitter;
+  , events      = require('events');
 
 // setup here
 config(app);
@@ -39,8 +39,6 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port:".blue, app.get('port'));
 });
 
-exports.httpApp = httpApp;
-
 // ---------------------------------------------------------- //
 // Socket.io
 // ---------------------------------------------------------- //
@@ -66,12 +64,13 @@ io.sockets.on('connection', function(socket){
     });
   });
 
-  httpApp.on('update_commits', function(cur, prev){
+  router.commitFeed.on('update_commits', function(cur, prev){
+    console.log('UPDATE COMMITS!!!!!!!!!!'.cyan);
     mongo.db.collection('commits', function(err, col){
       col.find().limit(1).toArray(function(err, collection){
         console.log('updatingCommitFeeds'.yellow);
         console.log(collection);
-        //socket.broadcast.emit('feed', collection);
+        socket.broadcast.emit('feed', collection);
       });
     });
   })

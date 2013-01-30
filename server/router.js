@@ -6,8 +6,7 @@ var mongo     = require("./database.js")
 	, process   = require('./process.js')
 	, loop      = require('./app.js')
 	, interval
-	//, events    = require('events').EventEmitter;
-	, httpApp   = require('./app.js').httpApp
+	, events    = require('events')
 	, secret    = require('./secret.js').admin;
 
 mongo.connect(function(msg, coltn) {
@@ -17,6 +16,15 @@ mongo.connect(function(msg, coltn) {
 	} else 
 		console.log(msg);
 });
+
+var commitFeed = function(){};
+commitFeed.prototype = new events.EventEmitter;
+commitFeed.prototype.updateAll = function(commit) {
+	this.emit('update_commits', commit);
+};
+
+var Updater = new commitFeed();
+exports.commitFeed = Updater;
 
 exports.access = function(req, res){
 	res.render('access', { title: "Access" });
@@ -52,20 +60,21 @@ exports.hook = function(req, res) {
 	var hook_data = JSON.parse(req.body.payload);
 	console.log(hook_data);
 	process.pushIntoDatabase(hook_data);
-	httpApp.emit('update_commits');
 };
 
 // main page
 exports.index = function(req, res){
-	/*mongo.db.collection('commits', function(err, col){
+	//console.log(loop.events);
+	mongo.db.collection('commits', function(err, col){
 		col.find().limit(1).toArray(function(err, r){
-			console.log(r);
+			//console.log(r);
 			console.log(r[0]);
-			process.pushIntoDatabase(r[0]);
+			//process.pushIntoDatabase(r[0]);
+			Updater.updateAll(r[0]);
 			res.render('index', { title: 'Turnip' });
 		});
-	});*/
-	res.render('index', { title: 'Turnip' });
+	});
+	//res.render('index', { title: 'Turnip' });
 };
 
 // graph page
