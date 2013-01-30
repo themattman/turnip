@@ -53,6 +53,7 @@ exports.pushIntoDatabase = function(d, cb){
   saveCommitToDatabase(d);
 
   mongo.db.collection('graph_data', function(err, col){
+    if(err){throw err;}
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       if(err){throw err;}
       console.log('RESULTS');
@@ -104,7 +105,7 @@ exports.pushIntoDatabase = function(d, cb){
       }
     });
   });
-}
+};
 
 
 // ---------------------------------------------------------- //
@@ -112,18 +113,43 @@ exports.pushIntoDatabase = function(d, cb){
 // ---------------------------------------------------------- //
 exports.getData = function(curTime, cb) {
   mongo.db.collection('graph_data', function(err, collection) {
+    if(err){throw err;}
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
+      if(err){throw err;}
       console.log('getData'.red, results.length)
       cb(results);
     });
   });
 };
 
+exports.getFeed = function(curTime, cb){
+  mongo.db.collection('commits', function(err, collection) {
+    if(err){throw err;}
+    // Sort the results and take the top 10 teams
+    collection.find().sort({ '_id': 1 }).limit(10).toArray(function(err, results) {
+      if(err){throw err;}
+      var to_push = [];
+      if(results){
+        for(var i in results){
+          var msg = {};
+          msg.repoName = results[i].repository.name;
+          msg.userName = results[i].pusher.name;
+          msg.message  = results[i].head_commit.message;
+          to_push.push(msg);
+        }
+      }
+      cb(to_push);
+    });
+  });
+};
+
 exports.getLatestDelta = function(curTime, cb) {
   mongo.db.collection('graph_data', function(err, collection) {
+    if(err){throw err;}
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
+      if(err){throw err;}
       console.log('getLatestDelta'.red, results.length);
 
       // Only send the most recent 10 items

@@ -68,23 +68,28 @@ socket.on('update', function(delta){
     updatePageData(delta);
   }
 });
-socket.on('feed', function(commit){
+socket.on('feed_update', function(commit){
   console.log('on_feed');
   console.log(commit);
-  updateFeed(commit[0]);
+  updateFeed(commit);
+});
+socket.on('feed_load', function(commit){
+  commit = commit.reverse();
+  for(var i in commit){
+    updateFeed(commit[i]);
+  }
+  $('#messages').fadeIn('slow');
 });
 
 function updateFeed(commit){
-  //var new_row = document.createElement('tr');
   var td0 = document.createElement('td');
-  td0.innerHTML = commit.pusher.name;
+  td0.innerHTML = commit.userName;
   var td1 = document.createElement('td');
-  td1.innerHTML = commit.head_commit.message;
+  td1.innerHTML = commit.message;
   var new_row = document.createElement('tr');
   new_row.appendChild(td0);
   new_row.appendChild(td1);
-  $('#messages_tbody').append(new_row);
-  $('#messages').fadeIn('fast');
+  $('#messages_tbody').prepend(new_row);
 }
 
 function updateLeaderboard(c, tbody_handle) {

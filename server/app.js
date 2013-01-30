@@ -57,6 +57,11 @@ io.sockets.on('connection', function(socket){
     }, 1000);
   });
 
+  process.getFeed(currentTime, function(commitFeed){
+    console.log(commitFeed);
+    socket.emit('feed_load', commitFeed);
+  });
+
   fs.watch('./server/github.json', function(cur, prev){
     var curTime = new Date().getTime();
     process.getLatestDelta(curTime, function(latestDelta){
@@ -69,8 +74,14 @@ io.sockets.on('connection', function(socket){
     mongo.db.collection('commits', function(err, col){
       col.find().limit(1).toArray(function(err, collection){
         console.log('updatingCommitFeeds'.yellow);
-        console.log(collection);
-        socket.broadcast.emit('feed', collection);
+        if(collection){
+          console.log(collection);
+          var to_send = {};
+          to_send.userName = collection[0].pusher.name;
+          to_send.repoName = collection[0].repository.name;
+          to_send.message  = collection[0].head_commit.message;
+          socket.broadcast.emit('feed_update', to_send);
+        }
       });
     });
   })
