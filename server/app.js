@@ -28,7 +28,6 @@ app.get('/github/accounts', router.githubjson);
 app.get('/rickshaw',        router.rickshaw  );
 
 // POST
-//app.post('/access', router.access)
 app.post('/hook',   router.hook  );
 app.post('/start',  router.start );
 app.post('/stop',   router.stop  );
@@ -84,34 +83,34 @@ io.sockets.on('connection', function(socket){
         }
       });
     });
-  })
+  });
 });
 
 
 exports.daemon = function(){
-    // ---------------------------------------------------------- //
-    // Increment the timestamp in github.json and the database
-    // ---------------------------------------------------------- //
-    fs.readFile('./server/github.json', 'utf-8', function(err, file){
-      file = JSON.parse(file);
-      console.log('file'.cyan, file.latest_timestamp);
-      file.latest_timestamp += __timeDelta;
-      fs.writeFile('./server/github.json', JSON.stringify(file), function(error){
-        if(error) throw error;
-        console.log('done writing timestamp to github.json');
-        mongo.db.collection('graph_data', function(err, col){
-          col.find().toArray(function(err, collection){
-            for(var row in collection){
-              var data_point = {};
-              data_point.x = file.latest_timestamp + __timeDelta;
-              data_point.y = collection[row].numCommits;
-              col.update( {'repoName': collection[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
-                if(err){throw err;}
-              });
-            }
-          });
+  // ---------------------------------------------------------- //
+  // Increment the timestamp in github.json and the database
+  // ---------------------------------------------------------- //
+  fs.readFile('./server/github.json', 'utf-8', function(err, file){
+    file = JSON.parse(file);
+    console.log('file'.cyan, file.latest_timestamp);
+    file.latest_timestamp += __timeDelta;
+    fs.writeFile('./server/github.json', JSON.stringify(file), function(error){
+      if(error) throw error;
+      console.log('done writing timestamp to github.json');
+      mongo.db.collection('graph_data', function(err, col){
+        col.find().toArray(function(err, collection){
+          for(var row in collection){
+            var data_point = {};
+            data_point.x = file.latest_timestamp + __timeDelta;
+            data_point.y = collection[row].numCommits;
+            col.update( {'repoName': collection[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
+              if(err){throw err;}
+            });
+          }
         });
       });
     });
-    console.log('intervalling', new Date().getTime());
-  }
+  });
+  console.log('intervalling', new Date().getTime());
+};

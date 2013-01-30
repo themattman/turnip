@@ -71,7 +71,7 @@ socket.on('update', function(delta){
 socket.on('feed_update', function(commit){
   console.log('on_feed');
   console.log(commit);
-  updateFeed(commit);
+  //updateFeed(commit);
 });
 socket.on('feed_load', function(commit){
   commit = commit.reverse();
@@ -90,6 +90,13 @@ function updateFeed(commit){
   new_row.appendChild(td0);
   new_row.appendChild(td1);
   $('#messages_tbody').prepend(new_row);
+  if($('#messages_tbody tr').length > 10){
+    for(var i in ($('#messages_tbody tr')-10)){
+      var to_delete = "'#messages_tbody tr:nth-child('" + (10+i) + ")";
+      console.log(to_delete);
+      $(to_delete).remove();
+    }
+  }
 }
 
 function updateLeaderboard(c, tbody_handle) {
