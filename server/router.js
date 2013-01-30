@@ -7,7 +7,8 @@ var mongo     = require("./database.js")
 	, loop      = require('./app.js')
 	, interval
 	//, events    = require('events').EventEmitter;
-	, httpApp   = require('./app.js').httpApp;
+	, httpApp   = require('./app.js').httpApp
+	, secret    = require('./secret.js').admin;
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -73,11 +74,17 @@ exports.rickshaw = function(req, res){
 };
 
 exports.start = function(req, res){
-	console.log('start');
-	interval = setInterval(loop.daemon, 10000);
+	console.log(req.body, secret.pass);
+	if(req.body.password == secret.pass){
+		console.log('start');
+		interval = setInterval(loop.daemon, 10000);
+	}
 };
 
 exports.stop = function(req, res){
-	console.log('stop');
-	clearInterval(interval);
+	console.log(req.body, secret.pass);
+	if(req.body.password == secret.pass){
+		console.log('stop');
+		clearInterval(interval);
+	}
 };

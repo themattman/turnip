@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  input(type="password", id="password", style="margin:auto;")
   .btn.btn-success(style="margin-right:10px;margin-left:10px;") Start
   .btn.btn-danger Stop
 
@@ -8,9 +9,9 @@ block scripts
   script
     $('.btn.btn-success').click(function(){
       console.log('suc');
-      $.post('/start');
+      $.post('/start', { password: $('#password').val() });
     });
     $('.btn.btn-danger').click(function(){
       console.log('dan');
-      $.post('/stop');
+      $.post('/stop', { password: $('#password').val() });
     });

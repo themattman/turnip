@@ -27,7 +27,7 @@ module.exports = Object.freeze({
   //email: {},
   admin: {
     user: "user",
-    pass: "pass"
+    pass: "dopes"
   },
   constants: {
     timeDelta: 300000, //in milli-seconds
