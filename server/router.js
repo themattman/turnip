@@ -6,7 +6,8 @@ var mongo     = require("./database.js")
 	, process   = require('./process.js')
 	, loop      = require('./app.js')
 	, interval
-	, events    = require('events').EventEmitter;
+	//, events    = require('events').EventEmitter;
+	, httpApp   = require('./app.js').httpApp;
 
 mongo.connect(function(msg, coltn) {
 	if(msg == null) {
@@ -50,19 +51,20 @@ exports.hook = function(req, res) {
 	var hook_data = JSON.parse(req.body.payload);
 	console.log(hook_data);
 	process.pushIntoDatabase(hook_data);
-	events.emit('update_commits');
+	httpApp.emit('update_commits');
 };
 
 // main page
 exports.index = function(req, res){
-	mongo.db.collection('commits', function(err, col){
+	/*mongo.db.collection('commits', function(err, col){
 		col.find().limit(1).toArray(function(err, r){
 			console.log(r);
 			console.log(r[0]);
 			process.pushIntoDatabase(r[0]);
 			res.render('index', { title: 'Turnip' });
 		});
-	});
+	});*/
+	res.render('index', { title: 'Turnip' });
 };
 
 // graph page

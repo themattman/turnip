@@ -20,11 +20,18 @@ function zeroOutUnusedDataPoints(cb) {
 }
 
 function updateCommitsFeed(){
-  
+  mongo.db.collection('commits', function(err, col){
+    if(err){throw err;}
+    col.find().sort({_id:1}).limit(1).toArray(function(err, results){
+      if(err){throw err;}
+      console.log(results);
+    });
+  });
 }
 
 function saveCommitToDatabase(commit_data){
   mongo.db.collection('commits', function(err, col){
+    if(err){throw err;}
     console.log('in da commits collection');
     col.insert(commit_data);
   });
@@ -47,6 +54,7 @@ exports.pushIntoDatabase = function(d, cb){
 
   mongo.db.collection('graph_data', function(err, col){
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
+      if(err){throw err;}
       console.log('RESULTS');
       console.log(results);
       if(!results || results.length < 1) {

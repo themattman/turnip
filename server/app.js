@@ -38,6 +38,8 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port:".blue, app.get('port'));
 });
 
+exports.httpApp = httpApp;
+
 // ---------------------------------------------------------- //
 // Socket.io
 // ---------------------------------------------------------- //
@@ -63,7 +65,7 @@ io.sockets.on('connection', function(socket){
     });
   });
 
-  events.on('update_commits', function(cur, prev){
+  httpApp.on('update_commits', function(cur, prev){
     mongo.db.collection('commits', function(err, col){
       col.find().limit(1).toArray(function(err, collection){
         console.log('updatingCommitFeeds'.yellow);
@@ -71,7 +73,7 @@ io.sockets.on('connection', function(socket){
         //socket.broadcast.emit('feed', collection);
       });
     });
-  });
+  })
 });
 
 
