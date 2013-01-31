@@ -15,7 +15,7 @@ block append content
     #leader_container
       h2(class="noun") Leaderboard
       p By number of commits
-      table.table.table-striped(id="leaders")
+      table.table.table-striped.table-hover(id="leaders")
         thead(style="font-weight: bold;")
           tr
             td #
@@ -26,7 +26,7 @@ block append content
     #commit_feed_container
       h2(class="noun") Commit Messages
       p From the latest commits
-      table.table.table-bordered(id="messages")
+      table.table.table-bordered.table-hover(id="messages")
         tbody(id="messages_tbody")
 
 block append scripts
