@@ -66,6 +66,10 @@ io.sockets.on('connection', function(socket){
 });
 
 process.commitFeed.on('update_commits', function(cur, prev){
+  console.log('CURREEENNTTT'.magenta);
+  console.log(cur);
+  console.log('PREEVIOUS'.magenta);
+  console.log(prev);
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}
     col.find().limit(1).toArray(function(err, collection){
