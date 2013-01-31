@@ -118,10 +118,6 @@ function updateLeaderboard(c, tbody_handle) {
     new_row.appendChild(td2);
     new_row.appendChild(td3);
     tbody_handle.appendChild(new_row);
-    $(td0).effect('highlight', {}, 1200);
-    $(td1).effect('highlight', {}, 1200);
-    $(td2).effect('highlight', {}, 1200);
-    $(td3).effect('highlight', {}, 1200);
   }
   return tbody_handle;
 }
