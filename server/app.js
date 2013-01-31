@@ -49,23 +49,27 @@ io.sockets.on('connection', function(socket){
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
     setTimeout(function(){
+      console.log('emit_graph_load'.zebra);
       socket.emit('graph_load', graph_info);
     }, 1000);
   });
 
   process.getFeed(currentTime, function(commitFeed){
+    console.log('emit_feed_load'.zebra);
     socket.emit('feed_load', commitFeed);
   });
 
   fs.watch('./server/github.json', function(cur, prev){
     var curTime = new Date().getTime();
     process.getLatestDelta(curTime, function(latestDelta){
+      console.log('emit_graph_update'.zebra);
       socket.broadcast.emit('graph_update', latestDelta);
     });
   });
 });
 
 process.commitFeed.on('update_commits', function(new_commit){
+  console.log('emit_feed_update'.zebra);
   io.sockets.in('graph').emit('feed_update', new_commit);
 });
 
