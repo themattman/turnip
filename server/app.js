@@ -63,7 +63,7 @@ io.sockets.on('connection', function(socket){
     var curTime = new Date().getTime();
     process.getLatestDelta(curTime, function(latestDelta){
       console.log('emit_graph_update'.zebra);
-      socket.broadcast.emit('graph_update', latestDelta);
+      socket.emit('graph_update', latestDelta);
     });
   });
 });
