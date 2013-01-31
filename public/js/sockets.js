@@ -46,11 +46,6 @@ function sanitizeDataPoints(serverUpdate){
     delete serverUpdate[i]._id;
     serverUpdate[i].color = palette.color();
   }
-
-  $('#loader').hide();
-
-  createGraph();
-  updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
 }
 
 var socket = io.connect('/');
@@ -58,13 +53,17 @@ socket.on('connect', function(){
   console.log('on_connect');
 });
 socket.on('graph_load', function(update){
-  console.log('on_gimme');
+  console.log('on_graph_load');
   if(window.leaderboard.length < 1){
     sanitizeDataPoints(update);
+    $('#loader').hide();
+    createGraph();
+    updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
+    $('#leaders_tbody tr').effect('highlight', {}, 1200);
   }
 });
 socket.on('graph_update', function(delta){
-  console.log('on_update');
+  console.log('on_graph_update');
   if(window.leaderboard.length > 0){
     updatePageData(delta);
   }
@@ -99,8 +98,8 @@ function updateFeed(commit){
       $('#messages_tbody tr:last-child').remove();
     }
   }
-  $(td0).effect('highlight', {}, 1200);
-  $(td1).effect('highlight', {}, 1200);
+  $(td0).effect('highlight', {}, 1000);
+  $(td1).effect('highlight', {}, 1000);
 }
 
 function updateLeaderboard(c, tbody_handle) {
@@ -119,6 +118,10 @@ function updateLeaderboard(c, tbody_handle) {
     new_row.appendChild(td2);
     new_row.appendChild(td3);
     tbody_handle.appendChild(new_row);
+    $(td0).effect('highlight', {}, 1200);
+    $(td1).effect('highlight', {}, 1200);
+    $(td2).effect('highlight', {}, 1200);
+    $(td3).effect('highlight', {}, 1200);
   }
   return tbody_handle;
 }
