@@ -167,11 +167,13 @@ exports.getFeed = function(curTime, cb){
       var to_push = [];
       if(results){
         for(var i in results){
-          var msg = {};
-          msg.repoName = results[i].repository.name;
-          msg.userName = results[i].pusher.name;
-          msg.message  = results[i].head_commit.message;
-          to_push.push(msg);
+          for(var j in results[i].commits){
+            var msg = {};
+            msg.repoName = results[i].repository.name;
+            msg.userName = results[i].pusher.name;
+            msg.message  = results[i].commits[j].message;
+            to_push.push(msg);
+          }
         }
       }
       cb(to_push);
