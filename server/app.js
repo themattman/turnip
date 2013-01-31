@@ -26,9 +26,9 @@ app.get('/github/accounts', router.githubjson);
 app.get('/rickshaw',        router.rickshaw  );
 
 // POST
-app.post('/hook',   router.hook  );
-app.post('/start',  router.start );
-app.post('/stop',   router.stop  );
+app.post('/hook',  router.hook );
+app.post('/start', router.start);
+app.post('/stop',  router.stop );
 
 
 // start the server
@@ -45,7 +45,9 @@ var io = require('socket.io').listen(httpApp).set('log level', 1);
 io.sockets.on('connection', function(socket){
   console.log('SOCKET CONNECTED'.green);
   socket.join('graph');
+
   var currentTime = new Date().getTime();
+  
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
     setTimeout(function(){

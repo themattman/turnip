@@ -20,12 +20,12 @@ function updatePageData(serverUpdate) {
   // ---------------------------------------------------------- //
   var fresh_tbody = document.createElement('tbody');
   fresh_tbody = updateLeaderboard(serverUpdate, fresh_tbody);
-  //$('#leaders_tbody').fadeOut('fast', function(){
+  $('#leaders_tbody').fadeOut('fast', function(){
     document.getElementById('leaders').appendChild(fresh_tbody);
     $('#leaders_tbody').remove();
     $(fresh_tbody).fadeIn('fast');
     fresh_tbody.setAttribute("id", "leaders_tbody");
-  //});
+  });
 }
 
 function sanitizeDataPoints(serverUpdate){
@@ -75,7 +75,6 @@ socket.on('feed_update', function(commit){
 });
 socket.on('feed_load', function(commit){
   console.log(commit);
-  //commit = commit.reverse();
   for(var i in commit){
     updateFeed(commit[i]);
   }

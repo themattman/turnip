@@ -10,7 +10,7 @@ var mongo       = require('./database.js')
 var commitFeed = function(){};
 commitFeed.prototype = new events.EventEmitter;
 commitFeed.prototype.updateAll = function(commit) {
-  console.log('emitting the new commit feed prototype'.red);
+  console.log('update_commits.emit'.red);
   this.emit('update_commits', commit);
 };
 
@@ -41,16 +41,15 @@ function updateCommitsFeed(){
 }
 
 var saveCommitToDatabase = function (commit_data){
+  console.log('saveCommitToDatabase()'.zebra);
   if(!commit_data){return;}
   var sanitized_commit        = {};
   sanitized_commit.pusher     = {};
   sanitized_commit.repository = {};
   sanitized_commit.commits    = [];
-  console.log('numCommits=', commit_data.commits.length);
 
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}
-
     sanitized_commit.pusher.name            = commit_data.pusher.name;
     sanitized_commit.pusher.email           = commit_data.pusher.email;
     sanitized_commit.repository.name        = commit_data.repository.name;
@@ -65,7 +64,6 @@ var saveCommitToDatabase = function (commit_data){
       this_commit.committer.name = commit_data.commits[i].committer.name;
       sanitized_commit.commits.push(this_commit);
     }
-    console.log(sanitized_commit);
     col.insert(sanitized_commit);
 
     Updater.updateAll(sanitized_commit);
@@ -75,14 +73,10 @@ var saveCommitToDatabase = function (commit_data){
 exports.saveCommitToDatabase = saveCommitToDatabase;
 
 exports.pushIntoDatabase = function(d, cb){
-  var record = {};
-  console.log('pushIntoDatabase'.magenta);
-  console.log(d);
-  var file = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
-  console.log('file'.cyan, file.latest_timestamp);
-
+  console.log('pushIntoDatabase()'.zebra);
+  var file     = JSON.parse(fs.readFileSync('./server/github.json', 'utf-8'));
   var repoName = d.repository.name;
-  console.log('repoName =', repoName);
+  var record   = {};
 
   // ---------------------------------------------------------- //
   // Write the commit to Mongo
@@ -93,8 +87,7 @@ exports.pushIntoDatabase = function(d, cb){
     if(err){throw err;}
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       if(err){throw err;}
-      console.log('RESULTS');
-      console.log(results);
+      console.log('A RESULT'.green);
       if(!results || results.length < 1) {
 
         // ---------------------------------------------------------- //
@@ -106,11 +99,9 @@ exports.pushIntoDatabase = function(d, cb){
           record.numCommits = d.commits.length;
           record.data = c;
           record.data.push({'x': file.latest_timestamp, 'y': d.commits.length});
-          console.log('record to insert'.green);
-          console.log('numCommits of this record'.blue, record.numCommits);
           col.insert(record, function(err, docs){
             if(err){throw err;}
-            console.log('inserted a new repo/record'.magenta);
+            console.log('created a new repo record'.magenta);
           });
         });
       } else {
@@ -121,24 +112,23 @@ exports.pushIntoDatabase = function(d, cb){
         var data_point = {};
         data_point.x = file.latest_timestamp;
         data_point.y = record.numCommits + d.commits.length;
-        console.log('record'.zebra);
 
         col.update({'repoName': record.repoName}, { $inc: { 'numCommits': d.commits.length } }, function(err, docs){
           if(err){throw err;}
-          console.log('updated a record'.magenta);
+          console.log('updated a graph_data record, numCommits'.magenta);
 
           // Remove the last data point
           col.update({'repoName': record.repoName}, { $pop: { data: 1 } }, function(err, docs){
             if(err){throw err;}
-
             // Push the last data point back on with an updated y value
             col.update({'repoName': record.repoName}, { $push: { data: data_point } }, function(err, docs){
               if(err){throw err;}
-              console.log('updated a record'.blue);
+              console.log('updated a graph_data record, last x val'.blue);
             });
           });
 
         });
+
       }
     });
   });
