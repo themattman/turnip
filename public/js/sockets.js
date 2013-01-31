@@ -61,6 +61,7 @@ socket.on('graph_load', function(load_data){
     updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
     $('#leaders_tbody tr').effect('highlight', {}, 1200);
   //}
+  $('#offset_form').fadeIn('fast');
 });
 socket.on('graph_update', function(delta){
   console.log('on_graph_update');

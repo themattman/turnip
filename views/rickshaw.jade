@@ -12,6 +12,11 @@ block append content
       #chart
       #slider
       #legend
+      form#offset_form.toggler
+        input#lines(type="radio", name="offset", value="lines", checked)
+        label.lines(for="lines") lines
+        input#stack(type="radio", name="offset", value="zero")
+        label.stack(for="stack") stack
     #leader_container
       h2(class="noun") Leaderboard
       p By number of commits
