@@ -168,13 +168,15 @@ function updateGraph() {
 
 var offsetForm = document.getElementById('offset_form');
 $('#btn0').click(function(a){
-  graph.setRenderer('line');
-  graph.offset = 'zero';
+  graph.renderer.unstack = true;
+  /*graph.setRenderer('line');
+  graph.offset = 'zero';*/
   graph.render();
 });
 $('#btn1').click(function(a){
-  graph.setRenderer('stack');
-  graph.offset = 0;
+  graph.renderer.unstack = false;
+  /*graph.setRenderer('stack');
+  graph.offset = 0;*/
   graph.render();
 });
 /*offsetForm.addEventListener('change', function(e) {
