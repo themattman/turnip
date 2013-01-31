@@ -51,21 +51,23 @@ var socket = io.connect('/');
 socket.on('connect', function(){
   console.log('on_connect');
 });
-socket.on('graph_load', function(update){
+socket.on('graph_load', function(load_data){
   console.log('on_graph_load');
-  if(window.leaderboard.length < 1){
-    sanitizeDataPoints(update);
+  console.log(load_data)
+  //if(window.leaderboard.length < 1){
+    sanitizeDataPoints(load_data);
     $('#loader').hide();
     createGraph();
     updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
     $('#leaders_tbody tr').effect('highlight', {}, 1200);
-  }
+  //}
 });
 socket.on('graph_update', function(delta){
   console.log('on_graph_update');
-  if(window.leaderboard.length > 0){
+  console.log(delta);
+  //if(window.leaderboard.length > 0){
     updatePageData(delta);
-  }
+  //}
 });
 socket.on('feed_update', function(commit){
   console.log('on_feed');
