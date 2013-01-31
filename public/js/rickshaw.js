@@ -84,7 +84,7 @@ function createGraph() {
     element: document.querySelector('#chart'),
     width: 800,
     height: 250,
-    renderer: 'area',
+    //renderer: 'area',
     stroke: true,
     series:  window.graph_data//[ item2, item1 ]//window.graph_data//seriesData 
   });
