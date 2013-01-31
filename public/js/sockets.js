@@ -119,6 +119,6 @@ function updateLeaderboard(c, tbody_handle) {
     new_row.appendChild(td2);
     new_row.appendChild(td3);
     tbody_handle.appendChild(new_row);
-    return tbody_handle;
   }
+  return tbody_handle;
 }
