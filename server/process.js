@@ -40,7 +40,7 @@ function updateCommitsFeed(){
   });
 }
 
-exports.saveCommitToDatabase = function (commit_data){
+var saveCommitToDatabase = function (commit_data){
   if(!commit_data){return;}
   var sanitized_commit        = {};
   sanitized_commit.pusher     = {};
@@ -71,6 +71,8 @@ exports.saveCommitToDatabase = function (commit_data){
     Updater.updateAll(sanitized_commit);
   });
 }
+
+exports.saveCommitToDatabase = saveCommitToDatabase;
 
 exports.pushIntoDatabase = function(d, cb){
   var record = {};
