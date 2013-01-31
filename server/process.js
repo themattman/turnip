@@ -31,17 +31,6 @@ function zeroOutUnusedDataPoints(latest_timestamp, cb) {
   cb(commits);
 }
 
-function updateCommitsFeed(){
-  console.log('updateCommitsFeed()'.zebra);
-  mongo.db.collection('commits', function(err, col){
-    if(err){throw err;}
-    col.find().sort({_id:1}).limit(1).toArray(function(err, results){
-      if(err){throw err;}
-      console.log(results);
-    });
-  });
-}
-
 var saveCommitToDatabase = function (commit_data){
   console.log('saveCommitToDatabase()'.zebra);
   if(!commit_data){return;}
