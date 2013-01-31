@@ -65,24 +65,13 @@ io.sockets.on('connection', function(socket){
   });
 });
 
-process.commitFeed.on('update_commits', function(cur, prev){
-  console.log('CURREEENNTTT'.magenta);
-  console.log(cur);
-  console.log('PREEVIOUS'.magenta);
-  console.log(prev);
-  mongo.db.collection('commits', function(err, col){
-    if(err){throw err;}
-    col.find().limit(1).toArray(function(err, collection){
-      if(err){throw err;}
-      if(collection){
-        var to_send = {};
-        to_send.userName = collection[0].pusher.name;
-        to_send.repoName = collection[0].repository.name;
-        to_send.message  = collection[0].commits[0].message;
-        io.sockets.in('graph').emit('feed_update', to_send);
-      }
-    });
-  });
+process.commitFeed.on('update_commits', function(new_commit){
+  io.sockets.in('graph').emit('feed_update', new_commit);
+  /*var to_send = {};
+  to_send.userName = collection[0].pusher.name;
+  to_send.repoName = collection[0].repository.name;
+  to_send.message  = collection[0].commits[0].message;
+  io.sockets.in('graph').emit('feed_update', to_send);*/
 });
 
 exports.daemon = function(){
