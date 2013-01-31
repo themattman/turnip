@@ -73,7 +73,7 @@ exports.start = function(req, res){
 	console.log(req.body, secret.pass);
 	if(req.body.password == secret.pass){
 		console.log('start');
-		interval = setInterval(loop.daemon, 10000);
+		interval = setInterval(loop.daemon, 30000);
 	}
 };
 

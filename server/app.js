@@ -109,5 +109,5 @@ exports.daemon = function(){
       });
     });
   });
-  console.log('intervalling', new Date().getTime());
+  console.log('intervalling', Math.round(new Date().getTime()/1000));
 };

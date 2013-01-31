@@ -17,13 +17,13 @@ commitFeed.prototype.updateAll = function(commit) {
 var Updater = new commitFeed();
 exports.commitFeed = Updater;
 
-function zeroOutUnusedDataPoints(cb) {
-  var numPointsToFill = ((1359273904465 - __startTime) / __timeDelta) / 1000;
+function zeroOutUnusedDataPoints(latest_timestamp, cb) {
+  var numPointsToFill = ((latest_timestamp - __startTime) / __timeDelta);
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
     var ith_commit = {};
     ith_commit.x = (__startTime + i*__timeDelta);
-    ith_commit.y = Math.round(40*Math.random());
+    ith_commit.y = 0;//Math.round(40*Math.random());
     commits.push(ith_commit);
   }
   console.log('commits Zerod'.yellow, i);
@@ -100,7 +100,7 @@ exports.pushIntoDatabase = function(d, cb){
         // ---------------------------------------------------------- //
         // Create a new record for this repo
         // ---------------------------------------------------------- //
-        zeroOutUnusedDataPoints(function(c){
+        zeroOutUnusedDataPoints(file.latest_timestamp, function(c){
           record.repoName = repoName;
           record.userName = d.repository.owner.name;
           record.numCommits = d.commits.length;
