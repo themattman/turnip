@@ -41,11 +41,12 @@ function updateCommitsFeed(){
 }
 
 exports.saveCommitToDatabase = function (commit_data){
+  if(!commit_data){return;}
   var sanitized_commit        = {};
   sanitized_commit.pusher     = {};
   sanitized_commit.repository = {};
   sanitized_commit.commits    = [];
-  console.log('numCommits=', commit_data.commits.length.magenta);
+  console.log('numCommits=', commit_data.commits.length);
 
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}

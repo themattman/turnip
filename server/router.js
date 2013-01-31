@@ -62,7 +62,6 @@ exports.index = function(req, res){
 			res.render('index', { title: 'Turnip' });
 		});
 	});
-	//res.render('index', { title: 'Turnip' });
 };
 
 // graph page

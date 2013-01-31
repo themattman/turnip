@@ -74,6 +74,7 @@ socket.on('feed_update', function(commit){
   updateFeed(commit);
 });
 socket.on('feed_load', function(commit){
+  console.log(commit);
   commit = commit.reverse();
   for(var i in commit){
     updateFeed(commit[i]);
@@ -82,6 +83,7 @@ socket.on('feed_load', function(commit){
 });
 
 function updateFeed(commit){
+  if(!commit){return;}
   var td0 = document.createElement('td');
   td0.innerHTML = commit.userName;
   var td1 = document.createElement('td');
