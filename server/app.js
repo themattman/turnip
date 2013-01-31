@@ -49,7 +49,7 @@ io.sockets.on('connection', function(socket){
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
     setTimeout(function(){
-      socket.emit('gimme_all_ur_datas', graph_info);
+      socket.emit('graph_load', graph_info);
     }, 1000);
   });
 
@@ -60,7 +60,7 @@ io.sockets.on('connection', function(socket){
   fs.watch('./server/github.json', function(cur, prev){
     var curTime = new Date().getTime();
     process.getLatestDelta(curTime, function(latestDelta){
-      socket.broadcast.emit('update', latestDelta);
+      socket.broadcast.emit('graph_update', latestDelta);
     });
   });
 });

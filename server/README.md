@@ -38,6 +38,7 @@
 * clean up / refactor - (check) emitter for hook should move from router to process
 * get rid of collection undef issue
 * make sure in each file all require()s are used
+* Support for multiple types of graphs (unstacked)
 * Static graphs?
 * load balancer
 * separate server for getting hooks

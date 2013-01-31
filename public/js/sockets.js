@@ -57,13 +57,13 @@ var socket = io.connect('/');
 socket.on('connect', function(){
   console.log('on_connect');
 });
-socket.on('gimme_all_ur_datas', function(update){
+socket.on('graph_load', function(update){
   console.log('on_gimme');
   if(window.leaderboard.length < 1){
     sanitizeDataPoints(update);
   }
 });
-socket.on('update', function(delta){
+socket.on('graph_update', function(delta){
   console.log('on_update');
   if(window.leaderboard.length > 0){
     updatePageData(delta);
