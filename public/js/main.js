@@ -10,4 +10,8 @@ $(function() {
 
   // Toggle functionality on the graph selectors
   $('.btn-group').button();
+
+  $('.inline').click(function(){
+    window.location = 'http://themattmans.turnip.jit.su';
+  });
 });

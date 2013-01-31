@@ -63,6 +63,10 @@ a:hover {
 }
 .inline {
   margin-left: 10px;
+  width: 135px;
+}
+.inline:hover {
+  cursor: pointer;
 }
 #loader {
   position: absolute;
