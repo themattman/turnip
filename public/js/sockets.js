@@ -29,6 +29,12 @@ function updatePageData(serverUpdate) {
 }
 
 function sanitizeDataPoints(serverUpdate){
+  if(!serverUpdate){
+    console.log('woops')
+    $('#loader').hide();
+    $('#loader').text('Sorry, no data.')
+    return;
+  }
   for(var i in serverUpdate){
     var team = {};
     team.repoName   = serverUpdate[i].repoName;
