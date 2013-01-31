@@ -151,7 +151,7 @@ exports.getData = function(curTime, cb) {
 };
 
 exports.getFeed = function(curTime, cb){
-  console.log('getFeed()');
+  console.log('getFeed()'.zebra);
   mongo.db.collection('commits', function(err, collection) {
     if(err){throw err;}
     // Sort the results and take the top 10 teams

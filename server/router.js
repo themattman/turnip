@@ -24,11 +24,6 @@ exports.accounts = function(req, res){
   res.render('accounts', { title: "Github Accounts" });
 };
 
-// admin page
-exports.admin = function(req, res){
-	res.send("<h3> You must be and admin! </h3>");
-};
-
 // db test
 exports.db = function(req, res){
 	collection.insert({ msg: "hello world" }, function(err, docs){
@@ -50,22 +45,9 @@ exports.hook = function(req, res) {
 	process.pushIntoDatabase(hook_data);
 };
 
-// main page
-exports.index = function(req, res){
-	/*mongo.db.collection('commits', function(err, col){
-		col.find().limit(1).toArray(function(err, r){
-			//process.pushIntoDatabase(r[0]);
-			if(r){
-				process.saveCommitToDatabase(r[0]);
-			}
-		});
-	});*/
-	res.render('index', { title: 'Turnip' });
-};
-
 // graph page
-exports.rickshaw = function(req, res){
-  res.render('rickshaw', { title: 'Turnip' });
+exports.index = function(req, res){
+	res.render('rickshaw', { title: 'Turnip' });
 };
 
 exports.start = function(req, res){

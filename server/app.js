@@ -19,11 +19,9 @@ config(app);
 // GET
 app.get('/',                router.index     );
 app.get('/access',          router.access    );
-app.get('/admin',           router.admin     );
 app.get('/admin/accounts',  router.accounts  );
 app.get('/db',              router.db        );
 app.get('/github/accounts', router.githubjson);
-app.get('/rickshaw',        router.rickshaw  );
 
 // POST
 app.post('/hook',  router.hook );

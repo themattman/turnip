@@ -12,7 +12,7 @@ module.exports = Object.freeze({
     pass: "dopes"
   },
   constants: {
-    timeDelta: 30,
+    timeDelta: 60,
     startTime: 1359603335
   }
 });

@@ -56,9 +56,6 @@ a:hover {
   /*text-align:center;*/
 
 }
-/*#commit_feed_container {
-  display: inline-block;
-}*/
 #turnip_pic {
   position: absolute;
   top: 45px;
@@ -78,8 +75,9 @@ a:hover {
 
 }
 #commit_feed_container {
-  max-height: 462px;
-  overflow: hidden;
+  /*max-height: 462px;
+  overflow: hidden;*/
+
   float: left;
   display: inline-block;
   margin-bottom: 100px;

@@ -1,11 +1,35 @@
 ## Design Docs
 
-### Synchronize commit numbers with the database
+# System Design
+
+### Graph Data
+
+* Onload
+  * Grab 10 most recent data points and display
+* Ondata
+  * Overwrite all graph data with 10 most recent data points and update graph
+
+### Leaderboard
+
+* Onload
+  * Grab top 10 results
+* Ondata
+  * Refresh entire 10 results
+
+### Feed
+
+* Onload
+  * Grab all the commits
+* Ondata
+  * Put this new commit at top spot
+
+# Synchronize commit numbers with the database
 
 * Have the updateInterval create new db entries for the new timestamp
 * The hook catcher should only be updating the last entry, not inserting 
 
-### Todo
+
+# Todo
 
 * (check) Add authentication to start/stop buttons
 * (check) Sanitize data upon hook, only save necessary data
