@@ -28,7 +28,7 @@ a:hover {
   width: 40px;
 }
 #legend {
-  display: inline-block;
+  display: block;
   vertical-align: top;
   margin: 0 0 0 10px;
   background-color: #808080;
@@ -86,8 +86,10 @@ a:hover {
   margin-top: 20px;
 }
 #offset_form {
-  float: left;
-  margin: 2em 0 0 15px;
-  font-size: 13px;
-  display: none;
+  margin-right: auto;
+  margin-left: 20px;
+  margin: 10px;
+  /*font-size: 13px;*/
+
+  display: inline-block;
 }

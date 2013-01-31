@@ -10,13 +10,14 @@ block append content
       img(id="loader", src="/img/ajax-loader.gif")
       #y_axis
       #chart
-      #slider
-      #legend
-      form#offset_form.toggler
-        input#lines(type="radio", name="offset", value="lines", checked)
+      form#offset_form
+        input#lines(type="radio", name="offset", value="lines")
         label.lines(for="lines") lines
+        br
         input#stack(type="radio", name="offset", value="zero")
         label.stack(for="stack") stack
+      #slider
+      #legend
     #leader_container
       h2(class="noun") Leaderboard
       p By number of commits
