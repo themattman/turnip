@@ -144,7 +144,7 @@ exports.getFeed = function(curTime, cb){
   mongo.db.collection('commits', function(err, collection) {
     if(err){throw err;}
     // Sort the results and take the top 10 teams
-    collection.find().sort({ '_id': 1 }).limit(10).toArray(function(err, results) {
+    collection.find().sort({ '_id': -1 }).limit(10).toArray(function(err, results) {
       if(err){throw err;}
       var to_push = [];
       if(results){

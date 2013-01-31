@@ -75,7 +75,8 @@ socket.on('feed_update', function(commit){
   updateFeed(commit);
 });
 socket.on('feed_load', function(commit){
-  console.log(commit);
+  commit.splice(10, (commit.length-10));
+  commit.reverse();
   for(var i in commit){
     updateFeed(commit[i]);
   }
