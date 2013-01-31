@@ -47,7 +47,7 @@ io.sockets.on('connection', function(socket){
   socket.join('graph');
 
   var currentTime = new Date().getTime();
-  
+
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
     setTimeout(function(){
@@ -68,7 +68,6 @@ io.sockets.on('connection', function(socket){
 });
 
 process.commitFeed.on('update_commits', function(cur, prev){
-  console.log('UPDATE COMMITS!!!!!!!!!!'.cyan);
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}
     col.find().limit(1).toArray(function(err, collection){

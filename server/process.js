@@ -18,6 +18,7 @@ var Updater = new commitFeed();
 exports.commitFeed = Updater;
 
 function zeroOutUnusedDataPoints(latest_timestamp, cb) {
+  console.log('zeroOutUnusedDataPoints()'.zebra);
   var numPointsToFill = ((latest_timestamp - __startTime) / __timeDelta);
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
@@ -31,6 +32,7 @@ function zeroOutUnusedDataPoints(latest_timestamp, cb) {
 }
 
 function updateCommitsFeed(){
+  console.log('updateCommitsFeed()'.zebra);
   mongo.db.collection('commits', function(err, col){
     if(err){throw err;}
     col.find().sort({_id:1}).limit(1).toArray(function(err, results){
@@ -87,7 +89,6 @@ exports.pushIntoDatabase = function(d, cb){
     if(err){throw err;}
     col.find({'repoName': repoName}).limit(1).toArray(function(err, results){
       if(err){throw err;}
-      console.log('A RESULT'.green);
       if(!results || results.length < 1) {
 
         // ---------------------------------------------------------- //
@@ -138,6 +139,7 @@ exports.pushIntoDatabase = function(d, cb){
 // Pushing Data out to Sockets
 // ---------------------------------------------------------- //
 exports.getData = function(curTime, cb) {
+  console.log('getData()'.zebra);
   mongo.db.collection('graph_data', function(err, collection) {
     if(err){throw err;}
     // Sort the results and take the top 10 teams
@@ -149,6 +151,7 @@ exports.getData = function(curTime, cb) {
 };
 
 exports.getFeed = function(curTime, cb){
+  console.log('getFeed()');
   mongo.db.collection('commits', function(err, collection) {
     if(err){throw err;}
     // Sort the results and take the top 10 teams
@@ -172,6 +175,7 @@ exports.getFeed = function(curTime, cb){
 };
 
 exports.getLatestDelta = function(curTime, cb) {
+  console.log('getLatestDelta()'.zebra);
   mongo.db.collection('graph_data', function(err, collection) {
     if(err){throw err;}
     // Sort the results and take the top 10 teams
