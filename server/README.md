@@ -18,3 +18,4 @@
 * load balancer
 * separate server for getting hooks
 * cost estimate
+* Make buttons to see larger graphs, larger graphs send less % of total points

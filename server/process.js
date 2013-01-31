@@ -18,7 +18,7 @@ var Updater = new commitFeed();
 exports.commitFeed = Updater;
 
 function zeroOutUnusedDataPoints(cb) {
-  var numPointsToFill = (1359273904465 - __startTime) / __timeDelta;
+  var numPointsToFill = ((1359273904465 - __startTime) / __timeDelta) / 1000;
   var commits = [];
   for(var i = 0; i < numPointsToFill; ++i) {
     var ith_commit = {};
