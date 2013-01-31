@@ -1,5 +1,4 @@
 $(function() {
-	//console.log('test')
   $('#password').focus(function(){
     $('#password').keypress(function(k){
       console.log(k, 'fired!');
@@ -10,4 +9,7 @@ $(function() {
       }
     });
   });
+
+  // Toggle functionality on the graph selectors
+  $('.btn-group').button();
 });

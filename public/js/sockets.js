@@ -1,5 +1,5 @@
 $('#messages').hide(); // .show() the latest messages after they load
-$('#offset_form').hide();
+$('.btn-group').hide();
 
 var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 window.graph_data  = [];
@@ -66,9 +66,9 @@ socket.on('graph_load', function(load_data){
     $('#loader').hide();
     createGraph();
     updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
-    $('#leaders_tbody tr').effect('highlight', {}, 1200);
+    //$('#leaders_tbody tr').effect('highlight', {}, 1200);
   //}
-  $('#offset_form').fadeIn('slow');
+  $('.btn-group').show();
 });
 socket.on('graph_update', function(delta){
   console.log('on_graph_update');

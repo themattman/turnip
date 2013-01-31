@@ -167,7 +167,17 @@ function updateGraph() {
 
 
 var offsetForm = document.getElementById('offset_form');
-offsetForm.addEventListener('change', function(e) {
+$('#btn0').click(function(a){
+  graph.setRenderer('line');
+  graph.offset = 'zero';
+  graph.render();
+});
+$('#btn1').click(function(a){
+  graph.setRenderer('stack');
+  graph.offset = 0;
+  graph.render();
+});
+/*offsetForm.addEventListener('change', function(e) {
   var offsetMode = e.target.value;
   if (offsetMode == 'lines') {
     graph.setRenderer('line');
@@ -177,7 +187,7 @@ offsetForm.addEventListener('change', function(e) {
     graph.offset = offsetMode;
   }
   graph.render();
-}, false);
+}, false);*/
 
 // Require everyone to enter their repo name before the competition
 // Store global file on server with samples taken every x seconds (well, on Mongo)

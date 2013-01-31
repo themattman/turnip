@@ -10,14 +10,13 @@ block append content
       img(id="loader", src="/img/ajax-loader.gif")
       #y_axis
       #chart
-      form#offset_form
-        input#lines(type="radio", name="offset", value="lines")
-        label.lines(for="lines") lines
-        br
-        input#stack(type="radio", name="offset", value="zero")
-        label.stack(for="stack") stack
       #slider
       #legend
+      .btn-group(data-toggle="buttons-radio", style="margin-left:20px;margin-top:15px;")
+        button.btn#btn0(value="lines", name="offset")
+          i.icon-signal
+        button.btn#btn1(value="zero", name="offset")
+          i.icon-align-right
     #leader_container
       h2(class="noun") Leaderboard
       p By number of commits
@@ -38,7 +37,6 @@ block append content
 block append scripts
   script(src="/socket.io/socket.io.js")
   script(src="//cdnjs.cloudflare.com/ajax/libs/d3/3.0.1/d3.v3.min.js")
-  script(src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js")
   script(src="/js/rickshaw.min.js")
   script(src="/js/rickshaw.js")
   script(src="/js/sockets.js")
