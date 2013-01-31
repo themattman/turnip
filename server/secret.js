@@ -6,7 +6,6 @@ module.exports = Object.freeze({
     port: 10074,
     name: "turnip"
   }, 
-  //email: {},
   admin: {
     user: "user",
     pass: "dopes"
