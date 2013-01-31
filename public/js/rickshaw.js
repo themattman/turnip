@@ -165,6 +165,7 @@ function updateGraph() {
   graph.render();
 }
 
+
 var offsetForm = document.getElementById('offset_form');
 offsetForm.addEventListener('change', function(e) {
   var offsetMode = e.target.value;
