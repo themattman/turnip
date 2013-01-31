@@ -25,7 +25,6 @@ function updatePageData(serverUpdate) {
     $('#leaders_tbody').remove();
     $(fresh_tbody).fadeIn('fast');
     fresh_tbody.setAttribute("id", "leaders_tbody");
-    $(fresh_tbody).effect('highlight', {}, 1200);
   });
 }
 
@@ -84,10 +83,11 @@ socket.on('feed_load', function(commit){
 
 function updateFeed(commit){
   if(!commit){return;}
+  console.log(commit);
   var td0 = document.createElement('td');
-  td0.innerHTML = commit[0].committer.name;
+  td0.innerHTML = commit.commits[0].committer.name;
   var td1 = document.createElement('td');
-  td1.innerHTML = commit[0].message;
+  td1.innerHTML = commit.commits[0].message;
   var new_row = document.createElement('tr');
   new_row.appendChild(td0);
   new_row.appendChild(td1);
