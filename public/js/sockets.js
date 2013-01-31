@@ -13,7 +13,7 @@ function updatePageData(serverUpdate) {
   // Update Graph
   // ---------------------------------------------------------- //
   window.graph_data = serverUpdate;
-  //updateGraph();
+  updateGraph();
 
   // ---------------------------------------------------------- //
   // Update Leaderboard

@@ -1,4 +1,3 @@
-
 var express     = require('express')
   , app         = express()
   , colors      = require('colors')
@@ -9,7 +8,6 @@ var express     = require('express')
   , fs          = require('fs')
   , mongo       = require('./database.js')
   , __timeDelta = require('./secret.js').constants.timeDelta
-  , events      = require('events');
 
 // setup here
 config(app);
@@ -93,7 +91,7 @@ exports.daemon = function(){
     console.log('file'.cyan, file.latest_timestamp);
     file.latest_timestamp += __timeDelta;
     fs.writeFile('./server/github.json', JSON.stringify(file), function(error){
-      if(error) throw error;
+      if(error){throw error;}
       console.log('done writing timestamp to github.json');
       mongo.db.collection('graph_data', function(err, col){
         if(err){throw err;}

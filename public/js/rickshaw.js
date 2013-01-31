@@ -164,15 +164,6 @@ function updateGraph() {
   graph.update();
 }
 
-//graph.render();
-
-
-/*setTimeout(function(){
-  graph.series.push(item2);
-  graph.update();
-}, 3000);*/
-
-
 // Require everyone to enter their repo name before the competition
 // Store global file on server with samples taken every x seconds (well, on Mongo)
 // Have Otto take form data and write it to Mongo correctly when someone adds their account
@@ -181,34 +172,7 @@ function updateGraph() {
 
 // Calculate UNIX timestamp of beginning of hackathon
 // Issue Github API requests every x seconds and check if latest commit timestamp > mostRecentTimeStamp
-var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in setInterval
-
-/*function addDataStream(userName, repoName, cb) {  
-  $.get('https://api.github.com/repos/' + userName + '/' + repoName + '/commits', function(d) {
-    var pusher = {};
-    pusher.color = palette.color();
-    pusher.name = repoName;
-    pusher.data = [];
-    console.log(pusher);
-    var repoCommits = 0;
-    for(var i in d) {
-        if(repoCommits < 25) {
-          var commit = parseDate(d[i].commit.committer.date);
-          commit %= 100000000;
-          console.log(commit);
-          var datapoint = {};
-          datapoint.x = commit;
-          datapoint.y = repoCommits;
-          //console.log(datapoint);
-          pusher.data.push(datapoint);
-        }
-        repoCommits++;
-    }
-    currentAccountData.push(pusher);
-    cb();
-  });
-}
-
+//var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in setInterval
 
 // ----WORKS----
 // CLIENT-SIDE
@@ -218,23 +182,6 @@ var lastRequestTimeStamp = 0 //Defaulted to beginning of hackathon, updated in s
 // After that, server only sends top ten data
 // Client expects to overwrite everything with new update
 
-
-
-
-function iterateOverRepos(repo_data) {
-  console.log('github');
-  console.log(repo_data);
-
-  for(var i in repo_data.accounts) {
-    // Push latest item onto array
-    graph.series[i].data.push(repo_data.accounts[i].commits[repo_data.accounts[i].commits.length-1]);
-  }
-  graph.update();
-}*/
-
-/*function updateGraph() {
-  $.get('/github/accounts', iterateOverRepos);
-}*/
 
 // Get data when page is first loaded
 // Use Socket.io on connect to push the correct data (most logic server-side)
@@ -255,20 +202,3 @@ function iterateOverRepos(repo_data) {
 // Increment counter in DB for the y accordingly for the next timestamp
 
 // At set time intervals, blindly broadcast JSON deltas to all clients
-
-// Socket.io
-/*var socket = io.connect('http://localhost');
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-});*/
-
-
-
-//$.get('https://api.github.com/repos/joyent/node/commits', function(d) {
-/*$.get('/github/accounts', function(d) {
-        /*d.forEach(function(com){
-                console.log(com.commit.committer.date);
-        })
-        console.log(d)
-});*/

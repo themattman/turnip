@@ -1,12 +1,10 @@
 var mongo     = require("./database.js")
-	, email     = require("./email.js")
 	, colors    = require('colors')
 	, collection
 	, fs        = require('fs')
 	, process   = require('./process.js')
 	, loop      = require('./app.js')
 	, interval
-	, events    = require('events')
 	, secret    = require('./secret.js').admin;
 
 mongo.connect(function(msg, coltn) {
