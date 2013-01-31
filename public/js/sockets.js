@@ -25,6 +25,7 @@ function updatePageData(serverUpdate) {
     $('#leaders_tbody').remove();
     $(fresh_tbody).fadeIn('fast');
     fresh_tbody.setAttribute("id", "leaders_tbody");
+    $(fresh_tbody).effect('highlight', {}, 1200);
   });
 }
 
