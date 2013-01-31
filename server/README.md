@@ -36,6 +36,7 @@
 * (check) commit feed fade in
 * test top 10 update
 * clean up / refactor - (check) emitter for hook should move from router to process
+* put (no leaders/no messages placeholder for the bottom tables and graph onload if no data arrives)
 * get rid of collection undef issue
 * make sure in each file all require()s are used
 * Support for multiple types of graphs (unstacked)
