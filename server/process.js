@@ -49,10 +49,10 @@ var saveCommitToDatabase = function (commit_data){
     sanitized_commit.repository.private     = commit_data.repository.private;
     for(var i in commit_data.commits){
       var this_commit       = {};
-      this_commit.committer = {};
-      this_commit.timestamp      = commit_data.commits[i].timestamp;
-      this_commit.message        = commit_data.commits[i].message;
-      this_commit.committer.name = commit_data.commits[i].committer.name;
+      this_commit.timestamp = commit_data.commits[i].timestamp;
+      this_commit.message   = commit_data.commits[i].message;
+      this_commit.userName  = commit_data.commits[i].committer.name;
+      this_commit.repoName  = commit_data.repository.name;
       sanitized_commit.commits.push(this_commit);
     }
     col.insert(sanitized_commit);

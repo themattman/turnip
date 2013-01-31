@@ -85,9 +85,9 @@ function updateFeed(commit){
   if(!commit){return;}
   console.log(commit);
   var td0 = document.createElement('td');
-  td0.innerHTML = commit.commits[0].committer.name;
+  td0.innerHTML = commit.userName;
   var td1 = document.createElement('td');
-  td1.innerHTML = commit.commits[0].message;
+  td1.innerHTML = commit.message;
   var new_row = document.createElement('tr');
   new_row.appendChild(td0);
   new_row.appendChild(td1);
