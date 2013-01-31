@@ -53,11 +53,12 @@ var saveCommitToDatabase = function (commit_data){
       this_commit.message   = commit_data.commits[i].message;
       this_commit.userName  = commit_data.commits[i].committer.name;
       this_commit.repoName  = commit_data.repository.name;
+      Updater.updateAll(this_commit);
+      this_commit.repoName  = commit_data.repository.name;
+      delete this_commit.repoName;
       sanitized_commit.commits.push(this_commit);
     }
     col.insert(sanitized_commit);
-
-    Updater.updateAll(sanitized_commit);
   });
 }
 
