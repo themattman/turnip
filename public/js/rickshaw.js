@@ -161,6 +161,7 @@ function otherGraphStuff() {
 
 function updateGraph() {
   console.log('graph.update()');
+  graph.series = window.graph_data;
   graph.update();
 }
 
