@@ -13,6 +13,7 @@ function sanitizeDataPoints(serverUpdate){
     setTimeout(function(){
       console.log('woops')
       $('#loader').hide();
+      $('.btn').hide();
       var err_msg = document.createElement('div');
       err_msg.style.display = "none";
       document.getElementById('chart_container').appendChild(err_msg);
@@ -41,6 +42,9 @@ function sanitizeDataPoints(serverUpdate){
     setTimeout(function(){
       $('#loader').hide();
       createGraph();
+      $('.btn-group').show();
+      $('.btn').show();
+      $('.btn-group').css('display', 'inline-block');
     }, 1000);
   }
 }
@@ -54,9 +58,6 @@ socket.on('graph_load', function(load_data){
   console.log(load_data)
   sanitizeDataPoints(load_data);
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
-  $('.btn-group').show();
-  $('.btn').show();
-  $('.btn-group').css('display', 'inline-block');
 });
 socket.on('graph_update', function(delta){
   console.log('on_graph_update');
