@@ -23,11 +23,6 @@ function createGraph() {
     $('#chart').empty();
     $('#y_axis').empty();
     $('#legend').empty();
-    /*var new_div = document.createElement('div');
-    new_div.setAttribute('id', 'chart');
-    var contain = document.getElementById('chart_container');
-    var slider  = document.getElementById('slider');
-    contain.insertBefore(new_div, slider);*/
   }
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
