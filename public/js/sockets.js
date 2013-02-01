@@ -55,6 +55,7 @@ socket.on('graph_load', function(load_data){
   sanitizeDataPoints(load_data);
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
   $('.btn-group').show();
+  $('.btn').show();
   $('.btn-group').css('display', 'inline-block');
 });
 socket.on('graph_update', function(delta){
