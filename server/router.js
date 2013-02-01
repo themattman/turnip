@@ -62,18 +62,16 @@ exports.start = function(req, res){
 	console.log(req.body, secret.pass);
 	if(req.body.password == secret.pass){
 		console.log('start');
-		interval = setInterval(loop.daemon, 30000);
+		interval = setInterval(loop.daemon, 200000);
 	}
 };
 
 exports.stop = function(req, res){
 	console.log(req.body, secret.pass);
-	if(req.body.password == secret.pass){
+	/*if(req.body.password == secret.pass){
 		console.log('stop');
 		clearInterval(interval);
-	}
+	}*/
 };
 
-exports.test = function(req, res){
-
-};
+exports.test = function(req, res){};
