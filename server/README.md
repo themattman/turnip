@@ -34,14 +34,19 @@
 * (check) Add authentication to start/stop buttons
 * (check) Sanitize data upon hook, only save necessary data
 * (check) commit feed fade in
-* test top 10 update
+* (check) make sure in each file all require()s are used
+* (check) Support for multiple types of graphs (unstacked)
+* (check) page specifically for a commit message feed
+* [DOTHIS] top 10 refresh properly
+* [DOTHIS] graph real-time refresh
+* [DOTHIS] convert jade to HTML and .send not .render
+* [DOTHIS] put (no leaders/no messages placeholder for the bottom tables and graph onload if no data arrives)
 * clean up / refactor - (check) emitter for hook should move from router to process
-* put (no leaders/no messages placeholder for the bottom tables and graph onload if no data arrives)
 * get rid of collection undef issue
-* make sure in each file all require()s are used
-* Support for multiple types of graphs (unstacked)
 * Static graphs?
 * load balancer
 * separate server for getting hooks
 * cost estimate
 * Make buttons to see larger graphs, larger graphs send less % of total points
+
+START TIME = 1359759600

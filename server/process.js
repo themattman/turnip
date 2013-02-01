@@ -172,9 +172,8 @@ exports.getLatestDelta = function(curTime, cb) {
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
       if(err){throw err;}
-      console.log('getLatestDelta'.red, results.length);
 
-      // Only send the most recent 10 items
+      // Only send the most recent 10 data points for each
       for(var i in results){
         if(results[i].data.length > 10){
           results[i].data = results[i].data.slice(results[i].data.length - 10, 10);
