@@ -32,7 +32,6 @@ function createGraph() {
     stroke: true,
     series:  window.graph_data//[ item2, item1 ]//window.graph_data//seriesData 
   });
-  console.log(graph.series);
   graph.render();
   $('#chart').show();
   otherGraphStuff();
@@ -65,12 +64,6 @@ function otherGraphStuff() {
   });
   yAxis.render();
 }
-
-function updateGraph() {
-  console.log('graph.update()');
-  createGraph();
-}
-
 
 var offsetForm = document.getElementById('offset_form');
 $('#btn0').click(function(a){

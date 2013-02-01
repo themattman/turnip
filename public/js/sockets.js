@@ -8,16 +8,19 @@ window.leaderboard = [];
 function sanitizeDataPoints(serverUpdate){
   if(!serverUpdate || serverUpdate.length < 1){
     setTimeout(function(){
-      console.log('woops')
-      $('#loader').hide();
-      $('.btn').hide();
-      var err_msg = document.createElement('div');
-      err_msg.style.display = "none";
-      document.getElementById('chart_container').appendChild(err_msg);
-      $(err_msg).text('Sorry, no graph data.');
-      $(err_msg).css('margin-left', '360px');
-      $(err_msg).css('margin-top', '90px');
-      $(err_msg).show();
+      if(!$('#err_msg').length){
+        console.log('woops')
+        $('#loader').hide();
+        $('.btn').hide();
+        var err_msg = document.createElement('div');
+        err_msg.setAttribute('id', err_msg);
+        err_msg.style.display = 'none';
+        document.getElementById('chart_container').appendChild(err_msg);
+        $(err_msg).text('Sorry, no graph data.');
+        $(err_msg).css('margin-left', '360px');
+        $(err_msg).css('margin-top', '90px');
+        $(err_msg).show();
+      }
     }, 1000);
   } else {
     for(var i in serverUpdate){
@@ -52,13 +55,11 @@ socket.on('connect', function(){
 });
 socket.on('graph_load', function(load_data){
   console.log('on_graph_load');
-  console.log(load_data)
   sanitizeDataPoints(load_data);
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
 });
 socket.on('graph_update', function(delta){
   console.log('on_graph_update');
-  console.log(delta);
   delete window.graph_data;
   delete window.leaderboard;
   window.graph_data  = [];
@@ -71,7 +72,6 @@ socket.on('graph_update', function(delta){
 });
 socket.on('feed_update', function(commit){
   console.log('on_feed');
-  console.log(commit);
   updateFeed(commit);
 });
 socket.on('feed_load', function(commit){
