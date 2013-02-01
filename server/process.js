@@ -14,8 +14,8 @@ commitFeed.prototype.updateAll = function(commit) {
   this.emit('update_commits', commit);
 };
 
-var Updater = new commitFeed();
-exports.commitFeed = Updater;
+var Updater         = new commitFeed();
+exports.commitFeed  = Updater;
 
 function zeroOutUnusedDataPoints(latest_timestamp, cb) {
   console.log('zeroOutUnusedDataPoints()'.zebra);
@@ -172,9 +172,6 @@ exports.getLatestDelta = function(curTime, cb) {
     // Sort the results and take the top 10 teams
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
       if(err){throw err;}
-
-      console.log('getLatestDeltaRESULTS'.cyan);
-      console.log(results);
 
       // Only send the most recent 10 data points for each
       for(var i in results){

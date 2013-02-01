@@ -8,6 +8,17 @@ var express     = require('express')
   , fs          = require('fs')
   , mongo       = require('./database.js')
   , __timeDelta = require('./secret.js').constants.timeDelta
+  , events      = require('events');
+
+// Synchro here
+var graphUpdateSignal = function(){};
+graphUpdateSignal.prototype = new events.EventEmitter;
+graphUpdateSignal.prototype.updateAll = function() {
+  console.log('update_graph.emit'.red);
+  this.emit('update_graph');
+};
+var graphUpdater = new graphUpdateSignal();
+
 
 // setup here
 config(app);
@@ -59,13 +70,13 @@ io.sockets.on('connection', function(socket){
     console.log('emit_feed_load'.zebra);
     socket.emit('feed_load', commitFeed);
   });
+});
 
-  fs.watch('./server/github.json', function(cur, prev){
-    var curTime = new Date().getTime();
-    process.getLatestDelta(curTime, function(latestDelta){
-      console.log('emit_graph_update'.zebra);
-      socket.emit('graph_update', latestDelta);
-    });
+graphUpdater.on('update_graph', function(){
+  var curTime = new Date().getTime();
+  process.getLatestDelta(curTime, function(latestDelta){
+    console.log('emit_graph_update'.zebra);
+    socket.emit('graph_update', latestDelta);
   });
 });
 
@@ -97,6 +108,7 @@ exports.daemon = function(){
               if(err){throw err;}
             });
           }
+          graphUpdater.updateAll();
         });
       });
     });
