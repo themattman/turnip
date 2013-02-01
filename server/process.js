@@ -175,11 +175,8 @@ exports.getLatestDelta = function(curTime, cb) {
 
       // Only send the most recent 10 data points for each
       for(var i in results){
-        if(results[i].data.length > 10){
-          console.log('before/after');
-          console.log(results[i].data);
-          results[i].data = results[i].data.slice(-10);
-          console.log(results[i].data);
+        if(results[i].data.length > 30){
+          results[i].data = results[i].data.slice(-30);
         }
       }
       cb(results);
