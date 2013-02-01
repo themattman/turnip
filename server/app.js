@@ -70,13 +70,13 @@ io.sockets.on('connection', function(socket){
     console.log('emit_feed_load'.zebra);
     socket.emit('feed_load', commitFeed);
   });
+});
 
-  graphUpdater.on('update_graph', function(){
-    var curTime = new Date().getTime();
-    process.getLatestDelta(curTime, function(latestDelta){
-      console.log('emit_graph_update'.zebra);
-      socket.emit('graph_update', latestDelta);
-    });
+graphUpdater.on('update_graph', function(){
+  var curTime = new Date().getTime();
+  process.getLatestDelta(curTime, function(latestDelta){
+    console.log('emit_graph_update'.zebra);
+    io.sockets.in('graph').emit('graph_update', latestDelta);
   });
 });
 
