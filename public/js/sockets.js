@@ -13,7 +13,10 @@ function updatePageData(serverUpdate) {
   // ---------------------------------------------------------- //
   // Update Graph
   // ---------------------------------------------------------- //
+  console.log('new serverUpdate');
+  console.log(serverUpdate);
   window.graph_data = serverUpdate;
+  console.log(window.graph_data);
   updateGraph();
 
   // ---------------------------------------------------------- //
