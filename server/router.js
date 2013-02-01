@@ -39,6 +39,10 @@ exports.githubjson  = function(req, res) {
 	})
 };
 
+exports.help = function(req, res){
+	res.render('help', { title: 'Turnip' });
+};
+
 exports.hook = function(req, res) {
 	console.log('GOT A HOOK'.cyan);
 	var hook_data = JSON.parse(req.body.payload);

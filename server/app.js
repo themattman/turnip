@@ -22,6 +22,7 @@ app.get('/access',          router.access    );
 app.get('/admin/accounts',  router.accounts  );
 app.get('/db',              router.db        );
 app.get('/github/accounts', router.githubjson);
+app.get('/help',            router.help      );
 app.get('/messages',        router.messages  );
 
 // POST

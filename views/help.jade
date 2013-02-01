@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  #explainer_container(style="width:740px;")
+    h3(style="border-bottom:1px solid #ddd") Adding a webhook
+    ol
+      li
+        p Open your repo on GitHub and go to its settings page
+          img(src="https://github-images.s3.amazonaws.com/help/repo-actions-settings.png", style="float:right; width:250px;")
+      li
+        p Click "Service Hooks"
+          img(src="https://github-images.s3.amazonaws.com/help/webhooks-service-hooks.png", style="float:right;")
+      li
+        p Click "WebHook URLs"
+          img(src="https://github-images.s3.amazonaws.com/help/webhooks-urls.png", style="float:right;")
+      li
+        p Enter your URL and click "Update Settings"
+          img(src="https://github-images.s3.amazonaws.com/help/webhooks-paste-url.png", style="float:right;")
