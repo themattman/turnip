@@ -91,6 +91,7 @@ socket.on('graph_update', function(delta){
   console.log('on_graph_update');
   console.log(delta);
   delete window.graph_data;
+  window.graph_data  = [];
   sanitizeDataPoints(delta);
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
   $('.btn-group').show();
