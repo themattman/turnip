@@ -80,6 +80,9 @@ var graph;
 
 function createGraph() {
   console.log('creating');
+  if(graph){
+    delete graph;
+  }
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
     width: 800,
