@@ -73,3 +73,7 @@ exports.stop = function(req, res){
 		clearInterval(interval);
 	}
 };
+
+exports.test = function(req, res){
+
+};
