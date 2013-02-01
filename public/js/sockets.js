@@ -6,9 +6,9 @@ window.graph_data  = [];
 window.leaderboard = [];
 
 function sanitizeDataPoints(serverUpdate){
-  console.log(serverUpdate);
+  /*console.log(serverUpdate);
   console.log('serverUpdate');
-  console.log(serverUpdate.length);
+  console.log(serverUpdate.length);*/
   if(!serverUpdate || serverUpdate.length < 1){
     setTimeout(function(){
       console.log('woops')
