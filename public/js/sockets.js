@@ -95,10 +95,6 @@ socket.on('graph_update', function(delta){
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
   $('.btn-group').show();
   $('.btn-group').css('display', 'inline-block');
-  //if(window.leaderboard.length > 0){
-    //updatePageData(delta);
-  //}
-
 });
 socket.on('feed_update', function(commit){
   console.log('on_feed');
