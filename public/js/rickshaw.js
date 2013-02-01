@@ -19,12 +19,12 @@ function createGraph() {
   console.log('creating');
   if(graph){
     delete graph;
-    $('#chart').remove();
-    var new_div = document.createElement('div');
+    $('#chart').empty();
+    /*var new_div = document.createElement('div');
     new_div.setAttribute('id', 'chart');
     var contain = document.getElementById('chart_container');
     var slider  = document.getElementById('slider');
-    contain.insertBefore(new_div, slider);
+    contain.insertBefore(new_div, slider);*/
   }
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
