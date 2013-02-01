@@ -19,6 +19,7 @@ function createGraph() {
   console.log('creating');
   if(graph){
     delete graph;
+    $('#chart').hide();
     $('#chart').empty();
     /*var new_div = document.createElement('div');
     new_div.setAttribute('id', 'chart');
@@ -36,6 +37,7 @@ function createGraph() {
   });
   console.log(graph.series);
   graph.render();
+  $('#chart').show();
   otherGraphStuff();
 }
 
