@@ -85,7 +85,6 @@ socket.on('feed_load', function(commit){
 
 function updateFeed(commit){
   if(!commit){return;}
-  console.log(commit);
   var td0 = document.createElement('td');
   td0.innerHTML = commit.userName;
   var td1 = document.createElement('td');
