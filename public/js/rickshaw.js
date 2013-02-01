@@ -83,6 +83,10 @@ function createGraph() {
   if(graph){
     delete graph;
     $('#chart').remove();
+    var new_div = document.createElement('div');
+    var contain = document.getElementById('chart_container');
+    var slider  = document.getElementById('slider');
+    contain.insertBefore(new_div, slider);
   }
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
