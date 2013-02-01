@@ -181,7 +181,7 @@ exports.getLatestDelta = function(curTime, cb) {
         if(results[i].data.length > 10){
           console.log('before/after');
           console.log(results[i].data);
-          results[i].data = results[i].data.slice(-10, 10);
+          results[i].data = results[i].data.slice(-10);
           console.log(results[i].data);
         }
       }
