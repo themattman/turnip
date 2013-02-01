@@ -163,14 +163,15 @@ function otherGraphStuff() {
 }
 
 function updateGraph() {
-  console.log('graph.update()');
+  /*console.log('graph.update()');
   console.log(window.graph_data);
   console.log('graph.oldseries');
   if(graph.series){console.log(graph.series);}
-  graph.series = window.graph_data;
-  console.log('graph.newseries');
-  console.log(graph.series);
-  graph.render();
+  graph.series = window.graph_data;*/
+  createGraph();
+  /*console.log('graph.newseries');
+  console.log(graph.series);*/
+  //graph.render();
 }
 
 
