@@ -82,6 +82,7 @@ function createGraph() {
   console.log('creating');
   if(graph){
     delete graph;
+    $('#chart').remove();
   }
   graph = new Rickshaw.Graph({
     element: document.querySelector('#chart'),
