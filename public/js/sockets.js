@@ -5,36 +5,6 @@ var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 window.graph_data  = [];
 window.leaderboard = [];
 
-/*function updatePageData(serverUpdate) {
-  // Construct new hidden table body
-  // Fadeout the old and in the new
-  // Delete the old leaderboard
-
-  // ---------------------------------------------------------- //
-  // Update Graph
-  // ---------------------------------------------------------- //
-  console.log('new serverUpdate');
-  console.log(serverUpdate);
-  window.rawUpdate = serverUpdate;
-  console.log(window.rawUpdate);
-  delete window.graph_data;
-  window.graph_data = serverUpdate;
-  console.log(window.graph_data);
-  updateGraph();
-
-  // ---------------------------------------------------------- //
-  // Update Leaderboard
-  // ---------------------------------------------------------- //
-  var fresh_tbody = document.createElement('tbody');
-  fresh_tbody = updateLeaderboard(serverUpdate, fresh_tbody);
-  $('#leaders_tbody').fadeOut('fast', function(){
-    document.getElementById('leaders').appendChild(fresh_tbody);
-    $('#leaders_tbody').remove();
-    $(fresh_tbody).fadeIn('fast');
-    fresh_tbody.setAttribute("id", "leaders_tbody");
-  });
-}*/
-
 function sanitizeDataPoints(serverUpdate){
   console.log(serverUpdate);
   console.log('serverUpdate');
