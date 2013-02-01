@@ -65,6 +65,7 @@ socket.on('graph_update', function(delta){
   window.graph_data  = [];
   window.leaderboard = [];
   sanitizeDataPoints(delta);
+  $('#leaders_tbody').empty();
   updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
   $('.btn-group').show();
   $('.btn-group').css('display', 'inline-block');
