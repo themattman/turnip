@@ -21,6 +21,8 @@ function createGraph() {
     delete graph;
     $('#chart').hide();
     $('#chart').empty();
+    $('#y_axis').empty();
+    $('#legend').empty();
     /*var new_div = document.createElement('div');
     new_div.setAttribute('id', 'chart');
     var contain = document.getElementById('chart_container');
@@ -108,8 +110,8 @@ function otherGraphStuff() {
 }
 
 function updateGraph() {
-  /*console.log('graph.update()');
-  console.log(window.graph_data);
+  console.log('graph.update()');
+  /*console.log(window.graph_data);
   console.log('graph.oldseries');
   if(graph.series){console.log(graph.series);}
   graph.series = window.graph_data;*/
