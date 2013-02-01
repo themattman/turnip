@@ -102,7 +102,7 @@ exports.daemon = function(){
           if(err){throw err;}
           for(var row in collection){
             var data_point = {};
-            data_point.x = file.latest_timestamp + __timeDelta;
+            data_point.x = file.latest_timestamp;
             data_point.y = collection[row].numCommits;
             col.update( {'repoName': collection[row].repoName}, { $push: { 'data': data_point } }, function(err, docs){
               if(err){throw err;}
