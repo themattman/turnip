@@ -111,7 +111,7 @@ function otherGraphStuff() {
     graph: graph,
     legend: legend
   });
-  var hoverDetail = new Rickshaw.Graph.HoverDetail({
+  /*var hoverDetail = new Rickshaw.Graph.HoverDetail({
     graph: graph,
     //xFormatter: function(x) { return x + "seconds" }
     yFormatter: function(y) { 
@@ -119,7 +119,7 @@ function otherGraphStuff() {
       before_s += (Math.floor(y) == 1) ? "" : "s";
       return before_s;
     }
-  });
+  });*/
 
   /*var time = new Rickshaw.Fixtures.Time();
   console.log(time);
