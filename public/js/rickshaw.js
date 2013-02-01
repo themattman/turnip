@@ -68,28 +68,17 @@ function otherGraphStuff() {
 
 function updateGraph() {
   console.log('graph.update()');
-  /*console.log(window.graph_data);
-  console.log('graph.oldseries');
-  if(graph.series){console.log(graph.series);}
-  graph.series = window.graph_data;*/
   createGraph();
-  /*console.log('graph.newseries');
-  console.log(graph.series);*/
-  //graph.render();
 }
 
 
 var offsetForm = document.getElementById('offset_form');
 $('#btn0').click(function(a){
   graph.renderer.unstack = true;
-  /*graph.setRenderer('line');
-  graph.offset = 'zero';*/
   graph.render();
 });
 $('#btn1').click(function(a){
   graph.renderer.unstack = false;
-  /*graph.setRenderer('stack');
-  graph.offset = 0;*/
   graph.render();
 });
 
