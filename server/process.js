@@ -173,10 +173,16 @@ exports.getLatestDelta = function(curTime, cb) {
     collection.find().sort({ 'numCommits': -1 }).limit(10).toArray(function(err, results) {
       if(err){throw err;}
 
+      console.log('getLatestDeltaRESULTS'.cyan);
+      console.log(results);
+
       // Only send the most recent 10 data points for each
       for(var i in results){
         if(results[i].data.length > 10){
-          results[i].data = results[i].data.slice(results[i].data.length - 10, 10);
+          console.log('before/after');
+          console.log(results[i].data);
+          results[i].data = results[i].data.slice(-10, 10);
+          console.log(results[i].data);
         }
       }
       cb(results);
