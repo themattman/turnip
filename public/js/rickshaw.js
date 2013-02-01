@@ -84,7 +84,7 @@ function createGraph() {
     element: document.querySelector('#chart'),
     width: 800,
     height: 250,
-    //renderer: 'area',
+    renderer: 'area',
     stroke: true,
     series:  window.graph_data//[ item2, item1 ]//window.graph_data//seriesData 
   });
@@ -163,7 +163,7 @@ function updateGraph() {
   console.log('graph.update()');
   console.log(window.graph_data);
   console.log('graph.oldseries');
-  console.log(graph.series);
+  if(graph.series){console.log(graph.series);}
   graph.series = window.graph_data;
   console.log('graph.newseries');
   console.log(graph.series);
