@@ -5,7 +5,7 @@ var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 window.graph_data  = [];
 window.leaderboard = [];
 
-function updatePageData(serverUpdate) {
+/*function updatePageData(serverUpdate) {
   // Construct new hidden table body
   // Fadeout the old and in the new
   // Delete the old leaderboard
@@ -33,7 +33,7 @@ function updatePageData(serverUpdate) {
     $(fresh_tbody).fadeIn('fast');
     fresh_tbody.setAttribute("id", "leaders_tbody");
   });
-}
+}*/
 
 function sanitizeDataPoints(serverUpdate){
   console.log(serverUpdate);
