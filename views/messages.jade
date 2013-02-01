@@ -1,0 +1,17 @@
+extends layout
+
+block append stylesheets
+  link(type="text/css", rel="stylesheet", href="/css/rickshaw.css")
+  link(type="text/css", rel="stylesheet", href="/css/rickshaw.min.css")
+
+block append content
+  #content
+    #commit_feed_container
+      h2(class="noun") Commit Messages
+      p From the latest commits
+      table.table.table-bordered.table-hover(id="messages")
+        tbody(id="messages_tbody")
+
+block append scripts
+  script(src="/socket.io/socket.io.js")
+  script(src="/js/messages.js")

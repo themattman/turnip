@@ -50,6 +50,10 @@ exports.index = function(req, res){
 	res.render('rickshaw', { title: 'Turnip' });
 };
 
+exports.messages = function(req, res){
+	res.render('messages', { title: 'Turnip' });
+};
+
 exports.start = function(req, res){
 	console.log(req.body, secret.pass);
 	if(req.body.password == secret.pass){

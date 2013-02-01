@@ -1,5 +1,5 @@
 $('#messages').hide(); // .show() the latest messages after they load
-//$('.btn-group').hide();
+$('.btn').hide();
 
 var palette = new Rickshaw.Color.Palette({"scheme": "spectrum2001"});
 window.graph_data  = [];
@@ -30,27 +30,42 @@ function updatePageData(serverUpdate) {
 }
 
 function sanitizeDataPoints(serverUpdate){
-  if(!serverUpdate){
-    console.log('woops')
-    $('#loader').hide();
-    $('#loader').text('Sorry, no data.')
-    return;
-  }
-  for(var i in serverUpdate){
-    var team = {};
-    team.repoName   = serverUpdate[i].repoName;
-    team.userName   = serverUpdate[i].userName;
-    team.numCommits = serverUpdate[i].numCommits;
+  console.log(serverUpdate);
+  console.log('serverUpdate');
+  console.log(serverUpdate.length);
+  if(!serverUpdate || serverUpdate.length < 1){
+    setTimeout(function(){
+      console.log('woops')
+      $('#loader').hide();
+      var err_msg = document.createElement('div');
+      err_msg.style.display = "none";
+      document.getElementById('chart_container').appendChild(err_msg);
+      $(err_msg).text('Sorry, no graph data.');
+      $(err_msg).css('margin-left', '360px');
+      $(err_msg).css('margin-top', '90px');
+      $(err_msg).show();
+    }, 1000);
+  } else {
+    for(var i in serverUpdate){
+      var team = {};
+      team.repoName   = serverUpdate[i].repoName;
+      team.userName   = serverUpdate[i].userName;
+      team.numCommits = serverUpdate[i].numCommits;
 
-    window.graph_data.push(serverUpdate[i]);
-    window.leaderboard.push(team);
+      window.graph_data.push(serverUpdate[i]);
+      window.leaderboard.push(team);
 
-    serverUpdate[i].name = serverUpdate[i].repoName;
-    delete serverUpdate[i].repoName;
-    delete serverUpdate[i].userName;
-    delete serverUpdate[i].numCommits;
-    delete serverUpdate[i]._id;
-    serverUpdate[i].color = palette.color();
+      serverUpdate[i].name = serverUpdate[i].repoName;
+      delete serverUpdate[i].repoName;
+      delete serverUpdate[i].userName;
+      delete serverUpdate[i].numCommits;
+      delete serverUpdate[i]._id;
+      serverUpdate[i].color = palette.color();
+    }
+    setTimeout(function(){
+      $('#loader').hide();
+      createGraph();
+    }, 1000);
   }
 }
 
@@ -61,13 +76,8 @@ socket.on('connect', function(){
 socket.on('graph_load', function(load_data){
   console.log('on_graph_load');
   console.log(load_data)
-  //if(window.leaderboard.length < 1){
-    sanitizeDataPoints(load_data);
-    $('#loader').hide();
-    createGraph();
-    updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
-    //$('#leaders_tbody tr').effect('highlight', {}, 1200);
-  //}
+  sanitizeDataPoints(load_data);
+  updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
   $('.btn-group').show();
   $('.btn-group').css('display', 'inline-block');
 });

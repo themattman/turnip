@@ -22,6 +22,7 @@ app.get('/access',          router.access    );
 app.get('/admin/accounts',  router.accounts  );
 app.get('/db',              router.db        );
 app.get('/github/accounts', router.githubjson);
+app.get('/messages',        router.messages  );
 
 // POST
 app.post('/hook',  router.hook );
@@ -48,10 +49,8 @@ io.sockets.on('connection', function(socket){
 
   // Change this to get all data
   process.getData(currentTime, function(graph_info){
-    setTimeout(function(){
-      console.log('emit_graph_load'.zebra);
-      socket.emit('graph_load', graph_info);
-    }, 1000);
+    console.log('emit_graph_load'.zebra);
+    socket.emit('graph_load', graph_info);
   });
 
   process.getFeed(currentTime, function(commitFeed){
