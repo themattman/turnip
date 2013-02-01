@@ -41,6 +41,8 @@
 * [DOTHIS] graph real-time refresh
 * [DOTHIS] convert jade to HTML and .send not .render
 * [DOTHIS] put (no leaders/no messages placeholder for the bottom tables and graph onload if no data arrives)
+* [DOTHIS] to refresh graph, overwrite var graph and construct new graph with new data, then delete old graph
+
 * clean up / refactor - (check) emitter for hook should move from router to process
 * get rid of collection undef issue
 * Static graphs?
