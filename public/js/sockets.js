@@ -15,6 +15,7 @@ function updatePageData(serverUpdate) {
   // ---------------------------------------------------------- //
   console.log('new serverUpdate');
   console.log(serverUpdate);
+  delete window.graph_data;
   window.graph_data = serverUpdate;
   console.log(window.graph_data);
   updateGraph();
