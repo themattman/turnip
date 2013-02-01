@@ -10,6 +10,11 @@ block append content
       h2(class="noun") Commit Messages
       p From the latest commits
       table.table.table-bordered.table-hover(id="messages")
+        thead.table-striped
+          tr(style='font-weight:bold;')
+            td Repo
+            td Name
+            td Message
         tbody(id="messages_tbody")
 
 block append scripts

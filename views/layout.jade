@@ -9,8 +9,9 @@ html
 
   body
     .inline
-      h1= title
-      p Welcome to #{title}
+      h1(style="color:darkgreen")= title
+      //p Welcome to #{title}
+      a(href="//www.twitter.com/themattmans", style="color:rgb(97,167,88)") Courtesy of @themattmans
       img(id="turnip_pic", src="/img/turnip.jpg")
     block content
 
