@@ -84,6 +84,7 @@ function createGraph() {
     delete graph;
     $('#chart').remove();
     var new_div = document.createElement('div');
+    new_div.setAttribute('id', 'chart');
     var contain = document.getElementById('chart_container');
     var slider  = document.getElementById('slider');
     contain.insertBefore(new_div, slider);
