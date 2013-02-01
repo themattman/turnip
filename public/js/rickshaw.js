@@ -56,44 +56,6 @@ function otherGraphStuff() {
     graph: graph,
     legend: legend
   });
-  /*var hoverDetail = new Rickshaw.Graph.HoverDetail({
-    graph: graph,
-    //xFormatter: function(x) { return x + "seconds" }
-    yFormatter: function(y) { 
-      var before_s = Math.floor(y) + " commit";
-      before_s += (Math.floor(y) == 1) ? "" : "s";
-      return before_s;
-    }
-  });*/
-
-  /*var time = new Rickshaw.Fixtures.Time();
-  console.log(time);
-  var hours = time.unit('6 hour');
-  console.log('hours');
-  console.log(hours);
-  var xAxis = new Rickshaw.Graph.Axis.Time({
-      graph: graph,
-      timeUnit: hours
-  });*/
-
-  //xAxis.render();
-
-  //var time = new Rickshaw.Fixtures.Time({ graph: graph });
-  //var seconds = time.unit('second');
-  //console.log(seconds);
-
-  /*var xAxis = new Rickshaw.Graph.Axis.X({ 
-    graph: graph,
-    TimeUnit: seconds 
-  });
-  xAxis.render();*/
-
-  /*var x_axis = new Rickshaw.Graph.Axis.X({
-    element: document.querySelector('#chart'),
-    graph: graph,
-    pixelsPerTick: 50
-  });
-  x_axis.render();*/
 
   var yAxis = new Rickshaw.Graph.Axis.Y({
     graph: graph,
