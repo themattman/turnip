@@ -15,6 +15,8 @@ function updatePageData(serverUpdate) {
   // ---------------------------------------------------------- //
   console.log('new serverUpdate');
   console.log(serverUpdate);
+  window.rawUpdate = serverUpdate;
+  console.log(window.rawUpdate);
   delete window.graph_data;
   window.graph_data = serverUpdate;
   console.log(window.graph_data);
@@ -88,9 +90,15 @@ socket.on('graph_load', function(load_data){
 socket.on('graph_update', function(delta){
   console.log('on_graph_update');
   console.log(delta);
+  delete window.graph_data;
+  sanitizeDataPoints(delta);
+  updateLeaderboard(window.leaderboard, document.getElementById('leaders_tbody'));
+  $('.btn-group').show();
+  $('.btn-group').css('display', 'inline-block');
   //if(window.leaderboard.length > 0){
-    updatePageData(delta);
+    //updatePageData(delta);
   //}
+
 });
 socket.on('feed_update', function(commit){
   console.log('on_feed');
