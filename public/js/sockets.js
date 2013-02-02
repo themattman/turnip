@@ -8,7 +8,7 @@ window.leaderboard = [];
 function sanitizeDataPoints(serverUpdate){
   if(!serverUpdate || serverUpdate.length < 1){
     setTimeout(function(){
-      if(!$('#err_msg').length){
+      if($('#err_msg').length < 1){
         console.log('woops')
         $('#loader').hide();
         $('.btn').hide();
