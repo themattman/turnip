@@ -19,16 +19,18 @@ exports.commitFeed  = Updater;
 
 function zeroOutUnusedDataPoints(latest_timestamp, cb) {
   console.log('zeroOutUnusedDataPoints()'.zebra);
-  var numPointsToFill = ((latest_timestamp - __startTime) / __timeDelta);
-  var commits = [];
-  for(var i = 0; i < numPointsToFill; ++i) {
-    var ith_commit = {};
-    ith_commit.x = (__startTime + i*__timeDelta);
-    ith_commit.y = 0;
-    commits.push(ith_commit);
+  if((latest_timestamp - __startTime) > 0){
+    var numPointsToFill = ((latest_timestamp - __startTime) / __timeDelta);
+    var commits = [];
+    for(var i = 0; i < numPointsToFill; ++i) {
+      var ith_commit = {};
+      ith_commit.x = (__startTime + i*__timeDelta);
+      ith_commit.y = 0;
+      commits.push(ith_commit);
+    }
+    console.log('commits Zerod'.yellow, i);
+    cb(commits);
   }
-  console.log('commits Zerod'.yellow, i);
-  cb(commits);
 }
 
 var saveCommitToDatabase = function (commit_data){
