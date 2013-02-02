@@ -68,6 +68,7 @@ exports.start = function(req, res){
 
 exports.stop = function(req, res){
 	console.log(req.body, secret.pass);
+	console.log('stop called, not executed.');
 };
 
 exports.test = function(req, res){};
