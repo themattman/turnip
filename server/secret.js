@@ -11,7 +11,7 @@ module.exports = Object.freeze({
     pass: "dopes"
   },
   constants: {
-    timeDelta: 60,
+    timeDelta: 300,
     startTime: 1359603335
   }
 });
